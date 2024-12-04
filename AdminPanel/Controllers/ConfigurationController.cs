@@ -19,7 +19,6 @@ namespace AdminPanel.Controllers
 {
     public class ConfigurationController : BaseController
     {
-
         private readonly IBasicDataServicesDAL _basicDataDAL;
         private readonly IConfigurationServicesDAL _configurationServicesDAL;
         private readonly IConstants _constants;
@@ -27,8 +26,6 @@ namespace AdminPanel.Controllers
         private readonly ISessionManager _sessionManag;
         private readonly IUserManagementServicesDAL _userManagementServicesDAL;
         private readonly IFilesHelpers _filesHelpers;
-
-
         public ConfigurationController(IBasicDataServicesDAL basicDataDAL, IConfigurationServicesDAL configurationServicesDAL, IConstants constants, ICommonServicesDAL commonServicesDAL,
             ISessionManager sessionManag, IUserManagementServicesDAL userManagementServicesDAL, IFilesHelpers filesHelpers)
         {
@@ -39,7 +36,6 @@ namespace AdminPanel.Controllers
             this._sessionManag = sessionManag;
             this._userManagementServicesDAL = userManagementServicesDAL;
             this._filesHelpers = filesHelpers;
-
         }
 
         [HttpGet]
@@ -48,14 +44,12 @@ namespace AdminPanel.Controllers
         {
             // ✅ Main Model
             ConfigurationModel model = new ConfigurationModel();
-
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Roles Rights";
             model.PageBasicInfoObj.EntityId = (int)EntitiesEnum.RolesRightsSetting;
             model.PageBasicInfoObj.langCode = await _sessionManag.GetLanguageCodeFromSession();
             #endregion
-
 
             ViewBag.IsAjaxRequest = false;
             ViewBag.SelectedRoleId = FormData.RoleId;
@@ -68,8 +62,6 @@ namespace AdminPanel.Controllers
                     return PartialView("~/Views/Configuration/PartialViews/_RolesRightsSetting.cshtml", model);
                 }
             }
-
-
             try
             {
                 #region Drop Down Area
@@ -111,7 +103,6 @@ namespace AdminPanel.Controllers
 
                 #endregion
 
-
                 //--Page main list
                 EntityEntity EntityFormData = new EntityEntity();
                 EntityFormData.PageSize = this._constants.ITEMS_PER_PAGE();
@@ -124,18 +115,14 @@ namespace AdminPanel.Controllers
                 int TotalRecords = model?.EntityList?.FirstOrDefault()?.TotalRecords ?? 0;
                 model.pageHelperObj = PagerHelper.Instance.MakePaginationObject(model?.EntityList?.Count() ?? 0, TotalRecords, _constants.ITEMS_PER_PAGE(), FormData.PageNo);
                 #endregion
-
-
             }
             catch (Exception ex)
             {
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 #region error model
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
 
             if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")//if request is ajax
@@ -147,13 +134,10 @@ namespace AdminPanel.Controllers
             return View(model);
         }
 
-
         [HttpPost]
         public async Task<IActionResult> SaveRolesRights(int RoleId, string recordValueJson)
         {
-
             int UserID = (await this._sessionManag.GetLoginUserIdFromSession()) ?? 0;
-
             string result = await this._configurationServicesDAL.SaveUpdateRoleRightsDAL(RoleId, recordValueJson, UserID);
 
             if (!String.IsNullOrWhiteSpace(result) && result == "Saved Successfully!")
@@ -164,8 +148,6 @@ namespace AdminPanel.Controllers
             {
                 return Json(new { success = false, message = result });
             }
-
-
         }
 
         [HttpGet]
@@ -174,7 +156,6 @@ namespace AdminPanel.Controllers
         {
             // ✅ Main Model
             ConfigurationModel model = new ConfigurationModel();
-
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Site Logo";
@@ -188,31 +169,25 @@ namespace AdminPanel.Controllers
                 FormData.PageSize = this._constants.ITEMS_PER_PAGE();
                 model.AppConfigList = await _commonServicesDAL.GetAppConfigsValuesAsyncDAL(FormData);
 
-
                 #region pagination data
                 model.pageHelperObj = new PagerHelper();
                 int TotalRecords = model?.AppConfigList?.FirstOrDefault()?.TotalRecords ?? 0;
                 model.pageHelperObj = PagerHelper.Instance.MakePaginationObject(model?.AppConfigList?.Count() ?? 0, TotalRecords, _constants.ITEMS_PER_PAGE(), FormData.PageNo);
                 #endregion
 
-
-
                 if (FormData.DataExportType != null && FormData.DataExportType == (short)DataExportTypeEnum.Excel && model?.AppConfigList?.Count > 0)
                 {
                     var ExcelFileResutl = await this._filesHelpers.ExportToExcel(this, model.PageBasicInfoObj.PageTitle, model.AppConfigList.Cast<dynamic?>().ToList());
                     return ExcelFileResutl;
                 }
-
             }
             catch (Exception ex)
             {
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 #region error model
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
 
             if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")//if request is ajax
@@ -227,8 +202,6 @@ namespace AdminPanel.Controllers
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.SitesLogo, 0, (short)UserRightsEnum.Update, 0, 0, 0)]
         public async Task<IActionResult> UpdateSiteLogo(AppConfigEntity FormData, int DataOperationType = (short)DataOperationType.Insert)
         {
-
-
             try
             {
                 if (FormData.AppConfigId < 1)
@@ -236,14 +209,10 @@ namespace AdminPanel.Controllers
                     return Json(new { success = false, message = "App Config Id is required!" });
                 }
 
-
-
                 if (string.IsNullOrEmpty(FormData.AppConfigKey))
                 {
                     return Json(new { success = false, message = "Logo name is required!" });
                 }
-
-
 
                 #region image checking
 
@@ -274,9 +243,7 @@ namespace AdminPanel.Controllers
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
         }
@@ -287,16 +254,12 @@ namespace AdminPanel.Controllers
         {
             // ✅ Main Model
             ConfigurationModel model = new ConfigurationModel();
-
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Screens Localization";
             model.PageBasicInfoObj.EntityId = (int)EntitiesEnum.ScreensLocalization;
             model.PageBasicInfoObj.langCode = await _sessionManag.GetLanguageCodeFromSession();
             #endregion
-
-
-
 
             try
             {
@@ -308,38 +271,31 @@ namespace AdminPanel.Controllers
                     PageSize = 200
                 };
                 model.LanguagesList = await this._configurationServicesDAL.GetLanguagesListDAL(languageEntity);
-                model.LanguagesList = model?.LanguagesList?.Where(x=>x.IsActive==true).ToList();
+                model.LanguagesList = model?.LanguagesList?.Where(x => x.IsActive == true).ToList();
 
-				//--App module data
-				AppModuleEntity appModuleEntity = new AppModuleEntity()
-				{
-					PageNo = 1,
-					PageSize = 100
-				};
-				model.AppModulesList = await this._configurationServicesDAL.GetAppModulesListDAL(appModuleEntity);
-				model.AppModulesList = model?.AppModulesList?.Where(x => x.IsActive == true).ToList();
+                //--App module data
+                AppModuleEntity appModuleEntity = new AppModuleEntity()
+                {
+                    PageNo = 1,
+                    PageSize = 100
+                };
+                model.AppModulesList = await this._configurationServicesDAL.GetAppModulesListDAL(appModuleEntity);
+                model.AppModulesList = model?.AppModulesList?.Where(x => x.IsActive == true).ToList();
 
-				
+
                 #endregion
-
-
-
             }
             catch (Exception ex)
             {
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 #region error model
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
-
 
             return View(model);
         }
-
 
         [HttpGet]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.ScreensLocalization, 0, 0, 0, (short)UserRightsEnum.View_All, 0)]
@@ -350,7 +306,6 @@ namespace AdminPanel.Controllers
 
             try
             {
-              
                 //--Get entity list from search dropdown
                 EntityEntity EntitySearchDrowdownFormData = new EntityEntity()
                 {
@@ -367,21 +322,14 @@ namespace AdminPanel.Controllers
                                   displayValue = o.EntityId,
                                   displayText = o.EntityName,
                               }).ToList();
-
-
                 return Json(new { success = true, message = "Get Successfully!", result = result });
-
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
         }
-
-
 
         [HttpGet]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.ScreensLocalization, 0, 0, 0, (short)UserRightsEnum.View_All, 0)]
@@ -389,17 +337,14 @@ namespace AdminPanel.Controllers
         {
             // ✅ Main Model
             ConfigurationModel model = new ConfigurationModel();
-
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.EntityId = (int)EntitiesEnum.ScreensLocalization;
             model.PageBasicInfoObj.langCode = await _sessionManag.GetLanguageCodeFromSession();
             #endregion
 
-
             try
             {
-
                 ScrnsLocalizationEntity scrnsLocalization = new ScrnsLocalizationEntity()
                 {
                     ScreenId = FormData.EntityId ?? 999999999,
@@ -414,23 +359,21 @@ namespace AdminPanel.Controllers
 
                     LabelsJsonDataDictionary = JsonConvert.DeserializeObject<Dictionary<string, object>?>(screenLocalizationData.LabelsJsonData);
 
-                    if (LabelsJsonDataDictionary != null && LabelsJsonDataDictionary.ContainsKey("labelsJsonData")  )
+                    if (LabelsJsonDataDictionary != null && LabelsJsonDataDictionary.ContainsKey("labelsJsonData"))
                     {
                         model.LocalizationList = JsonConvert.DeserializeObject<List<LocalizationLabelsInfoEntity>?>(LabelsJsonDataDictionary["labelsJsonData"].ToString());
 
-                        if (model?.LocalizationList!=null && model.LocalizationList.Count > 0)
+                        if (model?.LocalizationList != null && model.LocalizationList.Count > 0)
                         {
                             #region pagination data
                             model.pageHelperObj = new PagerHelper();
                             int TotalRecords = model?.LocalizationList?.Count() ?? 0;
                             model.pageHelperObj = PagerHelper.Instance.MakePaginationObject(model?.LocalizationList?.Count() ?? 0, TotalRecords, _constants.ITEMS_PER_PAGE(), FormData.PageNo);
                             #endregion
-
                             #region get required data according to page size
                             FormData.PageSize = this._constants.ITEMS_PER_PAGE();
                             model.LocalizationList = model?.LocalizationList?.Skip((FormData.PageNo - 1) * FormData.PageSize).Take(FormData.PageSize).ToList();
                             #endregion
-
                             #region assign localization id to each row
 
                             foreach (var item in model?.LocalizationList)
@@ -441,26 +384,17 @@ namespace AdminPanel.Controllers
                             }
                             #endregion
                         }
-
                     }
                 }
-
-
-
-
-
             }
             catch (Exception ex)
             {
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 #region error model
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
-
 
             return PartialView("~/Views/Configuration/PartialViews/_ScreensLocalizationSearch.cshtml", model);
         }
@@ -469,10 +403,8 @@ namespace AdminPanel.Controllers
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.ScreensLocalization, (short)UserRightsEnum.Add, 0, 0, 0, 0)]
         public async Task<IActionResult> SaveScreenLocalizationLabel(LocalizationLabelsInfoEntity FormData, int DataOperationType = (short)DataOperationType.Insert)
         {
-
             try
             {
-
                 #region validation region
                 if (String.IsNullOrWhiteSpace(FormData.labelHtmlId))
                 {
@@ -488,7 +420,7 @@ namespace AdminPanel.Controllers
                     return Json(new { success = false, message = "description field is required!" });
                 }
 
-                if (FormData.LanguageId==null || FormData.LanguageId < 1)
+                if (FormData.LanguageId == null || FormData.LanguageId < 1)
                 {
                     return Json(new { success = false, message = "Please first select language in the search field!" });
                 }
@@ -504,14 +436,12 @@ namespace AdminPanel.Controllers
                 }
                 #endregion
 
-
                 ScrnsLocalizationEntity scrnsLocalization = new ScrnsLocalizationEntity()
                 {
                     ScreenId = FormData.EntityId ?? 0,
                     AppModuleId = Convert.ToInt32(FormData.AppModuleId ?? 0),
                     LanguageId = Convert.ToInt32(FormData.LanguageId ?? 0)
                 };
-
 
                 var LocalizationList = new List<LocalizationLabelsInfo>();
                 Dictionary<string, object>? LabelsJsonDataDictionary = new Dictionary<string, object>();
@@ -525,13 +455,13 @@ namespace AdminPanel.Controllers
                     {
                         LocalizationList = JsonConvert.DeserializeObject<List<LocalizationLabelsInfo>?>(LabelsJsonDataDictionary["labelsJsonData"].ToString());
 
-                        if (LocalizationList!=null && LocalizationList.Any(x=>x.labelHtmlId == FormData.labelHtmlId))
+                        if (LocalizationList != null && LocalizationList.Any(x => x.labelHtmlId == FormData.labelHtmlId))
                         {
                             foreach (var item in LocalizationList.Where(x => x.labelHtmlId == FormData.labelHtmlId))
                             {
                                 item.text = FormData.text;
                                 item.description = FormData.description;
-                                item.toolTip =String.IsNullOrWhiteSpace(FormData.toolTip) ? "" : FormData.toolTip;
+                                item.toolTip = String.IsNullOrWhiteSpace(FormData.toolTip) ? "" : FormData.toolTip;
                             }
                         }
                         else
@@ -545,7 +475,6 @@ namespace AdminPanel.Controllers
                         }
 
                         LabelsJsonDataDictionary["labelsJsonData"] = LocalizationList;
-
                     }
 
                     screenLocalizationData.LabelsJsonData = JsonConvert.SerializeObject(LabelsJsonDataDictionary);
@@ -576,11 +505,6 @@ namespace AdminPanel.Controllers
                     screenLocalizationData.LabelsJsonData = JsonConvert.SerializeObject(LabelsJsonDataDictionary);
                 }
 
-
-
-
-
-
                 screenLocalizationData.LoginUserId = await this._sessionManag.GetLoginUserIdFromSession();
 
                 string result = await _configurationServicesDAL.SaveScreenLocalizationLabelDAL(screenLocalizationData);
@@ -595,22 +519,17 @@ namespace AdminPanel.Controllers
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
         }
-
 
         [HttpPost]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.ScreensLocalization, 0, (short)UserRightsEnum.Update, 0, 0, 0)]
         public async Task<IActionResult> UpdateScreenLocalizationLabel(LocalizationLabelsInfoEntity FormData, int DataOperationType = (short)DataOperationType.Update)
         {
-
             try
             {
-
                 #region validation region
                 if (String.IsNullOrWhiteSpace(FormData.labelHtmlId))
                 {
@@ -626,21 +545,18 @@ namespace AdminPanel.Controllers
                     return Json(new { success = false, message = "description field is required!" });
                 }
 
-                if ( FormData.ScrnLocalizationId < 1)
+                if (FormData.ScrnLocalizationId < 1)
                 {
                     return Json(new { success = false, message = "Screen localization id is empty for this row!" });
                 }
 
-              
-                #endregion
 
+                #endregion
 
                 ScrnsLocalizationEntity scrnsLocalization = new ScrnsLocalizationEntity()
                 {
-                    ScrnLocalizationId = FormData.ScrnLocalizationId ,
-                   
+                    ScrnLocalizationId = FormData.ScrnLocalizationId,
                 };
-
 
                 var LocalizationList = new List<LocalizationLabelsInfo>();
                 Dictionary<string, object>? LabelsJsonDataDictionary = new Dictionary<string, object>();
@@ -675,18 +591,13 @@ namespace AdminPanel.Controllers
                         }
 
                         LabelsJsonDataDictionary["labelsJsonData"] = LocalizationList;
-
                     }
-
                     screenLocalizationData.LabelsJsonData = JsonConvert.SerializeObject(LabelsJsonDataDictionary);
                 }
                 else
                 {
                     return Json(new { success = false, message = "No row found for this data!" });
                 }
-
-
-
 
                 screenLocalizationData.LoginUserId = await this._sessionManag.GetLoginUserIdFromSession();
 
@@ -702,28 +613,23 @@ namespace AdminPanel.Controllers
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
         }
-
 
         [HttpPost]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.ScreensLocalization, 0, 0, (short)UserRightsEnum.Delete, 0, 0)]
         public async Task<IActionResult> DeleteScreenLocalizationLabel(LocalizationLabelsInfoEntity FormData, int DataOperationType = (short)DataOperationType.Delete)
         {
-
             try
             {
-
                 #region validation region
                 if (String.IsNullOrWhiteSpace(FormData.labelHtmlId))
                 {
                     return Json(new { success = false, message = "Html id field is required!" });
                 }
-               
+
 
                 if (FormData.ScrnLocalizationId < 1)
                 {
@@ -733,13 +639,10 @@ namespace AdminPanel.Controllers
 
                 #endregion
 
-
                 ScrnsLocalizationEntity scrnsLocalization = new ScrnsLocalizationEntity()
                 {
                     ScrnLocalizationId = FormData.ScrnLocalizationId,
-
                 };
-
 
                 var LocalizationList = new List<LocalizationLabelsInfo>();
                 Dictionary<string, object>? LabelsJsonDataDictionary = new Dictionary<string, object>();
@@ -755,31 +658,21 @@ namespace AdminPanel.Controllers
 
                         if (LocalizationList != null && LocalizationList.Any(x => x.labelHtmlId == FormData.labelHtmlId))
                         {
-
                             var deletedRow = LocalizationList.FirstOrDefault(x => x.labelHtmlId == FormData.labelHtmlId);
                             if (deletedRow != null)
                             {
                                 LocalizationList.Remove(deletedRow);
-
                             }
-
                         }
-                       
 
                         LabelsJsonDataDictionary["labelsJsonData"] = LocalizationList ?? new List<LocalizationLabelsInfo>();
-
                     }
-
                     screenLocalizationData.LabelsJsonData = JsonConvert.SerializeObject(LabelsJsonDataDictionary);
                 }
                 else
                 {
                     return Json(new { success = false, message = "No row found for this data!" });
                 }
-
-
-
-
                 screenLocalizationData.LoginUserId = await this._sessionManag.GetLoginUserIdFromSession();
 
                 string result = await _configurationServicesDAL.SaveScreenLocalizationLabelDAL(screenLocalizationData);
@@ -794,13 +687,11 @@ namespace AdminPanel.Controllers
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
 
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
         }
-
 
         [HttpGet]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.MenuLocalization, 0, 0, 0, (short)UserRightsEnum.View_All, (short)UserRightsEnum.View_Self)]
@@ -808,7 +699,6 @@ namespace AdminPanel.Controllers
         {
             // ✅ Main Model
             ConfigurationModel model = new ConfigurationModel();
-
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Menu Localization";
@@ -820,32 +710,25 @@ namespace AdminPanel.Controllers
             {
                 FormData.PageSize = this._constants.ITEMS_PER_PAGE();
                 model.menuNavigationList = await _configurationServicesDAL.GetNavMenusListForLocalizationDAL(FormData);
-
-
                 #region pagination data
                 model.pageHelperObj = new PagerHelper();
                 int TotalRecords = model?.menuNavigationList?.FirstOrDefault()?.TotalRecords ?? 0;
                 model.pageHelperObj = PagerHelper.Instance.MakePaginationObject(model?.menuNavigationList?.Count() ?? 0, TotalRecords, _constants.ITEMS_PER_PAGE(), FormData.PageNo);
                 #endregion
 
-
-
                 if (FormData.DataExportType != null && FormData.DataExportType == (short)DataExportTypeEnum.Excel && model?.menuNavigationList?.Count > 0)
                 {
                     var ExcelFileResutl = await this._filesHelpers.ExportToExcel(this, model.PageBasicInfoObj.PageTitle, model.menuNavigationList.Cast<dynamic?>().ToList());
                     return ExcelFileResutl;
                 }
-
             }
             catch (Exception ex)
             {
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 #region error model
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
 
             if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")//if request is ajax
@@ -862,18 +745,14 @@ namespace AdminPanel.Controllers
         {
             // ✅ Main Model
             ConfigurationModel model = new ConfigurationModel();
-
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Menu Localization Detail";
             model.PageBasicInfoObj.EntityId = (int)EntitiesEnum.MenuLocalizationDetail;
             model.PageBasicInfoObj.langCode = await _sessionManag.GetLanguageCodeFromSession();
             #endregion
-
             try
             {
-               
-
                 LanguageEntity languageEntity = new LanguageEntity()
                 {
                     PageNo = 1,
@@ -888,20 +767,14 @@ namespace AdminPanel.Controllers
                     PageSize = this._constants.ITEMS_PER_PAGE(),
                     MenuNavigationId = MenuNavigationId,
                     PageNo = 1
-
                 };
 
-               
                 model.menuNavigationList = await _configurationServicesDAL.GetNavMenusListForLocalizationDAL(FormData);
-                model.MenuNavigationObj = model?.menuNavigationList?.FirstOrDefault(x=>x.MenuNavigationId==MenuNavigationId);
-
-
+                model.MenuNavigationObj = model?.menuNavigationList?.FirstOrDefault(x => x.MenuNavigationId == MenuNavigationId);
 
                 if (model?.MenuNavigationObj != null && !String.IsNullOrEmpty(model.MenuNavigationObj.LocalizationJsonData))
                 {
                     model.LocalizationMenuLabelsChildList = JsonConvert.DeserializeObject<List<LocalizationMenuLabelInfoChild>?>(model.MenuNavigationObj.LocalizationJsonData);
-
-
                     #region pagination data
                     model.pageHelperObj = new PagerHelper();
                     int TotalRecords = model?.LocalizationMenuLabelsChildList?.Count() ?? 0;
@@ -909,33 +782,26 @@ namespace AdminPanel.Controllers
                     model.pageHelperObj = PagerHelper.Instance.MakePaginationObject(model?.LocalizationMenuLabelsChildList?.Count() ?? 0, TotalRecords, _constants.ITEMS_PER_PAGE(), FormData.PageNo);
                     #endregion
 
-
                     foreach (var item in model.LocalizationMenuLabelsChildList)
                     {
                         item.MenuNavigationName = model?.MenuNavigationObj?.MenuNavigationName;
                         item.LanguageName = model?.LanguagesList?.Where(x => x.LanguageId == item.langId).FirstOrDefault()?.LanguageName;
                     }
-
                 }
 
-
-                 
                 if (FormData.DataExportType != null && FormData.DataExportType == (short)DataExportTypeEnum.Excel && model?.menuNavigationList?.Count > 0)
                 {
                     var ExcelFileResutl = await this._filesHelpers.ExportToExcel(this, model.PageBasicInfoObj.PageTitle, model.menuNavigationList.Cast<dynamic?>().ToList());
                     return ExcelFileResutl;
                 }
-
             }
             catch (Exception ex)
             {
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 #region error model
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
 
             if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")//if request is ajax
@@ -946,17 +812,14 @@ namespace AdminPanel.Controllers
             return View(model);
         }
 
-
         [HttpPost]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.MenuLocalizationDetail, (short)UserRightsEnum.Add, 0, 0, 0, 0)]
         public async Task<IActionResult> SaveMenuLocalizationLabelText(LocalizationMenuLabelInfoChild FormData, int DataOperationType = (short)DataOperationType.Insert)
         {
             // ✅ Main Model
             ConfigurationModel model = new ConfigurationModel();
-
             try
             {
-
                 #region validation region
                 if (FormData.MenuNavigationId < 1)
                 {
@@ -974,17 +837,15 @@ namespace AdminPanel.Controllers
 
                 #endregion
 
-
                 //--get complete list
                 MenuNavigationEntity menuEntityForm = new MenuNavigationEntity()
                 {
                     PageSize = this._constants.ITEMS_PER_PAGE(),
                     MenuNavigationId = FormData.MenuNavigationId,
                     PageNo = 1
-
                 };
                 model.menuNavigationList = await _configurationServicesDAL.GetNavMenusListForLocalizationDAL(menuEntityForm);
-                model.MenuNavigationObj = model?.menuNavigationList?.FirstOrDefault(x=>x.MenuNavigationId ==FormData.MenuNavigationId);
+                model.MenuNavigationObj = model?.menuNavigationList?.FirstOrDefault(x => x.MenuNavigationId == FormData.MenuNavigationId);
                 if (model?.MenuNavigationObj != null && !String.IsNullOrEmpty(model.MenuNavigationObj.LocalizationJsonData))
                 {
                     model.LocalizationMenuLabelsBaseList = JsonConvert.DeserializeObject<List<LocalizationLabelInfoBase>?>(model.MenuNavigationObj.LocalizationJsonData);
@@ -999,8 +860,6 @@ namespace AdminPanel.Controllers
                         {
                             model.LocalizationMenuLabelsBaseList = new List<LocalizationLabelInfoBase>();
                         }
-                       
-                      
                     }
                     else
                     {
@@ -1012,11 +871,9 @@ namespace AdminPanel.Controllers
                         }
                         model.LocalizationMenuLabelsBaseList.Add(menuIfo);
                     }
-
                     menuEntityForm.LocalizationJsonData = JsonConvert.SerializeObject(model.LocalizationMenuLabelsBaseList);
-
                 }
-                else if (model?.MenuNavigationObj != null  && String.IsNullOrEmpty(model.MenuNavigationObj.LocalizationJsonData)) //-- if only json data is null but row exist for the table
+                else if (model?.MenuNavigationObj != null && String.IsNullOrEmpty(model.MenuNavigationObj.LocalizationJsonData)) //-- if only json data is null but row exist for the table
                 {
                     LocalizationLabelInfoBase? menuIfo = new LocalizationLabelInfoBase();
                     menuIfo.langId = FormData.langId;
@@ -1033,11 +890,7 @@ namespace AdminPanel.Controllers
                 {
                     return Json(new { success = false, message = "No menu information exists" });
                 }
-
                 menuEntityForm.LoginUserId = await this._sessionManag.GetLoginUserIdFromSession();
-               
-
-
                 string result = await _configurationServicesDAL.SaveMenuLocalizationLabelDAL(menuEntityForm);
                 if (!String.IsNullOrWhiteSpace(result) && result == "Saved Successfully!")
                 {
@@ -1050,13 +903,10 @@ namespace AdminPanel.Controllers
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
         }
-
 
         [HttpPost]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.MenuLocalizationDetail, (short)UserRightsEnum.Add, 0, 0, 0, 0)]
@@ -1067,7 +917,6 @@ namespace AdminPanel.Controllers
 
             try
             {
-
                 #region validation region
                 if (FormData.MenuNavigationId < 1)
                 {
@@ -1084,22 +933,18 @@ namespace AdminPanel.Controllers
                 }
 
                 #endregion
-
-
                 //--get complete list
                 MenuNavigationEntity menuEntityForm = new MenuNavigationEntity()
                 {
                     PageSize = this._constants.ITEMS_PER_PAGE(),
                     MenuNavigationId = FormData.MenuNavigationId,
                     PageNo = 1
-
                 };
                 model.menuNavigationList = await _configurationServicesDAL.GetNavMenusListForLocalizationDAL(menuEntityForm);
-                model.MenuNavigationObj = model?.menuNavigationList?.FirstOrDefault(x=>x.MenuNavigationId ==FormData.MenuNavigationId);
+                model.MenuNavigationObj = model?.menuNavigationList?.FirstOrDefault(x => x.MenuNavigationId == FormData.MenuNavigationId);
                 if (model?.MenuNavigationObj != null && !String.IsNullOrEmpty(model.MenuNavigationObj.LocalizationJsonData))
                 {
                     model.LocalizationMenuLabelsBaseList = JsonConvert.DeserializeObject<List<LocalizationLabelInfoBase>?>(model.MenuNavigationObj.LocalizationJsonData);
-
                     LocalizationLabelInfoBase? menuIfo = new LocalizationLabelInfoBase();
                     if (model.LocalizationMenuLabelsBaseList != null && model.LocalizationMenuLabelsBaseList.Count() > 0 &&
                         model.LocalizationMenuLabelsBaseList.Where(x => x.langId == FormData.langId)?.ToList().Count() > 0)
@@ -1111,17 +956,12 @@ namespace AdminPanel.Controllers
                         {
                             model.LocalizationMenuLabelsBaseList = new List<LocalizationLabelInfoBase>();
                         }
-                       
-
                     }
                     else
                     {
                         return Json(new { success = false, message = "Text already exit for this menu for the mentioned language!" });
-
                     }
-
                     menuEntityForm.LocalizationJsonData = JsonConvert.SerializeObject(model.LocalizationMenuLabelsBaseList);
-
                 }
                 else
                 {
@@ -1129,9 +969,6 @@ namespace AdminPanel.Controllers
                 }
 
                 menuEntityForm.LoginUserId = await this._sessionManag.GetLoginUserIdFromSession();
-
-
-
                 string result = await _configurationServicesDAL.SaveMenuLocalizationLabelDAL(menuEntityForm);
                 if (!String.IsNullOrWhiteSpace(result) && result == "Saved Successfully!")
                 {
@@ -1144,13 +981,10 @@ namespace AdminPanel.Controllers
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
         }
-
 
         [HttpPost]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.MenuLocalizationDetail, 0, 0, (short)UserRightsEnum.Delete, 0, 0)]
@@ -1158,29 +992,25 @@ namespace AdminPanel.Controllers
         {
             // ✅ Main Model
             ConfigurationModel model = new ConfigurationModel();
-
             try
             {
-
                 #region validation region
                 if (FormData.MenuNavigationId < 1)
                 {
                     return Json(new { success = false, message = "Menu navigation id is null!" });
                 }
-            
+
                 if (FormData.langId == null || FormData.langId < 1)
                 {
                     return Json(new { success = false, message = "Language is null" });
                 }
 
                 #endregion
-
                 MenuNavigationEntity menuEntityForm = new MenuNavigationEntity()
                 {
                     PageSize = this._constants.ITEMS_PER_PAGE(),
                     MenuNavigationId = FormData.MenuNavigationId,
                     PageNo = 1
-
                 };
                 model.menuNavigationList = await _configurationServicesDAL.GetNavMenusListForLocalizationDAL(menuEntityForm);
                 model.MenuNavigationObj = model?.menuNavigationList?.FirstOrDefault(x => x.MenuNavigationId == FormData.MenuNavigationId);
@@ -1189,29 +1019,21 @@ namespace AdminPanel.Controllers
                     model.LocalizationMenuLabelsBaseList = JsonConvert.DeserializeObject<List<LocalizationLabelInfoBase>?>(model.MenuNavigationObj.LocalizationJsonData);
                     var deleteMenuRow = model?.LocalizationMenuLabelsBaseList?.Where(x => x.langId == FormData.langId)?.FirstOrDefault();
 
-                    if (deleteMenuRow != null && model!=null && model.LocalizationMenuLabelsBaseList!=null)
+                    if (deleteMenuRow != null && model != null && model.LocalizationMenuLabelsBaseList != null)
                     {
                         model.LocalizationMenuLabelsBaseList.Remove(deleteMenuRow);
-
                         menuEntityForm.LocalizationJsonData = JsonConvert.SerializeObject(model.LocalizationMenuLabelsBaseList);
                     }
                     else
                     {
                         return Json(new { success = false, message = "No menu information exists" });
                     }
-
-                   
-
                 }
                 else
                 {
                     return Json(new { success = false, message = "No menu information exists" });
                 }
-
                 menuEntityForm.LoginUserId = await this._sessionManag.GetLoginUserIdFromSession();
-
-
-
                 string result = await _configurationServicesDAL.SaveMenuLocalizationLabelDAL(menuEntityForm);
                 if (!String.IsNullOrWhiteSpace(result) && result == "Saved Successfully!")
                 {
@@ -1221,34 +1043,25 @@ namespace AdminPanel.Controllers
                 {
                     return Json(new { success = false, message = result });
                 }
-
-
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
         }
 
-
         [HttpGet]
         public async Task<IActionResult> TranslateAllScreensTestTest()
         {
-
             try
             {
-
                 //--get complete list
                 ScrnsLocalizationEntity scrnListObj = new ScrnsLocalizationEntity()
                 {
                     LanguageId = (short)LanguagesEnum.Arabic,
-
                 };
                 var allScreenLocalization = await _commonServicesDAL.TestTestDAL(scrnListObj);
-
 
                 //---Dummy starts here
                 List<testLocalization> fffff = new List<testLocalization>();
@@ -1261,19 +1074,13 @@ namespace AdminPanel.Controllers
                     fffff.Add(kkk);
                 }
                 var FinalJsonForTranslate = JsonConvert.SerializeObject(fffff);
-
-
                 //---Dummy ends here
-
-
-
 
                 foreach (var item in allScreenLocalization)
                 {
                     ScrnsLocalizationEntity scrnsLocalization = new ScrnsLocalizationEntity()
                     {
                         ScrnLocalizationId = item.ScrnLocalizationId,
-
                     };
                     var LocalizationList = new List<LocalizationLabelsInfo>();
                     Dictionary<string, object>? LabelsJsonDataDictionary = new Dictionary<string, object>();
@@ -1304,14 +1111,10 @@ namespace AdminPanel.Controllers
                                     lcl.toolTip = newTooltip;
                                 }
                             }
-
                             LabelsJsonDataDictionary["labelsJsonData"] = LocalizationList;
-
                         }
-
                         screenLocalizationData.LabelsJsonData = JsonConvert.SerializeObject(LabelsJsonDataDictionary);
                     }
-
 
                     screenLocalizationData.LoginUserId = await this._sessionManag.GetLoginUserIdFromSession();
 
@@ -1326,26 +1129,20 @@ namespace AdminPanel.Controllers
                         return Json(new { success = false, message = result });
                     }
                 }
-
                 return Json(new { success = false, message = "" });
 
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
         }
-
-
     }
 
     public class testLocalization
     {
         public int ScrnLocalizationId { get; set; }
         public object? JsonData { get; set; }
-
     }
 }

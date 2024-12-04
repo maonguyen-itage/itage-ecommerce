@@ -54,8 +54,5 @@ namespace Entities.CommonModels.ProductsCatalogModule
         public string? SizeIdsCommaSeperated { get; set; }
         public string? ImagesIdsCommaSeperated { get; set; }
         public string? LoginUserId { get; set; }
-
-
-
     }
 }

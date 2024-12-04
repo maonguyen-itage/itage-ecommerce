@@ -8,7 +8,6 @@ namespace Entities.CommonModels.ConfigurationModule
 {
     public class LocalizationMenuInfo
     {
-
         public int langId { get; set; }
         public string? text { get; set; }
     }

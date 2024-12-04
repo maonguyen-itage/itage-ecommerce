@@ -20,7 +20,7 @@ namespace AdminPanel.Controllers
         private readonly IConstants _constants;
         private readonly ISessionManager _sessionManag;
         private readonly ICommonServicesDAL _commonServicesDAL;
-        public HomeController(IHomeServicesDAL homeServicesDAL , IConstants constants, ISessionManager sessionManag, ICommonServicesDAL commonServicesDAL)
+        public HomeController(IHomeServicesDAL homeServicesDAL, IConstants constants, ISessionManager sessionManag, ICommonServicesDAL commonServicesDAL)
         {
             this._homeServicesDAL = homeServicesDAL;
             this._constants = constants;
@@ -66,7 +66,7 @@ namespace AdminPanel.Controllers
                 int LoginUserId = 0;
                 if (LoginUser?.UserTypeId == (short)UserTypesEnum.Vendor)
                 {
-                     LoginUserId = LoginUser.UserId;
+                    LoginUserId = LoginUser.UserId;
                 }
 
                 #region dashboard life time statistics
@@ -158,7 +158,7 @@ namespace AdminPanel.Controllers
         }
 
 
-     
+
 
 
     }

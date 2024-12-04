@@ -17,7 +17,6 @@ namespace AdminPanel.Areas.V1.Controllers
     [Area("V1")]
     public class ApiDynamicController : ApiBaseController
     {
-
         private readonly IApiOperationServicesDAL _apiOperationServicesDAL;
         private readonly ICalculationHelper _calculationHelper;
         private readonly ICommonServicesDAL _commonServicesDAL;
@@ -33,7 +32,6 @@ namespace AdminPanel.Areas.V1.Controllers
             this._constants = constants;
             this._calculationHelper = calculationHelper;
         }
-
 
         [Route("dataoperation/{UrlName?}")]
         [ServiceFilter(typeof(CustomerApiCallsAuthorization))]
@@ -54,11 +52,8 @@ namespace AdminPanel.Areas.V1.Controllers
 
             try
             {
-
                 //--Get Api Configuration
                 var ApiConfiguration = await this._apiOperationServicesDAL.GetAPIConfiguration(UrlName);
-
-
                 if (param != null && param.Count != 0)
                 {
                     Dictionary<string, object>? requestParameters = new Dictionary<string, object>();
@@ -68,7 +63,6 @@ namespace AdminPanel.Areas.V1.Controllers
                         if (!String.IsNullOrWhiteSpace(ParamKeyValue))
                         {
                             requestParameters = JsonConvert.DeserializeObject<Dictionary<string, object>>(ParamKeyValue);
-
                             //check of requestParameters contains any password key  
                             if (UrlName == "get-user-login" || UrlName == "signup-user")
                             {
@@ -82,17 +76,10 @@ namespace AdminPanel.Areas.V1.Controllers
                                                                     requestParameters["Password"];
                                 }
                             }
-
-
                         }
-
                     }
 
-
-                 
-
                     data = await this._apiOperationServicesDAL.GetApiData(requestParameters, ApiConfiguration);
-
                     #region set JWT Token
                     if (UrlName.Contains("get-user-login"))
                     {
@@ -100,7 +87,6 @@ namespace AdminPanel.Areas.V1.Controllers
                     }
 
                     #endregion
-
 
                     #region if required further calculation like Discount region
                     if (ApiConfiguration?.IsFurtherCalculationRequired == true)
@@ -118,9 +104,6 @@ namespace AdminPanel.Areas.V1.Controllers
 
                     }
                     #endregion
-
-                  
-
                 }
 
                 #region result
@@ -134,7 +117,6 @@ namespace AdminPanel.Areas.V1.Controllers
             }
             catch (Exception ex)
             {
-
                 #region log error
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
                 #endregion
@@ -145,11 +127,7 @@ namespace AdminPanel.Areas.V1.Controllers
                 apiActionResult = new APIActionResult(result);
             }
 
-
             return apiActionResult;
         }
-
-
-       
     }
 }

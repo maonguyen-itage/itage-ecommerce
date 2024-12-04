@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace Entities.DBInheritedModels
 {
     public class InheritedEntitiesLevelTwo
@@ -25,7 +24,6 @@ namespace Entities.DBInheritedModels
 
         public int? UserId { get; set; }
 
-
         //--Other Fields
         public string? SelectedCategoriesJson { get; set; }
         public string? SelectedTagsJson { get; set; }
@@ -42,15 +40,11 @@ namespace Entities.DBInheritedModels
         public string? DownloadUrlOption { get; set; }
         public string? DigitalProductExistingUrl { get; set; }
         public IFormFile[]? DigitalProductNewFileUpload { get; set; }
-
         
         public bool IsDiscountCreatePageSearchEnabled { get; set; }
         public decimal Rating { get; set; }
         public int TotalReviews { get; set; }
-
-
     }
-
 
     public class UserEntity : User
     {
@@ -60,7 +54,6 @@ namespace Entities.DBInheritedModels
         public int? DataExportType { get; set; }
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
-
 
         public IFormFile? ProfilePictureFile { get; set; }
         public string? ProfilePictureUrl { get; set; }
@@ -73,9 +66,6 @@ namespace Entities.DBInheritedModels
         public string? PostalCode { get; set; }
         public int? DataOperationType { get; set; }
         public string? UserTypeName { get; set; }
-
-
-
     }
 
     public class DiscountEntity : Discount
@@ -99,8 +89,6 @@ namespace Entities.DBInheritedModels
         
         public string? DiscountAssociatedProductsJson { get; set; }
         public string? DiscountAssociatedCategoriesJson { get; set; }
-
-        
     }
 
     public class EntityEntity : Entity
@@ -113,7 +101,6 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? UserId { get; set; }
-
     }
 
 
@@ -129,7 +116,6 @@ namespace Entities.DBInheritedModels
         public string? CustomerEmailAddress { get; set; }
         public string? CustomerMobileNo { get; set; }
 
-
         public string? ProductName { get; set; }
         public int? ProductId { get; set; }
         public string? LatestStatusName { get; set; }
@@ -140,7 +126,6 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? UserId { get; set; }
-
     }
 
     public class OrderShippingDetailEntity : OrderShippingDetail
@@ -162,7 +147,6 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? UserId { get; set; }
-
     }
 
     public class OrderItemEntity : OrderItem
@@ -181,7 +165,6 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? UserId { get; set; }
-
     }
 
     public class OrdersPaymentEntity : OrdersPayment
@@ -193,7 +176,6 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? UserId { get; set; }
-
     }
 
 
@@ -208,7 +190,6 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? LoginUserId { get; set; }
-
     } 
     public class VendorsAccountRequestEntity : VendorsAccountRequest
     {
@@ -219,6 +200,5 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? LoginUserId { get; set; }
-
     }
 }

@@ -12,6 +12,5 @@ namespace Entities.CommonModels
         public string? ImageName { get; set; }
         public string? ImageGuidName { get; set; }
         public string? ImageURL { get; set; }
-        
     }
 }

@@ -10,7 +10,6 @@ namespace Entities.MainModels
 {
     public class DiscountModel
     {
-
         public List<DiscountEntity>? DiscountsList { get; set; }
         public List<DiscountTypeEntity>? DiscountTypeList { get; set; }
         public ProductEntity? ProductObj { get; set; }

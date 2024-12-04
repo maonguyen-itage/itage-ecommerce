@@ -15,11 +15,9 @@ namespace DAL.DBContext
 			CommonConstruct();
 		}
 
-
 		public NoorPortalConnDB(string ConnetionString, string providerName)
 			: base(ConnetionString, providerName)
 		{
-
 			CommonConstruct();
 		}
 
@@ -55,7 +53,6 @@ namespace DAL.DBContext
 			if (_instance == this)
 				_instance = null;
 		}
-
 
 		public class Record<T> where T : new()
 		{
@@ -95,7 +92,6 @@ namespace DAL.DBContext
 			public static Page<T> Page(long page, long itemsPerPage, Sql sql) { return repo.Page<T>(page, itemsPerPage, sql); }
 			public static IEnumerable<T> Query(string sql, params object[] args) { return repo.Query<T>(sql, args); }
 			public static IEnumerable<T> Query(Sql sql) { return repo.Query<T>(sql); }
-
 		}
 	}
 }

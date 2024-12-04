@@ -16,7 +16,6 @@ namespace Helpers.ApiHelpers
             _result = result;
         }
 
-
         //public JsonRequestBehavior JsonRequestBehavior { get; set; }
 
         public async Task ExecuteResultAsync(ActionContext context)
@@ -50,7 +49,6 @@ namespace Helpers.ApiHelpers
                 JsonResult result = new JsonResult((res));
                 await result.ExecuteResultAsync(context);
             }
-
         }
     }
 
@@ -65,9 +63,7 @@ namespace Helpers.ApiHelpers
         public string? Message { get; set; }
         public bool IsAuthorized { get; set; }
         public string? Token { get; set; }
-
     }
-
 
     public class Result
     {
@@ -87,6 +83,4 @@ namespace Helpers.ApiHelpers
         PList = 2,
         Help = 4
     }
-
-
 }

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Entities.CommonModels.AccountsModule
 {
-
     public class VendorsPayments
     {
         public int TotalRecords { get; set; }
@@ -39,8 +38,6 @@ namespace Entities.CommonModels.AccountsModule
         public int? LoginUserId { get; set; }
         public int? CreatedBy { get; set; }
     }
-
-
 
     public class VendorsOrdersTotalReceivedBalance
     {

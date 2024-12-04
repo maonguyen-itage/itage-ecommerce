@@ -9,7 +9,6 @@ namespace Entities.CommonModels.ProductsCatalogModule
 {
     public class ProductVariantDetail
     {
-
         public int ProductAttributeId { get; set; }
         public int PrimaryKeyValue { get; set; } //-- this is for the different attribute primary value, like AttrRam table primary key column value
         public string? PrimaryKeyName { get; set; }

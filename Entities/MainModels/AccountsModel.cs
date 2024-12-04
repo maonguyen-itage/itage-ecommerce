@@ -12,7 +12,6 @@ namespace Entities.MainModels
 {
     public class AccountsModel
     {
-
         public List<BankMasterEntity>? BankMasterList { get; set; }
         public List<BankAccountAttachmentEntity>? BankAccountAttachmentEntityList { get; set; }
         public List<AccountTransAttachmentEntity>? AccountTransAttachmentList { get; set; }

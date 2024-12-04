@@ -1,12 +1,21 @@
 .vs/
+.git/
+.github/
+Local settings/
 AdminPanel/bin/
 AdminPanel/obj/
+AdminPanel/Properties/
+
 AdminPanel/appsettings.json
-AdminPanel/appsettings.Development.json
 
 React.Web/bin/
 React.Web/obj/
 React.Web/appsettings.json
 React.Web/appsettings.Development.json
 
-React.Web/appsettings.Development.json
+DAL/bin/
+Entities/bin/
+Entities/obj/
+Helpers/bin/
+Helpers/obj/
+

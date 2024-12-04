@@ -9,7 +9,6 @@ namespace Entities.DBInheritedModels
 {
     public class InheritedEntitiesApiModule
     {
-
         public int SimpleId { get; set; }
     }
 
@@ -40,11 +39,7 @@ namespace Entities.DBInheritedModels
         public string? CategoryName { get; set; }
         public string? DiscEndDate { get; set; }
 
-
         public List<CartProductAllAttributes>? ProductAllSelectedAttributes { get; set; }
-
-
-
     }
 
     public class CartProductSelectedAttributes
@@ -65,7 +60,6 @@ namespace Entities.DBInheritedModels
         public string? AttributeDisplayName { get; set; }
         public int PrimaryKeyValue { get; set; }
         public string? PrimaryKeyDisplayValue { get; set; }
-
     }
 
     public class CartCustomerProducts
@@ -82,8 +76,6 @@ namespace Entities.DBInheritedModels
     {
         public int ProductId { get; set; }
     }
-
-
 
     public class CustomerFinalOrderItemData
     {

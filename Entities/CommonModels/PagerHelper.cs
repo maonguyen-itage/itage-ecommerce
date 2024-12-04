@@ -8,8 +8,6 @@ namespace Entities.CommonModels
 {
     public class PagerHelper
     {
-
-
         #region Define as Singleton
         private static PagerHelper _Instance;
 
@@ -32,7 +30,6 @@ namespace Entities.CommonModels
         }
         #endregion
 
-
         public const string? CURRENT_PAGE_NUMBER = "C_PG_N";
         public const string? ORDER = "ORDER";
         public const string? ORDER_BY = "ORDER_BY";
@@ -45,7 +42,6 @@ namespace Entities.CommonModels
         {
             get
             {
-
                 if (CurrentPage > 0)
                 {
                     if (CurrentPage > 9999) return 3;
@@ -121,9 +117,6 @@ namespace Entities.CommonModels
         /// </summary>
         private int _entityId = 0;
 
-
-        
-
         //public Views ParentView { get; set; }
         public string? OrderBy { get; set; }
         public string? OrderType { get; set; }
@@ -196,7 +189,6 @@ namespace Entities.CommonModels
                 return string.Format("onclick='{0};'", this.OnClientClickAjaxCall);
         }
 
-
         public PagerHelper? MakePaginationObject(int ListCount = 0, int TotalRecords = 0, int ITEMS_PER_PAGE = 10, int PageNo = 1)
         {
             PagerHelper? helper = new PagerHelper();
@@ -216,16 +208,12 @@ namespace Entities.CommonModels
                     helper.CurrentPage = 0;
                 }
 
-
                 return helper;
             }
             catch (Exception)
             {
-
-
                 return helper;
             }
-
         }
     }
 }

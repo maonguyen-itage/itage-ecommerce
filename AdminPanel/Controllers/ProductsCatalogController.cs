@@ -26,7 +26,6 @@ namespace AdminPanel.Controllers
         private readonly IUserManagementServicesDAL _userManagementServicesDAL;
         private readonly IFilesHelpers _filesHelpers;
         private readonly IDiscountsServicesDAL _discountsServicesDAL;
-
         public ProductsCatalogController(IBasicDataServicesDAL basicDataDAL, IProductServicesDAL productServicesDAL, IConstants constants, ICommonServicesDAL commonServicesDAL,
             ISessionManager sessionManag, IUserManagementServicesDAL userManagementServicesDAL, IFilesHelpers filesHelpers, IDiscountsServicesDAL discountsServicesDAL)
         {
@@ -46,7 +45,6 @@ namespace AdminPanel.Controllers
         {
             // ✅ Main Model
             ProductsCatalogModel model = new ProductsCatalogModel();
-
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Products List";
@@ -56,15 +54,12 @@ namespace AdminPanel.Controllers
 
             try
             {
-
                 CategoryEntity categoryEntity = new CategoryEntity()
                 {
                     PageNo = 1,
                     PageSize = 5000
                 };
                 model.CategoryList = await this._basicDataDAL.GetCategoriesListDAL(categoryEntity);
-
-
                 #region ViewSelf Right Check
                 bool SelfRight = await _sessionManag.GetViewSelfRightForLoginUserFromSession();
                 if (SelfRight)
@@ -77,11 +72,8 @@ namespace AdminPanel.Controllers
                     FormData.CreatedBy = 0;
                 }
                 #endregion
-
                 FormData.PageSize = this._constants.ITEMS_PER_PAGE();
                 model.ProductsList = await _productServicesDAL.GetProductList(FormData);
-
-
 
                 #region pagination data
                 model.pageHelperObj = new PagerHelper();
@@ -94,24 +86,20 @@ namespace AdminPanel.Controllers
                     var ExcelFileResutl = await this._filesHelpers.ExportToExcel(this, model.PageBasicInfoObj.PageTitle, model.ProductsList.Cast<dynamic?>().ToList());
                     return ExcelFileResutl;
                 }
-
             }
             catch (Exception ex)
             {
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 #region error model
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
 
             if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")//if request is ajax
             {
                 return PartialView("~/Views/ProductsCatalog/PartialViews/_ProductsList.cshtml", model);
             }
-
             return View(model);
         }
 
@@ -122,20 +110,14 @@ namespace AdminPanel.Controllers
             #region Basic page setting area
             ViewBag.ThemeFormValidationScriptEnabled = true;
             #endregion
-
-
-
             // ✅ Main Model
             ProductsCatalogModel model = new ProductsCatalogModel();
-
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Create Product";
             model.PageBasicInfoObj.EntityId = (int)EntitiesEnum.CreateNewProduct;
             model.PageBasicInfoObj.langCode = await _sessionManag.GetLanguageCodeFromSession();
             #endregion
-
-
             #region dropdown data
             ManufacturerEntity manufacturer = new ManufacturerEntity()
             {
@@ -207,18 +189,13 @@ namespace AdminPanel.Controllers
 
 
             #endregion
-
-
-
             return View(model);
         }
-
 
         [HttpPost]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.CreateNewProduct, (short)UserRightsEnum.Add, 0, 0, 0, 0)]
         public async Task<IActionResult> CreateNewProductPost(ProductEntity FormData)
         {
-
             try
             {
                 // ✅ Main Model
@@ -241,7 +218,7 @@ namespace AdminPanel.Controllers
                 ValidationMsg = FormData != null && FormData.ProductImages != null && FormData.ProductImages.Length > 0 ? "Form is valid" : "Product image is required!";
                 validationList.Add(ValidationMsg);
 
-                if (FormData!=null && FormData.IsDigitalProduct != null && FormData.IsDigitalProduct == true)
+                if (FormData != null && FormData.IsDigitalProduct != null && FormData.IsDigitalProduct == true)
                 {
                     if (!String.IsNullOrWhiteSpace(FormData.DownloadUrlOption) && FormData.DownloadUrlOption == "1")
                     {//--Existing url
@@ -254,7 +231,7 @@ namespace AdminPanel.Controllers
                         else
                         {
                             List<ImageFileInfo> ImageFileInfosListForDigitalProduct = new List<ImageFileInfo>();
-                            ImageFileInfosListForDigitalProduct.Add(new ImageFileInfo { ImageName = "digital_product_"+ DateTime.Now.ToString(), ImageGuidName = "", ImageURL = FormData.DigitalProductExistingUrl });
+                            ImageFileInfosListForDigitalProduct.Add(new ImageFileInfo { ImageName = "digital_product_" + DateTime.Now.ToString(), ImageGuidName = "", ImageURL = FormData.DigitalProductExistingUrl });
                             FormData.DigitalProductFilesUrlJson = JsonConvert.SerializeObject(ImageFileInfosListForDigitalProduct);
                         }
                     }
@@ -285,7 +262,7 @@ namespace AdminPanel.Controllers
                     {
                         ValidationMsg = "Please provide all information for the digital product";
                         validationList.Add(ValidationMsg);
-                      
+
                     }
 
                 }
@@ -296,8 +273,6 @@ namespace AdminPanel.Controllers
                 }
 
                 #endregion
-
-
                 #region image file conversion secion
                 List<ImageFileInfo> ImageFileInfosList = new List<ImageFileInfo>();
                 if (FormData != null && FormData.ProductImages != null && FormData.ProductImages.Length > 0)
@@ -313,10 +288,7 @@ namespace AdminPanel.Controllers
                 }
                 #endregion
 
-
-
                 FormData.UserId = await this._sessionManag.GetLoginUserIdFromSession();
-
                 string result = await _productServicesDAL.CreateNewProductDAL(FormData);
                 if (!String.IsNullOrWhiteSpace(result) && result == "Saved Successfully!")
                 {
@@ -326,21 +298,12 @@ namespace AdminPanel.Controllers
                 {
                     return Json(new { success = false, message = result });
                 }
-
-
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
-
-
-
-
-
         }
 
         //--Update product
@@ -351,12 +314,8 @@ namespace AdminPanel.Controllers
             #region Basic page setting area
             ViewBag.ThemeFormValidationScriptEnabled = true;
             #endregion
-
-
-
             // ✅ Main Model
             ProductsCatalogModel model = new ProductsCatalogModel();
-
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Update Product";
@@ -368,11 +327,10 @@ namespace AdminPanel.Controllers
             model.ProductObj = await this._productServicesDAL.GetProductDetailsById(ProductId);
 
             //--Get product digital file mapping by id
-            if (model?.ProductObj?.IsDigitalProduct==true)
+            if (model?.ProductObj?.IsDigitalProduct == true)
             {
                 model.ProductDigitalFileMappingObj = await this._productServicesDAL.GetProductDigitalFileInfoByIdDAL(ProductId);
             }
-
             #region dropdown data
             ManufacturerEntity manufacturer = new ManufacturerEntity()
             {
@@ -465,30 +423,26 @@ namespace AdminPanel.Controllers
             model.ColorsList = new List<ColorEntity>();
             if (productAttributes != null && productAttributes.Count() > 0)
             {
-                foreach (var attr in productAttributes.Where(x=>x.ProductAttributeId == (short)ProductAttributesEnum.Color).ToList())
+                foreach (var attr in productAttributes.Where(x => x.ProductAttributeId == (short)ProductAttributesEnum.Color).ToList())
                 {
                     var colorRow = ColorsList?.Where(x => x.ColorId == Convert.ToInt32(attr.AttributeValue)).FirstOrDefault();
                     if (colorRow != null)
                     {
                         model.ColorsList.Add(colorRow);
                     }
-                 
+
                 }
             }
             #endregion
 
             #endregion
-
-
             return View(model);
         }
-
 
         [HttpPost]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.UpdateProduct, 0, (short)UserRightsEnum.Update, 0, 0, 0)]
         public async Task<IActionResult> UpdateProductPost(ProductEntity FormData)
         {
-
             try
             {
                 // ✅ Main Model
@@ -572,8 +526,6 @@ namespace AdminPanel.Controllers
                 }
 
                 #endregion
-
-
                 #region image file conversion secion
                 List<ImageFileInfo> ImageFileInfosList = new List<ImageFileInfo>();
                 if (FormData != null && FormData.ProductImages != null && FormData.ProductImages.Length > 0)
@@ -590,9 +542,7 @@ namespace AdminPanel.Controllers
                     }
                 }
                 #endregion
-
                 FormData.UserId = await this._sessionManag.GetLoginUserIdFromSession();
-
                 string result = await _productServicesDAL.UpdateProductDAL(FormData);
                 if (!String.IsNullOrWhiteSpace(result) && result == "Saved Successfully!")
                 {
@@ -602,28 +552,18 @@ namespace AdminPanel.Controllers
                 {
                     return Json(new { success = false, message = result });
                 }
-
-
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
-
-
-
-
-
         }
 
         [HttpPost]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.UpdateProduct, 0, (short)UserRightsEnum.Update, 0, 0, 0)]
         public async Task<IActionResult> UpdateProductImgColorMapping(ProductPicturesMappingEntity FormData)
         {
-
             try
             {
                 // ✅ Main Model
@@ -647,8 +587,6 @@ namespace AdminPanel.Controllers
                 }
 
                 #endregion
-
-             
                 string result = await _productServicesDAL.UpdateProductImgColorMappingDAL(FormData);
                 if (!String.IsNullOrWhiteSpace(result) && result == "Saved Successfully!")
                 {
@@ -658,31 +596,16 @@ namespace AdminPanel.Controllers
                 {
                     return Json(new { success = false, message = result });
                 }
-
-
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
-
-
-
-
-
         }
-
-
-
-
         [HttpGet]
         public async Task<IActionResult> GetTagsListByKeyword(string term)
         {
-
-
             try
             {
                 TagEntity tagEntity = new TagEntity()
@@ -692,7 +615,6 @@ namespace AdminPanel.Controllers
                     PageSize = 30
                 };
                 var TagsList = await _productServicesDAL.GetProductTagsListForCreateProductPageDAL(tagEntity);
-
                 var results = from Tag in TagsList
                               select new
                               {
@@ -701,52 +623,39 @@ namespace AdminPanel.Controllers
                               };
 
                 return Json(new { results = results });
-
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
         }
-
 
         [HttpGet]
         public async Task<IActionResult> GetProductAttributeValuesByAttributeID(string ProductAttributeId)
         {
-
             try
             {
-
                 var result = await _productServicesDAL.GetProductAttributeValuesByAttributeID(ProductAttributeId);
                 return Json(new { success = true, message = "Saved Successfully!", result = result });
-
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
         }
 
-
         // ✅ Delete product images
         [HttpPost]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.ProductsList, 0, 0, (short)UserRightsEnum.Delete, 0, 0)]
-        public async Task<IActionResult> DeleteProductAttachment(int AttachmentID,  string AttachmentURL)
+        public async Task<IActionResult> DeleteProductAttachment(int AttachmentID, string AttachmentURL)
         {
-
             try
             {
-
                 bool result = await _productServicesDAL.DeleteAnyProductImage(AttachmentID);
                 if (result)
                 {
-
                     //--Delete file from directroy
                     string outPut = await _filesHelpers.DeleteAnyFileFromDirectory(AttachmentURL);
                     if (outPut == "Deleted Successfully")
@@ -757,7 +666,6 @@ namespace AdminPanel.Controllers
                     {
                         return Json(new { success = false, message = "File record deleted from database but the file not deleted from actual direcoty" });
                     }
-
                 }
                 else
                 {
@@ -766,15 +674,10 @@ namespace AdminPanel.Controllers
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
-
-
         }
-
 
         [HttpGet]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.ProductsReviews, 0, 0, 0, (short)UserRightsEnum.View_All, (short)UserRightsEnum.View_Self)]
@@ -782,7 +685,6 @@ namespace AdminPanel.Controllers
         {
             // ✅ Main Model
             ProductsCatalogModel model = new ProductsCatalogModel();
-
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Products Reviews";
@@ -790,12 +692,8 @@ namespace AdminPanel.Controllers
             model.PageBasicInfoObj.langCode = await _sessionManag.GetLanguageCodeFromSession();
             #endregion
 
-
             try
             {
-
-
-
                 #region ViewSelf Right Check
                 bool SelfRight = await _sessionManag.GetViewSelfRightForLoginUserFromSession();
                 if (SelfRight)
@@ -808,12 +706,8 @@ namespace AdminPanel.Controllers
                     FormData.CreatedBy = 0;
                 }
                 #endregion
-
                 FormData.PageSize = this._constants.ITEMS_PER_PAGE();
                 model.ProductsList = await _productServicesDAL.GetProductsReviewsDAL(FormData);
-
-
-
                 #region pagination data
                 model.pageHelperObj = new PagerHelper();
                 int TotalRecords = model?.ProductsList?.FirstOrDefault()?.TotalRecords ?? 0;
@@ -825,27 +719,21 @@ namespace AdminPanel.Controllers
                     var ExcelFileResutl = await this._filesHelpers.ExportToExcel(this, model.PageBasicInfoObj.PageTitle, model.ProductsList.Cast<dynamic?>().ToList());
                     return ExcelFileResutl;
                 }
-
             }
             catch (Exception ex)
             {
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 #region error model
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
-
             if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")//if request is ajax
             {
                 return PartialView("~/Views/ProductsCatalog/PartialViews/_ProductsReviews.cshtml", model);
             }
-
             return View(model);
         }
-
 
         [HttpGet]
         [HttpGet]
@@ -854,7 +742,6 @@ namespace AdminPanel.Controllers
         {
             // ✅ Main Model
             ProductsCatalogModel model = new ProductsCatalogModel();
-
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Products Reviews Detail";
@@ -864,41 +751,31 @@ namespace AdminPanel.Controllers
 
             try
             {
-
                 model.ProductReviewObj = new ProductReviewEntity();
                 model.ProductReviewObj.ProductId = FormData.ProductId;
-
                 FormData.PageSize = this._constants.ITEMS_PER_PAGE();
                 model.ProductReviewList = await _productServicesDAL.GetProductReviewsByProductIdDAL(FormData);
-
-
                 #region pagination data
                 model.pageHelperObj = new PagerHelper();
                 int TotalRecords = model?.ProductReviewList?.FirstOrDefault()?.TotalRecords ?? 0;
                 model.pageHelperObj = PagerHelper.Instance.MakePaginationObject(model?.ProductReviewList?.Count() ?? 0, TotalRecords, _constants.ITEMS_PER_PAGE(), FormData.PageNo);
                 #endregion
-
             }
             catch (Exception ex)
             {
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 #region error model
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
 
             if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")//if request is ajax
             {
                 return PartialView("~/Views/ProductsCatalog/PartialViews/_ProductReviewsDetail.cshtml", model);
             }
-
             return View(model);
-
         }
-
 
         [HttpGet]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.ProductsBulkUpload, 0, 0, 0, (short)UserRightsEnum.View_All, (short)UserRightsEnum.View_Self)]
@@ -906,14 +783,12 @@ namespace AdminPanel.Controllers
         {
             // ✅ Main Model
             ProductsCatalogModel model = new ProductsCatalogModel();
-
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Products Bulk Upload";
             model.PageBasicInfoObj.EntityId = (int)EntitiesEnum.ProductsBulkUpload;
             model.PageBasicInfoObj.langCode = await _sessionManag.GetLanguageCodeFromSession();
             #endregion
-
             try
             {
 
@@ -921,31 +796,22 @@ namespace AdminPanel.Controllers
             catch (Exception ex)
             {
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 #region error model
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
-
             return View(model);
-
         }
-
 
         [HttpPost]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.ProductsBulkUpload, (short)UserRightsEnum.Add, 0, 0, 0, 0)]
         public async Task<IActionResult> UploadProductsBulkExcelFile(IFormFile? ProductsAttachmentFile)
         {
-
             // ✅ Main Model
             ProductsCatalogModel model = new ProductsCatalogModel();
             model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
-
             //Help Link: https://www.ittutorialswithexample.com/2019/06/export-and-import-excel-closedxml-aspnet-mvc.html
-
-
             string filePath = String.Empty;
             List<string> validationList = new List<string>();
 
@@ -965,13 +831,11 @@ namespace AdminPanel.Controllers
                 if (String.IsNullOrEmpty(ext) || ext != ".xlsx")
                 {
                     validationList.Add("Only excel file with format .xlsx is allowed!");
-
                     model.SuccessErrorMsgEntityObj.validationList = new List<string>();
                     model.SuccessErrorMsgEntityObj.validationList = validationList;
 
                     return PartialView("~/Views/ProductsCatalog/PartialViews/_BulkUploadValidation.cshtml", model);
                 }
-
 
                 #region image checking
                 if (ProductsAttachmentFile != null)
@@ -980,8 +844,6 @@ namespace AdminPanel.Controllers
 
                 }
                 #endregion
-
-
                 #region convert excel to data table and type
                 // Open the Excel file using ClosedXML.
                 // Keep in mind the Excel file cannot be open when trying to read it
@@ -1003,7 +865,6 @@ namespace AdminPanel.Controllers
                 await _filesHelpers.DeleteAnyFileFromDirectory(filePath);
 
                 #endregion
-
                 #region main validation area
 
                 if (productList == null || productList.Count == 0)
@@ -1061,9 +922,6 @@ namespace AdminPanel.Controllers
                 }
 
                 #endregion
-
-
-
                 #region save final products
                 int? LoginUserId = await this._sessionManag.GetLoginUserIdFromSession();
 
@@ -1093,27 +951,17 @@ namespace AdminPanel.Controllers
 
 
                 #endregion
-
-
-
-
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 //--Delete the file once all information processed successfully
                 await _filesHelpers.DeleteAnyFileFromDirectory(filePath);
-
                 validationList.Add($"An error occured. Error Detail: {ex.Message}");
-
-
             }
 
             return PartialView("~/Views/ProductsCatalog/PartialViews/_BulkUploadValidation.cshtml", model);
         }
-
 
         [HttpGet]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.ImagesUpload, 0, 0, 0, (short)UserRightsEnum.View_All, (short)UserRightsEnum.View_Self)]
@@ -1121,7 +969,6 @@ namespace AdminPanel.Controllers
         {
             // ✅ Main Model
             ProductsCatalogModel model = new ProductsCatalogModel();
-
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Images Upload";
@@ -1131,7 +978,6 @@ namespace AdminPanel.Controllers
 
             try
             {
-
                 #region ViewSelf Right Check
                 bool SelfRight = await _sessionManag.GetViewSelfRightForLoginUserFromSession();
                 if (SelfRight)
@@ -1145,52 +991,40 @@ namespace AdminPanel.Controllers
                 }
                 #endregion
 
-
                 FormData.PageSize = this._constants.ITEMS_PER_PAGE();
                 model.AttachmentsList = await _productServicesDAL.GetAttachmentsListForImageUploadPageDAL(FormData);
-
-
                 #region pagination data
                 model.pageHelperObj = new PagerHelper();
                 int TotalRecords = model?.AttachmentsList?.FirstOrDefault()?.TotalRecords ?? 0;
                 model.pageHelperObj = PagerHelper.Instance.MakePaginationObject(model?.AttachmentsList?.Count() ?? 0, TotalRecords, _constants.ITEMS_PER_PAGE(), FormData.PageNo);
                 #endregion
 
-
-
                 if (FormData.DataExportType != null && FormData.DataExportType == (short)DataExportTypeEnum.Excel && model?.AttachmentsList?.Count > 0)
                 {
                     var ExcelFileResutl = await this._filesHelpers.ExportToExcel(this, model.PageBasicInfoObj.PageTitle, model.AttachmentsList.Cast<dynamic?>().ToList());
                     return ExcelFileResutl;
                 }
-
             }
             catch (Exception ex)
             {
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 #region error model
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
 
             if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")//if request is ajax
             {
                 return PartialView("~/Views/ProductsCatalog/PartialViews/_ImagesUpload.cshtml", model);
             }
-
             return View(model);
         }
-
 
         [HttpPost]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.ImagesUpload, (short)UserRightsEnum.Add, 0, 0, 0, 0)]
         public async Task<IActionResult> SaveAttachment(AttachmentEntity FormData, int DataOperationType = (short)DataOperationType.Insert)
         {
-
-
             try
             {
                 if (String.IsNullOrWhiteSpace(FormData.AttachmentName))
@@ -1211,20 +1045,16 @@ namespace AdminPanel.Controllers
                 if (String.IsNullOrEmpty(ext))
                 {
                     return Json(new { success = false, message = "Only images are allowed for uploading!. Supported formates are .jpg, .jpeg, .png" });
-
                 }
 
                 if (!imagesFormat.Any(x => x == ext))
                 {
                     return Json(new { success = false, message = "Only images are allowed for uploading!. Supported formates are .jpg, .jpeg, .png" });
-
                 }
-
 
                 string url = await _filesHelpers.SaveFileToDirectory(FormData.AttachmentFile, null);
                 if (!String.IsNullOrWhiteSpace(url))
                 {
-
                     FormData.AttachmentUrl = url;
                     FormData.UserId = await this._sessionManag.GetLoginUserIdFromSession();
                     FormData.IsCommonImageUpload = true;
@@ -1243,16 +1073,10 @@ namespace AdminPanel.Controllers
                 {
                     return Json(new { success = false, message = "An error occured on server side." });
                 }
-
-
-
-
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
         }
@@ -1263,7 +1087,6 @@ namespace AdminPanel.Controllers
         {
             // ✅ Main Model
             ProductsCatalogModel model = new ProductsCatalogModel();
-
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Product Variants";
@@ -1275,32 +1098,25 @@ namespace AdminPanel.Controllers
             {
                 FormData.PageSize = this._constants.ITEMS_PER_PAGE();
                 model.ProductAttributesList = await _productServicesDAL.GetProductVariantsDAL(FormData);
-
-
                 #region pagination data
                 model.pageHelperObj = new PagerHelper();
                 int TotalRecords = model?.ProductAttributesList?.FirstOrDefault()?.TotalRecords ?? 0;
                 model.pageHelperObj = PagerHelper.Instance.MakePaginationObject(model?.ProductAttributesList?.Count() ?? 0, TotalRecords, _constants.ITEMS_PER_PAGE(), FormData.PageNo);
                 #endregion
 
-
-
                 if (FormData.DataExportType != null && FormData.DataExportType == (short)DataExportTypeEnum.Excel && model?.ProductAttributesList?.Count > 0)
                 {
                     var ExcelFileResutl = await this._filesHelpers.ExportToExcel(this, model.PageBasicInfoObj.PageTitle, model.ProductAttributesList.Cast<dynamic?>().ToList());
                     return ExcelFileResutl;
                 }
-
             }
             catch (Exception ex)
             {
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 #region error model
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
 
             if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")//if request is ajax
@@ -1317,7 +1133,6 @@ namespace AdminPanel.Controllers
         {
             // ✅ Main Model
             ProductsCatalogModel model = new ProductsCatalogModel();
-
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Product Variant Detail";
@@ -1327,12 +1142,6 @@ namespace AdminPanel.Controllers
 
             try
             {
-
-
-              
-
-
-
                 FormData.PageSize = this._constants.ITEMS_PER_PAGE();
                 model.ProductVariantDetailObj = new ProductVariantDetail();
                 model.ProductVariantDetailObj = FormData;
@@ -1348,7 +1157,6 @@ namespace AdminPanel.Controllers
                 model.ProductVariantDetailObj.AttributeDisplayName = ProductAttributesList?.FirstOrDefault()?.DisplayName;
 
                 #endregion
-
                 model.ProductVariantDetailList = await _productServicesDAL.GetProductVariantsDetailByIdDAL(FormData.ProductAttributeId);
 
                 if (!String.IsNullOrEmpty(FormData.DisplayText))
@@ -1364,24 +1172,19 @@ namespace AdminPanel.Controllers
                 model.pageHelperObj = PagerHelper.Instance.MakePaginationObject(model?.ProductVariantDetailList?.Count() ?? 0, TotalRecords, _constants.ITEMS_PER_PAGE(), FormData.PageNo);
                 #endregion
 
-            
-
                 if (FormData.DataExportType != null && FormData.DataExportType == (short)DataExportTypeEnum.Excel && model?.ProductVariantDetailList?.Count > 0)
                 {
                     var ExcelFileResutl = await this._filesHelpers.ExportToExcel(this, model.PageBasicInfoObj.PageTitle, model.ProductVariantDetailList.Cast<dynamic?>().ToList());
                     return ExcelFileResutl;
                 }
-
             }
             catch (Exception ex)
             {
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 #region error model
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
 
             if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")//if request is ajax
@@ -1392,13 +1195,10 @@ namespace AdminPanel.Controllers
             return View(model);
         }
 
-
-
         [HttpPost]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.ProductVariantDetail, (short)UserRightsEnum.Add, (short)UserRightsEnum.Update, 0, 0, 0)]
         public async Task<IActionResult> SaveUpdateProductVariant(ProductVariantDetail FormData, int DataOperationType = (short)DataOperationType.Insert)
         {
-
             try
             {
                 if (String.IsNullOrWhiteSpace(FormData.DisplayText))
@@ -1406,18 +1206,17 @@ namespace AdminPanel.Controllers
                     return Json(new { success = false, message = "Variant value field is required!" });
                 }
 
-                if (FormData.ProductAttributeId  < 1)
+                if (FormData.ProductAttributeId < 1)
                 {
                     return Json(new { success = false, message = "Attribute id is required!" });
                 }
-              
+
                 if (DataOperationType == 2)
                 {
                     if (FormData.PrimaryKeyValue < 1)
                     {
                         return Json(new { success = false, message = "The edit row primary key is null!" });
                     }
-
                 }
 
                 FormData.LoginUserId = await this._sessionManag.GetLoginUserIdFromSession();
@@ -1434,12 +1233,9 @@ namespace AdminPanel.Controllers
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
         }
-
     }
 }
