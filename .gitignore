@@ -24,3 +24,5 @@ React.Web/itage-ecommerce-web-two/node_modules/
 
 */node_modules/
 
+/React.Web/appsettings.Development.json
+/React.Web/appsettings.json
