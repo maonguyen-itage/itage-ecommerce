@@ -5,17 +5,22 @@ Local settings/
 AdminPanel/bin/
 AdminPanel/obj/
 AdminPanel/Properties/
-
 AdminPanel/appsettings.json
+AdminPanel/appsettings.Development.json
 
 React.Web/bin/
 React.Web/obj/
-React.Web/appsettings.json
-React.Web/appsettings.Development.json
+
+React.Web/wwwroot/lib/
 
 DAL/bin/
+DAL/obj/
+
 Entities/bin/
 Entities/obj/
 Helpers/bin/
 Helpers/obj/
+React.Web/itage-ecommerce-web-two/node_modules/
+
+*/node_modules/
 
