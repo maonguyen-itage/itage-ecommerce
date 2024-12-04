@@ -25,10 +25,5 @@ namespace Entities.MainModels
         public PageBasicInfo? PageBasicInfoObj { get; set; }
         public PagerHelper? pageHelperObj { get; set; }
         public SuccessErrorMsgEntity? SuccessErrorMsgEntityObj { get; set; }
-
-        
-
-
-
     }
 }

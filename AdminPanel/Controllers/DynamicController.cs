@@ -18,7 +18,6 @@ namespace AdminPanel.Controllers
 {
     public class DynamicController : BaseController
     {
-
         private readonly IBasicDataServicesDAL _basicDataDAL;
         private readonly IConstants _constants;
         private readonly ICommonServicesDAL _commonServicesDAL;
@@ -135,7 +134,7 @@ namespace AdminPanel.Controllers
 
         [HttpGet]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.DynamicLocalizationDetail, (short)UserRightsEnum.Add, 0, 0, 0, 0)]
-        public async Task<IActionResult> DynamicLocalizationDetail( string PageTitle , int LocalizationTableId, int PKeyId)
+        public async Task<IActionResult> DynamicLocalizationDetail(string PageTitle, int LocalizationTableId, int PKeyId)
         {
             // ✅ Main Model
             DynamicModel model = new DynamicModel();
@@ -177,7 +176,7 @@ namespace AdminPanel.Controllers
                 if (model?.LocalizationCommonJsonObj != null && !String.IsNullOrEmpty(model?.LocalizationCommonJsonObj.LocalizationJsonData))
                 {
                     model.LocalizationDynamicLabelsChildList = JsonConvert.DeserializeObject<List<LocalizationDynamicLabelInfoChild>?>(model?.LocalizationCommonJsonObj.LocalizationJsonData);
-                   
+
                     #region pagination data
                     model.pageHelperObj = new PagerHelper();
                     int TotalRecords = model?.LocalizationDynamicLabelsChildList?.Count() ?? 0;
@@ -202,7 +201,7 @@ namespace AdminPanel.Controllers
                     model.LocalizationCommonJsonObj.LocalizationTableId = LocalizationTableId;
                     model.LocalizationCommonJsonObj.PrimaryKeyId = PKeyId;
 
-                  
+
 
                 }
 

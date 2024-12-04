@@ -23,8 +23,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
-
     }
 
     public class CategoryEntity : Category
@@ -44,7 +42,6 @@ namespace Entities.DBInheritedModels
 
         public IFormFile? AttachmentFile { get; set; }
       //  public int? AttachmentId { get; set; }
-
     }
 
     public class SizeEntity : Size
@@ -57,7 +54,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
      public class MenuNavigationEntity : MenuNavigation
     {
@@ -85,10 +81,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? LoginUserId { get; set; }
-
-        
-        
-
     }
 
     public class ManufacturerEntity : Manufacturer
@@ -101,7 +93,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
 
     public class CurrencyEntity : Currency
@@ -114,7 +105,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
 
     public class AttachmentTypeEntity : AttachmentType
@@ -126,7 +116,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
 
     public class PaymentMethodEntity : PaymentMethod
@@ -138,7 +127,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
 
 
@@ -152,7 +140,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
 
     public class CountryEntity : Country
@@ -191,7 +178,6 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? UserId { get; set; }
-
     }
 
     public class TagEntity : Tag
@@ -204,9 +190,7 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
-
 
     public class ShippingMethodEntity : ShippingMethod
     {
@@ -217,7 +201,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
     public class InventoryMethodEntity : InventoryMethod
     {
@@ -228,8 +211,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
-
     }
 
     public class WarehouseEntity : Warehouse
@@ -241,7 +222,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
 
     public class ProductAttributeEntity : ProductAttribute
@@ -258,9 +238,7 @@ namespace Entities.DBInheritedModels
         public string? AttributeDisplayText { get; set; }
         public int? DataExportType { get; set; }
 
-
         public int? UserId { get; set; }
-
     }
 
     public class ProductPicturesMappingEntity : ProductPicturesMapping
@@ -275,7 +253,6 @@ namespace Entities.DBInheritedModels
         public string? ProductsImgColorsMappingItemsJson { get; set; }
        
         public int? UserId { get; set; }
-
     }
      public class UserTypesEntity : UserType
     {
@@ -286,7 +263,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
 
 
@@ -299,7 +275,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
 
     public class DiscountProductsMappingEntity : DiscountProductsMapping
@@ -312,7 +287,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
 
 
@@ -327,7 +301,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
 
     public class AttachmentEntity : Attachment
@@ -342,7 +315,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
         public IFormFile? AttachmentFile { get; set; }
         public int? UserId { get; set; }
-
     }
 
     public class ContactUsEntity : ContactU
@@ -356,7 +328,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
 
     public class SubscriberEntity : Subscriber
@@ -370,7 +341,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
 
     public class HomeScreenBannerEntity : HomeScreenBanner
@@ -386,7 +356,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
 
     public class RoleRightEntity : RoleRight
@@ -401,7 +370,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
 
     public class RightEntity : Right
@@ -414,7 +382,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
 
     public class RolesEntity : Role
@@ -427,7 +394,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
 
     public class OrderStatusesEntity : OrderStatus
@@ -439,7 +405,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
     }
 
     public class UserAddressEntity : UserAddress
@@ -452,8 +417,6 @@ namespace Entities.DBInheritedModels
         public string? CityName { get; set; }
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
-
-
     }
 
     public class OrderNoteEntity : OrderNote
@@ -466,10 +429,7 @@ namespace Entities.DBInheritedModels
       
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
-
         public int? UserId { get; set; }
-
-
     }
 
     public class AdminPanelNotificationEntity : AdminPanelNotification
@@ -482,14 +442,11 @@ namespace Entities.DBInheritedModels
         public string? NotificationTypeName { get; set; }
         public string? SelectedNotificationsIdsForReadJson { get; set; }
 
-
         public int HeaderUnreadNotificationCount { get; set; }
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
-
     }
 
     public class DiscountsCampaignEntity : DiscountsCampaign
@@ -503,8 +460,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? UserId { get; set; }
-
-
     }
 
     public class BankMasterEntity : BankMaster
@@ -521,9 +476,7 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? LoginUserId { get; set; }
-
     }
-
 
     public class BankAccountEntity : BankAccount
     {
@@ -548,7 +501,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? LoginUserId { get; set; }
-
     }
 
     public class BankAccountTranEntity : BankAccountTran
@@ -565,7 +517,6 @@ namespace Entities.DBInheritedModels
         public int PageSize { get; set; } = 10;
 
         public int? LoginUserId { get; set; }
-
     }
 
     public class BankIndustryTypeEntity : BankIndustryType
@@ -602,7 +553,6 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? LoginUserId { get; set; }
-
     }
 
     public class VendorsCommissionSetupEntity : VendorsCommissionSetup
@@ -617,7 +567,6 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? LoginUserId { get; set; }
-
     }
 
     public class BankTransEventEntity : BankTransEvent
@@ -630,7 +579,6 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? LoginUserId { get; set; }
-
     }
 
 
@@ -643,7 +591,6 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? LoginUserId { get; set; }
-
     }
 
     public class AppConfigEntity : AppConfig
@@ -656,9 +603,7 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? LoginUserId { get; set; }
-
     }
-
 
     public class ProductReviewEntity : ProductReview
     {
@@ -670,7 +615,6 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? LoginUserId { get; set; }
-
     }
 
     public class LanguageEntity : Language
@@ -682,7 +626,6 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? LoginUserId { get; set; }
-
     } 
     public class AppModuleEntity : AppModule
 	{
@@ -693,7 +636,6 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? LoginUserId { get; set; }
-
     }
 
     public class RequestsQueueEntity : RequestsQueue
@@ -708,7 +650,6 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? LoginUserId { get; set; }
-
     }
 
     public class RequestTypeEntity : RequestType
@@ -720,7 +661,6 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? LoginUserId { get; set; }
-
     }
 
     public class RequestStatusEntity : RequestStatus
@@ -732,7 +672,6 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? LoginUserId { get; set; }
-
     }
     public class OrderRefundRequestEntity : OrderRefundRequest
     {
@@ -745,8 +684,5 @@ namespace Entities.DBInheritedModels
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? LoginUserId { get; set; }
-
     }
-
-
 }

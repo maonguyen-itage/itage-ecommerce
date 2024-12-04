@@ -7,12 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="noor-ecommerce-web-two\src\resources\themeContent\images\subscribe\" />
-    <Folder Include="noor-ecommerce-web-two\src\web\components\modal\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <Folder Include="itage-ecommerce-web-two\src\resources\themeContent\images\subscribe\" />
+    <Folder Include="itage-ecommerce-web-two\src\web\components\modal\" />
   </ItemGroup>
 
 </Project>

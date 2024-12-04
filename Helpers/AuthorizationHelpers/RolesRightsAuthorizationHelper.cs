@@ -24,9 +24,6 @@ namespace Helpers.AuthorizationHelpers
         private readonly int _viewAllRight;
         private readonly int _viewSelfRight;
 
-
-
-
         public RolesRightsAuthorizationHelper(int EntityID, int AddRight, int UpdateRight, int DeleteRight, int ViewAllRight, int ViewSelfRight)
         {
             _entityID = EntityID;
@@ -35,22 +32,16 @@ namespace Helpers.AuthorizationHelpers
             _deleteRight = DeleteRight;
             _viewAllRight = ViewAllRight;
             _viewSelfRight = ViewSelfRight;
-
         }
-
-
 
         public override async Task OnActionExecutionAsync(ActionExecutingContext filterContext, ActionExecutionDelegate next)
         {
-
-
             try
             {
                 bool IsValid = false;
                 IConfiguration? _configuration = filterContext.HttpContext.RequestServices.GetService<IConfiguration>();
                 ISessionManager? _sessionManager = filterContext.HttpContext.RequestServices.GetService<ISessionManager>();
                 List<RoleRightEntity>? UserRolesRights = _sessionManager != null ? await _sessionManager.GetUserRoleRightsFromSession() : new List<RoleRightEntity>();
-
 
                 //--check if roles rigts enables
                 int IsRoleRightsEnables = 0;
@@ -74,12 +65,10 @@ namespace Helpers.AuthorizationHelpers
                                 _sessionManager.SetViewSelfRightForLoginUserInSession();
                             }
                         }
-
                     }
                     else if (_addRight > 0 && _updateRight > 0)
                     {
                         var addUpdateRights = UserRolesRights?.Where(x => (x.RightId == (short)UserRightsEnum.Add || x.RightId == (short)UserRightsEnum.Update) && (x.EntityId == _entityID)).ToList();
-
 
                         if ((addUpdateRights != null && addUpdateRights.Count() > 0))
                         {
@@ -100,12 +89,8 @@ namespace Helpers.AuthorizationHelpers
                                     IsValid = UserRolesRights != null && UserRolesRights.Count > 0 && UserRolesRights.Any(x => x.EntityId == _entityID && x.RightId == _updateRight) ? true : false;
                                 }
                             }
-                            
                         }
-
-
-
-                    }else if (_addRight > 0)
+                    } else if (_addRight > 0)
                     {
                         IsValid = UserRolesRights != null && UserRolesRights.Count > 0 && UserRolesRights.Any(x => x.EntityId == _entityID && x.RightId == _addRight) ? true : false;
                     }
@@ -137,8 +122,6 @@ namespace Helpers.AuthorizationHelpers
                                 }
                             }
                         }
-
-                      
                     }
                     else
                     {
@@ -147,19 +130,14 @@ namespace Helpers.AuthorizationHelpers
 
                     if (IsValid == false)
                     {
-
                         filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                         {
                             controller = "Authentication",
                             action = "Login",
                             area = ""
                         }));
-
-
                     }
-
                 }
-
             }
             catch (Exception)
             {
@@ -169,9 +147,7 @@ namespace Helpers.AuthorizationHelpers
             {
                 await base.OnActionExecutionAsync(filterContext, next);
             }
-
         }
-
     }
 
     public class FilterContextControllerModelStateValues

@@ -19,9 +19,7 @@ namespace Entities.MainModels
         public List<TwoDimensionChart>? PopularProductsData { get; set; }
 
         public Dictionary<string, object>? distinctPopularCategoriesChartDic { get; set; }
-
         public DashboardLifeTimeStatistics? dashboardLifeTimeStatistics { get; set; }
-
         public PageBasicInfo? PageBasicInfoObj { get; set; }
         public PagerHelper? pageHelperObj { get; set; }
         public SuccessErrorMsgEntity? SuccessErrorMsgEntityObj { get; set; }

@@ -11,10 +11,7 @@ namespace DAL.DBContext
 {
     public class DapperConnectionHelper : IDapperConnectionHelper
     {
-
         private readonly IConfiguration _configuration;
-       
-
         //dapper setting
         public string ConnectionString { get; set; }
         public string ProviderName { get; }
@@ -23,7 +20,6 @@ namespace DAL.DBContext
         public DapperConnectionHelper(IConfiguration configuration)
         {
             _configuration = configuration;
-           
             //--Dapper setting
             ConnectionString = _configuration.GetConnectionString("DBConnection");
             ProviderName = "System.Data.SqlClient";
@@ -34,7 +30,6 @@ namespace DAL.DBContext
         {
             return new SqlConnection(ConnectionString);
         }
-
     }
 
     public interface IDapperConnectionHelper

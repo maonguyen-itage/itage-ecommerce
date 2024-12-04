@@ -8,8 +8,6 @@ namespace Entities.CommonModels.SalesModule
 {
     public class OrderVariantDetail
     {
-
-
         public int OrderAttributeMappingID { get; set; }
         public int ProductAttributeID { get; set; } 
         public int OrderItemID { get; set; }

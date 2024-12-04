@@ -11,12 +11,10 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using static Entities.DBInheritedModels.InheritedEntitiesLevelTwo;
 
-
 namespace AdminPanel.Controllers
 {
     public class SalesController : BaseController
     {
-
         private readonly IBasicDataServicesDAL _basicDataDAL;
         private readonly IProductServicesDAL _productServicesDAL;
         private readonly IConstants _constants;
@@ -55,17 +53,14 @@ namespace AdminPanel.Controllers
             model.PageBasicInfoObj.langCode = await _sessionManag.GetLanguageCodeFromSession();
             #endregion
 
-
             try
             {
-
                 OrderStatusesEntity categoryEntityFormData = new OrderStatusesEntity()
                 {
                     PageNo = 1,
                     PageSize = 200
                 };
                 model.OrderStatusesList = await this._salesServicesDAL.GetOrderStatusesList(categoryEntityFormData);
-
 
                 if (FormData.VendorId == null || FormData.VendorId == 0)
                 {
@@ -82,10 +77,6 @@ namespace AdminPanel.Controllers
                     }
                     #endregion
                 }
-
-
-
-
                 UserEntity vendorEntityFormData = new UserEntity()
                 {
                     PageNo = 1,
@@ -94,13 +85,8 @@ namespace AdminPanel.Controllers
                     UserId = Convert.ToInt32(FormData.VendorId ?? 0)
                 };
                 model.VendorsList = await this._userManagementServicesDAL.GetUsersListDAL(vendorEntityFormData);
-
-
                 FormData.PageSize = this._constants.ITEMS_PER_PAGE();
                 model.OrdersList = await _salesServicesDAL.GetOrdersListDAL(FormData);
-
-
-
                 #region pagination data
                 model.pageHelperObj = new PagerHelper();
 
@@ -195,7 +181,7 @@ namespace AdminPanel.Controllers
 
                 model.OrderObj = await _salesServicesDAL.GetOrderDetailByIdDAL(OrderFormData);
 
-              
+
 
                 model.OrderShippingDetailList = JsonConvert.DeserializeObject<List<OrderShippingDetailEntity>>(model?.OrderObj?.OrderShippingDetailsDataJson ?? "[]");
                 model.OrderShippingMasterData = JsonConvert.DeserializeObject<UserAddressEntity>(model?.OrderObj?.OrderShippingMasterDataJson ?? "[]");
@@ -207,14 +193,14 @@ namespace AdminPanel.Controllers
                 bool SelfRight = await _sessionManag.GetViewSelfRightForLoginUserFromSession();
                 if (SelfRight)
                 {
-                    var user =  _sessionManag.GetLoginUserFromSession();
-                    if (user!=null && user.UserTypeId ==(short)UserTypesEnum.Vendor )
+                    var user = _sessionManag.GetLoginUserFromSession();
+                    if (user != null && user.UserTypeId == (short)UserTypesEnum.Vendor)
                     {
                         model.OrderShippingDetailList = model?.OrderShippingDetailList?.Where(o => o.VendorId == user.UserId).ToList();
                     }
                 }
                 #endregion
-               
+
 
                 OrderNoteEntity OrderNoteFormData = new OrderNoteEntity()
                 {
@@ -462,9 +448,9 @@ namespace AdminPanel.Controllers
             try
             {
                 model.OrderVariantsList = await this._salesServicesDAL.GetOrderVariantsDetailByIdDAL(OrderId);
-                if (model.OrderVariantsList!=null)
+                if (model.OrderVariantsList != null)
                 {
-                    model.OrderVariantsList = model.OrderVariantsList.Where(x=>x.OrderItemID==OrderItemId).ToList();
+                    model.OrderVariantsList = model.OrderVariantsList.Where(x => x.OrderItemID == OrderItemId).ToList();
                 }
 
             }
@@ -479,12 +465,12 @@ namespace AdminPanel.Controllers
 
             }
 
-          
+
             return PartialView("~/Views/Sales/PartialViews/_OrderItemVariants.cshtml", model);
         }
 
 
-       
+
 
     }
 }

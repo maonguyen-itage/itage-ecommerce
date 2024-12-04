@@ -14,6 +14,5 @@ namespace Entities.CommonModels.SalesModule
         public string? ProductName { get; set; }
         public bool IsDigitalProduct { get; set; }
         public string? DigitalFileDownloadUrl { get; set; }
-
     }
 }

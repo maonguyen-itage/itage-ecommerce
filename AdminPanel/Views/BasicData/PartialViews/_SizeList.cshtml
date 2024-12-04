@@ -58,7 +58,10 @@
                         {
                             <td><span class="badge bg-success-400">Active</span></td>
                         }
+
+
                         <td><span class="text-dark">@(item.CreatedOn.ToString("dd MMM, yyyy"))</span></td>
+
 
                         <td class="text-center">
                             <div class="list-icons">
@@ -104,10 +107,16 @@
             }
         }
 
+
+
+
     </tbody>
 </table>
 
+
+
 <div class="row" id="pagination_div">
+
     @{
         if (Model != null && Model.pageHelperObj != null)
         {
@@ -125,6 +134,8 @@
         }
 
     }
+
+
 </div>
 
 

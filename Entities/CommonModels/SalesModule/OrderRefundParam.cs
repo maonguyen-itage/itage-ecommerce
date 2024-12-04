@@ -14,9 +14,5 @@ namespace Entities.CommonModels.SalesModule
         public bool IsFullRefund { get; set; } = true;
         public decimal? RefundAmount { get; set; }
         public int? LoginUserId { get; set; }
-
-
-        
-        
     }
 }

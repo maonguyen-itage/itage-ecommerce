@@ -1,5 +1,4 @@
-﻿
-using DAL.Repository.IServices;
+﻿using DAL.Repository.IServices;
 using Entities.CommonModels;
 using Entities.DBInheritedModels;
 using Entities.MainModels;
@@ -14,8 +13,6 @@ namespace AdminPanel.Controllers
 {
     public class UserManagementController : BaseController
     {
-
-
         private readonly IBasicDataServicesDAL _basicDataDAL;
         private readonly IUserManagementServicesDAL _userManagementServicesDAL;
         private readonly IConstants _constants;
@@ -23,7 +20,6 @@ namespace AdminPanel.Controllers
         private readonly ISessionManager _sessionManag;
         private readonly IFilesHelpers _filesHelpers;
         private readonly IConfigurationServicesDAL _configurationServicesDAL;
-
         public UserManagementController(IBasicDataServicesDAL basicDataDAL, IUserManagementServicesDAL userManagementServicesDAL, IConstants constants,
             ICommonServicesDAL commonServicesDAL, ISessionManager sessionManag, IFilesHelpers filesHelpers, IConfigurationServicesDAL configurationServicesDAL)
         {
@@ -36,15 +32,13 @@ namespace AdminPanel.Controllers
             this._configurationServicesDAL = configurationServicesDAL;
         }
 
-
-
         [HttpGet]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.AddressTypesList, 0, 0, 0, (short)UserRightsEnum.View_All, (short)UserRightsEnum.View_Self)]
         public async Task<IActionResult> AddressTypesList(AddressTypeEntity FormData)
         {
             // ✅ Main Model
             UserManagementModel model = new UserManagementModel();
-         
+
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Address Types List";
@@ -57,31 +51,25 @@ namespace AdminPanel.Controllers
                 FormData.PageSize = this._constants.ITEMS_PER_PAGE();
                 model.AddressTypeList = await _userManagementServicesDAL.GetAddressTypesListDAL(FormData);
 
-
                 #region pagination data
                 model.pageHelperObj = new PagerHelper();
                 int TotalRecords = model?.AddressTypeList?.FirstOrDefault()?.TotalRecords ?? 0;
                 model.pageHelperObj = PagerHelper.Instance.MakePaginationObject(model?.AddressTypeList?.Count() ?? 0, TotalRecords, _constants.ITEMS_PER_PAGE(), FormData.PageNo);
                 #endregion
 
-
-
                 if (FormData.DataExportType != null && FormData.DataExportType == (short)DataExportTypeEnum.Excel && model?.AddressTypeList?.Count > 0)
                 {
                     var ExcelFileResutl = await this._filesHelpers.ExportToExcel(this, model.PageBasicInfoObj.PageTitle, model.AddressTypeList.Cast<dynamic?>().ToList());
                     return ExcelFileResutl;
                 }
-
             }
             catch (Exception ex)
             {
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 #region error model
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
 
             if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")//if request is ajax
@@ -92,14 +80,13 @@ namespace AdminPanel.Controllers
             return View(model);
         }
 
-
         [HttpGet]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.CountriesList, 0, 0, 0, (short)UserRightsEnum.View_All, (short)UserRightsEnum.View_Self)]
         public async Task<IActionResult> CountriesList(CountryEntity FormData)
         {
             // ✅ Main Model
             UserManagementModel model = new UserManagementModel();
-       
+
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Countries List";
@@ -107,13 +94,10 @@ namespace AdminPanel.Controllers
             model.PageBasicInfoObj.langCode = await _sessionManag.GetLanguageCodeFromSession();
             #endregion
 
-
             try
             {
                 FormData.PageSize = this._constants.ITEMS_PER_PAGE();
                 model.CountriesList = await _userManagementServicesDAL.GetCountriesListDAL(FormData);
-
-              
 
                 #region pagination data
                 model.pageHelperObj = new PagerHelper();
@@ -126,17 +110,14 @@ namespace AdminPanel.Controllers
                     var ExcelFileResutl = await this._filesHelpers.ExportToExcel(this, model.PageBasicInfoObj.PageTitle, model.CountriesList.Cast<dynamic?>().ToList());
                     return ExcelFileResutl;
                 }
-
             }
             catch (Exception ex)
             {
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 #region error model
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
 
             if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")//if request is ajax
@@ -150,8 +131,6 @@ namespace AdminPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveUpdateCountry(CountryEntity FormData, int DataOperationType = (short)DataOperationType.Insert)
         {
-
-
             try
             {
                 if (String.IsNullOrWhiteSpace(FormData.CountryName))
@@ -175,7 +154,6 @@ namespace AdminPanel.Controllers
                     {
                         return Json(new { success = false, message = "CountryId is null!" });
                     }
-
                 }
 
                 FormData.UserId = await this._sessionManag.GetLoginUserIdFromSession();
@@ -192,14 +170,10 @@ namespace AdminPanel.Controllers
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
         }
-
-
 
         [HttpGet]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.StatesList, 0, 0, 0, (short)UserRightsEnum.View_All, (short)UserRightsEnum.View_Self)]
@@ -207,14 +181,12 @@ namespace AdminPanel.Controllers
         {
             // ✅ Main Model
             UserManagementModel model = new UserManagementModel();
-      
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "State/Province List";
             model.PageBasicInfoObj.EntityId = (int)EntitiesEnum.StatesList;
             model.PageBasicInfoObj.langCode = await _sessionManag.GetLanguageCodeFromSession();
             #endregion
-
 
             try
             {
@@ -225,9 +197,6 @@ namespace AdminPanel.Controllers
                 CountryEntity countryEntity = new CountryEntity();
                 countryEntity.PageSize = 260; //--Total Countries in wolrd are not more than this value
                 model.CountriesList = await _userManagementServicesDAL.GetCountriesListDAL(countryEntity);
-
-               
-
                 #region pagination data
                 model.pageHelperObj = new PagerHelper();
                 int TotalRecords = model?.StateProvinceList?.FirstOrDefault()?.TotalRecords ?? 0;
@@ -239,17 +208,14 @@ namespace AdminPanel.Controllers
                     var ExcelFileResutl = await this._filesHelpers.ExportToExcel(this, model.PageBasicInfoObj.PageTitle, model.StateProvinceList.Cast<dynamic?>().ToList());
                     return ExcelFileResutl;
                 }
-
             }
             catch (Exception ex)
             {
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 #region error model
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
 
             if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")//if request is ajax
@@ -263,8 +229,6 @@ namespace AdminPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveUpdateStateProvinceEntity(StateProvinceEntity FormData, int DataOperationType = (short)DataOperationType.Insert)
         {
-
-
             try
             {
                 if (String.IsNullOrWhiteSpace(FormData.StateName))
@@ -288,7 +252,6 @@ namespace AdminPanel.Controllers
                     {
                         return Json(new { success = false, message = "State id is null!" });
                     }
-
                 }
 
                 FormData.UserId = await this._sessionManag.GetLoginUserIdFromSession();
@@ -305,13 +268,10 @@ namespace AdminPanel.Controllers
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
         }
-
 
         [HttpGet]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.CititesList, 0, 0, 0, (short)UserRightsEnum.View_All, (short)UserRightsEnum.View_Self)]
@@ -319,7 +279,6 @@ namespace AdminPanel.Controllers
         {
             // ✅ Main Model
             UserManagementModel model = new UserManagementModel();
-    
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Cities List";
@@ -327,10 +286,8 @@ namespace AdminPanel.Controllers
             model.PageBasicInfoObj.langCode = await _sessionManag.GetLanguageCodeFromSession();
             #endregion
 
-
             try
             {
-
                 #region ViewSelf Right Check
                 bool SelfRight = await _sessionManag.GetViewSelfRightForLoginUserFromSession();
                 if (SelfRight)
@@ -352,20 +309,17 @@ namespace AdminPanel.Controllers
                 countryEntity.PageSize = 300; //--Total Countries in wolrd are not more than this value
                 model.CountriesList = await _userManagementServicesDAL.GetCountriesListDAL(countryEntity);
 
-             
                 #region pagination data
                 model.pageHelperObj = new PagerHelper();
                 int TotalRecords = model?.CitiesList?.FirstOrDefault()?.TotalRecords ?? 0;
                 model.pageHelperObj = PagerHelper.Instance.MakePaginationObject(model?.CitiesList?.Count() ?? 0, TotalRecords, _constants.ITEMS_PER_PAGE(), FormData.PageNo);
                 #endregion
 
-
                 if (FormData.DataExportType != null && FormData.DataExportType == (short)DataExportTypeEnum.Excel && model?.CitiesList?.Count > 0)
                 {
                     var ExcelFileResutl = await this._filesHelpers.ExportToExcel(this, model.PageBasicInfoObj.PageTitle, model.CitiesList.Cast<dynamic?>().ToList());
                     return ExcelFileResutl;
                 }
-
             }
             catch (Exception ex)
             {
@@ -375,7 +329,6 @@ namespace AdminPanel.Controllers
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
 
             if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")//if request is ajax
@@ -389,14 +342,12 @@ namespace AdminPanel.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveUpdateCity(CityEntity FormData, int DataOperationType = (short)DataOperationType.Insert)
         {
-
             try
             {
                 if (String.IsNullOrWhiteSpace(FormData.CityName))
                 {
                     return Json(new { success = false, message = "Please fill the city name field!" });
                 }
-
 
                 if (FormData.IsActive == null)
                 {
@@ -409,17 +360,13 @@ namespace AdminPanel.Controllers
                     {
                         return Json(new { success = false, message = "City Id is null!" });
                     }
-
                 }
 
                 //-- "-999" is for others
-                if (FormData.StateProvinceId!=null && FormData.StateProvinceId ==-999)
+                if (FormData.StateProvinceId != null && FormData.StateProvinceId == -999)
                 {
                     FormData.StateProvinceId = null;
                 }
-
-
-
 
                 FormData.UserId = await this._sessionManag.GetLoginUserIdFromSession();
 
@@ -435,13 +382,10 @@ namespace AdminPanel.Controllers
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
         }
-
 
         [HttpGet]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.UsersList, 0, 0, 0, (short)UserRightsEnum.View_All, (short)UserRightsEnum.View_Self)]
@@ -449,7 +393,6 @@ namespace AdminPanel.Controllers
         {
             // ✅ Main Model
             UserManagementModel model = new UserManagementModel();
-         
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Users List";
@@ -459,7 +402,6 @@ namespace AdminPanel.Controllers
 
             try
             {
-
                 //--Get user Types list
                 UserTypesEntity userTypesEntity = new UserTypesEntity()
                 {
@@ -468,36 +410,28 @@ namespace AdminPanel.Controllers
                 };
                 model.UserTypesList = await this._userManagementServicesDAL.GetUserTypesListDAL(userTypesEntity);
 
-
-
                 FormData.PageSize = this._constants.ITEMS_PER_PAGE();
-               
                 model.UsersList = await _userManagementServicesDAL.GetUsersListDAL(FormData);
 
-             
                 #region pagination data
                 model.pageHelperObj = new PagerHelper();
                 int TotalRecords = model?.UsersList?.FirstOrDefault()?.TotalRecords ?? 0;
                 model.pageHelperObj = PagerHelper.Instance.MakePaginationObject(model?.UsersList?.Count() ?? 0, TotalRecords, _constants.ITEMS_PER_PAGE(), FormData.PageNo);
                 #endregion
 
-
                 if (FormData.DataExportType != null && FormData.DataExportType == (short)DataExportTypeEnum.Excel && model?.UsersList?.Count > 0)
                 {
                     var ExcelFileResutl = await this._filesHelpers.ExportToExcel(this, model.PageBasicInfoObj.PageTitle, model.UsersList.Cast<dynamic?>().ToList());
                     return ExcelFileResutl;
                 }
-
             }
             catch (Exception ex)
             {
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 #region error model
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
 
             if (HttpContext.Request.Headers["X-Requested-With"] == "XMLHttpRequest")//if request is ajax
@@ -508,7 +442,6 @@ namespace AdminPanel.Controllers
             return View(model);
         }
 
-
         [HttpGet]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.CreateNewUser, 0, 0, 0, (short)UserRightsEnum.View_All, (short)UserRightsEnum.View_Self)]
         public async Task<IActionResult> CreateUser()
@@ -517,18 +450,14 @@ namespace AdminPanel.Controllers
             ViewBag.ThemeFormValidationScriptEnabled = true;
             #endregion
 
-
-
             // ✅ Main Model
             UserManagementModel model = new UserManagementModel();
-
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Create User";
             model.PageBasicInfoObj.EntityId = (int)EntitiesEnum.CreateNewUser;
             model.PageBasicInfoObj.langCode = await _sessionManag.GetLanguageCodeFromSession();
             #endregion
-
             //--Get countries list
             CountryEntity countryEntity = new CountryEntity()
             {
@@ -552,16 +481,12 @@ namespace AdminPanel.Controllers
                 PageSize = 20
             };
             model.RolesList = await this._configurationServicesDAL.GetRolesListDAL(RoleFormData);
-
-
-
             return View(model);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetStateByCountryId(int CountryId)
         {
-
             try
             {
                 StateProvinceEntity stateProvinceEntity = new StateProvinceEntity()
@@ -594,7 +519,6 @@ namespace AdminPanel.Controllers
         [HttpGet]
         public async Task<IActionResult> GetCityByStateId(int StateProvinceId)
         {
-
             try
             {
                 CityEntity cityEntity = new CityEntity()
@@ -610,26 +534,19 @@ namespace AdminPanel.Controllers
                                   displayValue = o.CityId,
                                   displayText = o.CityName,
                               }).ToList();
-
-
                 return Json(new { success = true, message = "Get Successfully!", result = result });
-
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
         }
-
 
         [HttpPost]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.CreateNewUser, (short)UserRightsEnum.Add, 0, 0, 0, 0)]
         public async Task<IActionResult> CreateNewUserPost(UserEntity FormData)
         {
-
             try
             {
                 string ValidationMsg = "Form is valid";
@@ -656,22 +573,20 @@ namespace AdminPanel.Controllers
                 //validationList.Add(ValidationMsg);
 
 
-                if (validationList.Count()>0 && validationList.Where(a=>a!= "Form is valid").ToList().Count>0 )
+                if (validationList.Count() > 0 && validationList.Where(a => a != "Form is valid").ToList().Count > 0)
                 {
                     return Json(new { success = false, message = ValidationMsg });
                 }
 
 
                 //--check of user name or email already exists
-                 ValidationMsg = await _userManagementServicesDAL.CheckIfUserAlreadyExistsDAL("", FormData.EmailAddress);
+                ValidationMsg = await _userManagementServicesDAL.CheckIfUserAlreadyExistsDAL("", FormData.EmailAddress);
                 if (ValidationMsg != "User not exists")
                 {
                     return Json(new { success = false, message = ValidationMsg });
                 }
 
                 #endregion
-
-
                 #region image file conversion secion
 
                 Guid ImgGuid = Guid.NewGuid();
@@ -688,9 +603,8 @@ namespace AdminPanel.Controllers
                 }
                 #endregion
 
-
                 //-- "-999" is for others
-                if (FormData!=null && FormData.StateProvinceId != null && FormData.StateProvinceId == -999)
+                if (FormData != null && FormData.StateProvinceId != null && FormData.StateProvinceId == -999)
                 {
                     FormData.StateProvinceId = null;
                 }
@@ -718,23 +632,13 @@ namespace AdminPanel.Controllers
                 {
                     return Json(new { success = false, message = result });
                 }
-
-
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
-
-
-
-
-
         }
-
 
         [HttpGet]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.UpdateUser, 0, 0, 0, (short)UserRightsEnum.View_All, (short)UserRightsEnum.View_Self)]
@@ -743,19 +647,14 @@ namespace AdminPanel.Controllers
             #region Basic page setting area
             ViewBag.ThemeFormValidationScriptEnabled = true;
             #endregion
-
-
-
             // ✅ Main Model
             UserManagementModel model = new UserManagementModel();
-
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.PageTitle = "Update User";
             model.PageBasicInfoObj.EntityId = (int)EntitiesEnum.UpdateUser;
             model.PageBasicInfoObj.langCode = await _sessionManag.GetLanguageCodeFromSession();
             #endregion
-
             //--Get countries list
             CountryEntity countryEntity = new CountryEntity()
             {
@@ -763,7 +662,6 @@ namespace AdminPanel.Controllers
                 PageSize = 300
             };
             model.CountriesList = await this._userManagementServicesDAL.GetCountriesListDAL(countryEntity);
-
             //--Get user Types list
             UserTypesEntity userTypesEntity = new UserTypesEntity()
             {
@@ -772,7 +670,6 @@ namespace AdminPanel.Controllers
             };
             model.UserTypesList = await this._userManagementServicesDAL.GetUserTypesListDAL(userTypesEntity);
 
-
             //--Get Roles List
             RolesEntity RoleFormData = new RolesEntity()
             {
@@ -780,22 +677,18 @@ namespace AdminPanel.Controllers
                 PageSize = 20
             };
             model.RolesList = await this._configurationServicesDAL.GetRolesListDAL(RoleFormData);
-
-
-
             //--Get user data by user id
             model.UserEntityObj = await _userManagementServicesDAL.GetUserCompleteDataByIdDAL(UserId);
-            if (model.UserEntityObj==null || model.UserEntityObj.UserId<1)
+            if (model.UserEntityObj == null || model.UserEntityObj.UserId < 1)
             {
-               
-                return RedirectToAction("UsersList","UserManagement");
+                return RedirectToAction("UsersList", "UserManagement");
             }
 
             // Make the pssword empty
-            model.UserEntityObj.Password = ""; 
+            model.UserEntityObj.Password = "";
 
             //--Get states for user by StateProvinceId 
-            if (model.UserEntityObj != null && model.UserEntityObj.StateProvinceId >0)
+            if (model.UserEntityObj != null && model.UserEntityObj.StateProvinceId > 0)
             {
                 StateProvinceEntity stateProvinceEntity = new StateProvinceEntity()
                 {
@@ -804,7 +697,6 @@ namespace AdminPanel.Controllers
                     StateProvinceId = (int)model.UserEntityObj.StateProvinceId
                 };
                 model.StateProvinceList = await this._userManagementServicesDAL.GetStateProvinceListDAL(stateProvinceEntity);
-
             }
 
             //--Get states for user by Cityid
@@ -817,21 +709,15 @@ namespace AdminPanel.Controllers
                     CityId = (int)model.UserEntityObj.CityId
                 };
                 model.CitiesList = await this._userManagementServicesDAL.GetCitiesListDAL(cityEntity);
-
             }
-
-
 
             return View(model);
         }
-
-
 
         [HttpPost]
         [RolesRightsAuthorizationHelper((int)EntitiesEnum.UpdateUser, 0, (short)UserRightsEnum.Update, 0, 0, 0)]
         public async Task<IActionResult> UpdateUserPost(UserEntity FormData)
         {
-
             try
             {
                 string ValidationMsg = "Form is valid";
@@ -839,12 +725,11 @@ namespace AdminPanel.Controllers
 
                 // ✅ Main Model
                 UserManagementModel model = new UserManagementModel();
-
                 #region validation area
 
                 ValidationMsg = FormData == null ? "Form is null!" : "Form is valid";
                 validationList.Add(ValidationMsg);
-                ValidationMsg = FormData != null && FormData.UserId>0 ? "Form is valid" : "First name is required!";
+                ValidationMsg = FormData != null && FormData.UserId > 0 ? "Form is valid" : "First name is required!";
                 validationList.Add(ValidationMsg);
                 ValidationMsg = FormData != null && !String.IsNullOrWhiteSpace(FormData.FirstName) ? "Form is valid" : "First name is required!";
                 validationList.Add(ValidationMsg);
@@ -866,10 +751,8 @@ namespace AdminPanel.Controllers
                 }
 
 
-              
+
                 #endregion
-
-
                 #region image file conversion secion
 
                 Guid ImgGuid = Guid.NewGuid();
@@ -885,13 +768,10 @@ namespace AdminPanel.Controllers
                     FormData.ProfilePictureUrl = OtherImagesDirectory + "/" + ImageGuidName;
                 }
                 #endregion
-
                 //--Encrypt password
                 FormData.Password = CommonConversionHelper.Encrypt(FormData.Password);
-
                 //--created by user id
                 FormData.CreatedBy = Convert.ToInt32(await this._sessionManag.GetLoginUserIdFromSession());
-
                 FormData.DataOperationType = (int)DataOperationType.Update;
 
                 string result = await _userManagementServicesDAL.CreateUpdateUserDAL(FormData);
@@ -903,22 +783,12 @@ namespace AdminPanel.Controllers
                 {
                     return Json(new { success = false, message = result });
                 }
-
-
             }
             catch (Exception ex)
             {
-
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 return Json(new { success = false, message = "An error occured on server side.", ExMsg = ex.Message });
             }
-
-
-
-
-
         }
-
     }
 }

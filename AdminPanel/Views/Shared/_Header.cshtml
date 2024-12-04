@@ -1,279 +1,226 @@
 ﻿@{
-    var LoginUser = sessionManager.GetLoginUserFromSession();
-    var appConfigEntity = sessionManager.GetAdminPanelBasicAppConfigsFromSession("AdminPanelLogo");
-    string AdminPanelLogoUrl = appConfigEntity?.AppConfigValue ?? "";
+	var LoginUser = sessionManager.GetLoginUserFromSession();
+	var appConfigEntity = sessionManager.GetAdminPanelBasicAppConfigsFromSession("AdminPanelLogo");
+	string AdminPanelLogoUrl = appConfigEntity?.AppConfigValue ?? "";
 
-    string AdminPanelBaseUrl = ConstantsHelper.GetAppSettingKeyValue("AppSetting", "AdminPanelBaseUrl");
+	string AdminPanelBaseUrl = ConstantsHelper.GetAppSettingKeyValue("AppSetting", "AdminPanelBaseUrl");
 }
 
 <div class="navbar navbar-expand-md navbar-dark">
-    <div class="navbar-brand">
-        <a href="@AdminPanelBaseUrl" class="d-inline-block">
+	<div class="navbar-brand">
+		<a href="@AdminPanelBaseUrl" class="d-inline-block">
+			@{
+				string LogoImagePath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + AdminPanelLogoUrl);
 
-            @{
-                string LogoImagePath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + AdminPanelLogoUrl);
+				if (System.IO.File.Exists(LogoImagePath))
+				{
+					<img src="@AdminPanelLogoUrl" alt="">
+				}
+				else
+				{
+					<img src="/content/themeContent/global_assets/images/logo_light.png" alt="">
+				}
+			}
+		</a>
+	</div>
 
-                if (System.IO.File.Exists(LogoImagePath))
-                {
-                    <img src="@AdminPanelLogoUrl" alt="">
-                }
-                else
-                {
-                    <img src="/content/themeContent/global_assets/images/logo_light.png" alt="">
-                }
-            }
-          
+	<div class="d-md-none">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
+			<i class="icon-tree5"></i>
+		</button>
+		<button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
+			<i class="icon-paragraph-justify3"></i>
+		</button>
+	</div>
 
-        </a>
-    </div>
+	<div class="collapse navbar-collapse" id="navbar-mobile">
+		<ul class="navbar-nav">
+			<li class="nav-item">
+				<a href="#" class="navbar-nav-link sidebar-control sidebar-main-toggle d-none d-md-block">
+					<i class="icon-paragraph-justify3"></i>
+				</a>
+			</li>
+		</ul>
+		<span class="badge bg-success ml-md-3 mr-md-auto">Online</span>
+		<ul class="navbar-nav">
+			<li class="nav-item dropdown">
+				<a href="#" onclick="GetSiteHeaderNotifications()" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
+					<i class="icon-bubbles4"></i>
+					<span class="d-md-none ml-2">Messages</span>
+					<span id="header_notification_count" class="badge badge-pill bg-warning-400 ml-auto ml-md-0">0</span>
+				</a>
 
-    <div class="d-md-none">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
-            <i class="icon-tree5"></i>
-        </button>
-        <button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
-            <i class="icon-paragraph-justify3"></i>
-        </button>
-    </div>
+				<div class="dropdown-menu dropdown-menu-right dropdown-content wmin-md-350">
+					<div class="dropdown-content-header">
+						<span class="font-weight-semibold">Messages</span>
+					</div>
 
-    <div class="collapse navbar-collapse" id="navbar-mobile">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a href="#" class="navbar-nav-link sidebar-control sidebar-main-toggle d-none d-md-block">
-                    <i class="icon-paragraph-justify3"></i>
-                </a>
-            </li>
+					<div class="dropdown-content-body dropdown-scrollable">
+						<ul class="media-list" id="notification_list_header">
+						</ul>
+					</div>
 
+					<div class="dropdown-content-footer justify-content-center p-0">
+						<a href="@Url.Action("AdminPanelNotificationsList","Notifications" , new { langCode = Model?.PageBasicInfoObj?.langCode })" class="bg-light text-grey w-100 py-2" data-popup="tooltip" title="Load more"><i class="icon-menu7 d-block top-0"></i></a>
+					</div>
+				</div>
+			</li>
 
-        </ul>
+			<li class="nav-item dropdown" id="header_languages_area">
+			</li>
 
-        <span class="badge bg-success ml-md-3 mr-md-auto">Online</span>
+			<li class="nav-item dropdown dropdown-user">
+				<a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
+					@{
+						string UserProfileImagePath = String.Empty;
+						if (LoginUser != null && !String.IsNullOrWhiteSpace(LoginUser.ProfilePictureUrl))
+						{
+							UserProfileImagePath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + LoginUser.ProfilePictureUrl);
+						}
 
-        <ul class="navbar-nav">
+						if (System.IO.File.Exists(UserProfileImagePath))
+						{
+							<img src="@LoginUser?.ProfilePictureUrl" class="rounded-circle mr-2" height="34" alt="">
+						}
+						else
+						{
+							<img src="~/content/themeContent/global_assets/images/placeholders/placeholder.jpg" class="rounded-circle mr-2" height="34" alt="">
+						}
+					}
+					<span>@LoginUser?.FirstName</span>
+				</a>
 
-            <li class="nav-item dropdown">
-                <a href="#" onclick="GetSiteHeaderNotifications()" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
-                    <i class="icon-bubbles4"></i>
-                    <span class="d-md-none ml-2">Messages</span>
-                    <span id="header_notification_count" class="badge badge-pill bg-warning-400 ml-auto ml-md-0">0</span>
-                </a>
-
-                <div class="dropdown-menu dropdown-menu-right dropdown-content wmin-md-350">
-                    <div class="dropdown-content-header">
-                        <span class="font-weight-semibold">Messages</span>
-
-                    </div>
-
-                    <div class="dropdown-content-body dropdown-scrollable">
-                        <ul class="media-list" id="notification_list_header">
-                        </ul>
-                    </div>
-
-                    <div class="dropdown-content-footer justify-content-center p-0">
-                        <a href="@Url.Action("AdminPanelNotificationsList","Notifications" , new { langCode = Model?.PageBasicInfoObj?.langCode })" class="bg-light text-grey w-100 py-2" data-popup="tooltip" title="Load more"><i class="icon-menu7 d-block top-0"></i></a>
-                    </div>
-                </div>
-            </li>
-
-            <li class="nav-item dropdown" id="header_languages_area">
-              
-            </li>
-
-            <li class="nav-item dropdown dropdown-user">
-                <a href="#" class="navbar-nav-link d-flex align-items-center dropdown-toggle" data-toggle="dropdown">
-
-
-                    @{
-                        string UserProfileImagePath = String.Empty;
-                        if (LoginUser!=null && !String.IsNullOrWhiteSpace(LoginUser.ProfilePictureUrl))
-                        {
-                            UserProfileImagePath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot" + LoginUser.ProfilePictureUrl);
-                        }
-
-                        if (System.IO.File.Exists(UserProfileImagePath))
-                        {
-
-                            <img src="@LoginUser?.ProfilePictureUrl" class="rounded-circle mr-2" height="34" alt="">
-                        }
-                        else
-                        {
-                            <img src="~/content/themeContent/global_assets/images/placeholders/placeholder.jpg" class="rounded-circle mr-2" height="34" alt="">
-                        }
-                    }
-
-
-
-                    
-                    <span>@LoginUser?.FirstName</span>
-                </a>
-
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="@Url.Action("UpdateUser","UserManagement", new {langCode = Model?.PageBasicInfoObj?.langCode,   UserId = LoginUser?.UserId ?? 0 })" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
-
-
-                    @*  <div class="dropdown-divider"></div>*@
-                    @*  <a href="#" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>*@
-                    <a href="@Url.Action("LogoutUser","Authentication" , new { langCode = Model?.PageBasicInfoObj?.langCode })" class="dropdown-item"><i class="icon-switch2"></i> Logout</a>
-                </div>
-            </li>
-        </ul>
-    </div>
+				<div class="dropdown-menu dropdown-menu-right">
+					<a href="@Url.Action("UpdateUser","UserManagement", new {langCode = Model?.PageBasicInfoObj?.langCode,   UserId = LoginUser?.UserId ?? 0 })" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
+					@*  <div class="dropdown-divider"></div>*@
+					@*  <a href="#" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a>*@
+					<a href="@Url.Action("LogoutUser","Authentication" , new { langCode = Model?.PageBasicInfoObj?.langCode })" class="dropdown-item"><i class="icon-switch2"></i> Logout</a>
+				</div>
+			</li>
+		</ul>
+	</div>
 </div>
 
 <script>
+	$(document).ready(function () {
+		GetHeaderAdminUnreadNotificationsCount();
+		GetHeaderLanguages();
+	});
 
-    $(document).ready(function () {
-        GetHeaderAdminUnreadNotificationsCount();
-        GetHeaderLanguages();
-    });
+	function GetSiteHeaderNotifications() {
+		let getUrl = "@Url.Action("GetSiteHeaderNotifications", "Notifications", new { langCode = Model?.PageBasicInfoObj?.langCode })";
+		$.ajax({
+			type: "GET",
+			url: getUrl,
+			data: {},
+			// datatype: "json",
+			cache: false,
+			async: false,
 
-    function GetSiteHeaderNotifications() {
+			success: function (data) {
+				if (data != undefined) {
+					$('#notification_list_header').html(data);
+				}
+			},
+			error: function (xhr, status, error) {
+				showSuccessErrorMsg("error", "Error", "Something went wrong. Please try again");
+			}
+		});
+	}
 
-        
-        let getUrl = "@Url.Action("GetSiteHeaderNotifications", "Notifications" , new { langCode = Model?.PageBasicInfoObj?.langCode })";
+	function GetHeaderAdminUnreadNotificationsCount() {
+		let getUrl = "@Url.Action("GetHeaderAdminUnreadNotificationsCount", "Notifications", new { langCode = Model?.PageBasicInfoObj?.langCode })";
+		$.ajax({
+			type: "GET",
+			url: getUrl,
+			data: {},
+			// datatype: "json",
+			cache: false,
+			async: false,
+			success: function (data) {
+				if (data != undefined && data.success) {
+					$('#header_notification_count').html(data.total_unread_notifications);
+				}
+			},
+			error: function (xhr, status, error) {
+				showSuccessErrorMsg("error", "Error", "Something went wrong. Please try again");
+			}
+		});
+	}
 
+	function GetHeaderLanguages() {
+		let getUrl = "@Url.Action("GetHeaderLanguages", "Notifications", new { langCode = Model?.PageBasicInfoObj?.langCode })";
 
+		$.ajax({
+			type: "GET",
+			url: getUrl,
+			data: {},
+			// datatype: "json",
+			cache: false,
+			async: false,
 
-        $.ajax({
-            type: "GET",
-            url: getUrl,
-            data: {},
-            // datatype: "json",
-            cache: false,
-            async: false,
+			success: function (data) {
+				if (data != undefined && data != null && data!="") {
+					$('#header_languages_area').html(data);
+				}
+			},
+			error: function (xhr, status, error) {
+				//showSuccessErrorMsg("error", "Error", "Something went wrong. Please try again");
+			}
+		});
+	}
 
+	function setSelectedLanguageInSession(LanguageCode) {
+		if (!checkIfStringIsEmtpy(LanguageCode)) {
+			showSuccessErrorMsg("error", "Error", "Language code is empty!");
+			return false;
+		}
 
-            success: function (data) {
-                
-                if (data != undefined) {
-                    $('#notification_list_header').html(data);
-                }
+		//--make form data
+		var formData = {
+			LanguageCode: LanguageCode
+		}
 
-            },
-            error: function (xhr, status, error) {
-                showSuccessErrorMsg("error", "Error", "Something went wrong. Please try again");
-            }
-        });
-    }
+		// ✅ Show loader area starts here
+		showHideSiteMainLoader(true);
+		// ✅ Show loader area ends here
 
+		let saveUrl = "@Url.Action("setSelectedLanguageInSession", "Notifications", new { langCode = Model?.PageBasicInfoObj?.langCode })";
+		$.ajax({
+			type: "POST",
+			url: saveUrl,
+			data: formData,
+			// datatype: "json",
+			cache: false,
+			async: false,
 
-    function GetHeaderAdminUnreadNotificationsCount() {
+			success: function (data) {
+				console.log(data);
+				if (data.success) {
+					showSuccessErrorMsg("success", "Success", "Lang Changed Successfully!");
+					setTimeout(function () {
+						window.location.href = '@Url.Action("Index", "Home")';
+					}, 1000);
+				} else {
+					showSuccessErrorMsg("error", "Error", data.message ?? "An error occured. Please try again!");
+				}
 
-        let getUrl = "@Url.Action("GetHeaderAdminUnreadNotificationsCount", "Notifications" , new { langCode = Model?.PageBasicInfoObj?.langCode })";
-
-        $.ajax({
-            type: "GET",
-            url: getUrl,
-            data: {},
-            // datatype: "json",
-            cache: false,
-            async: false,
-
-
-            success: function (data) {
-                
-                if (data != undefined && data.success) {
-                    $('#header_notification_count').html(data.total_unread_notifications);
-                }
-
-            },
-            error: function (xhr, status, error) {
-                showSuccessErrorMsg("error", "Error", "Something went wrong. Please try again");
-            }
-        });
-    }
-
-
-    function GetHeaderLanguages() {
-
-
-        let getUrl = "@Url.Action("GetHeaderLanguages", "Notifications" , new { langCode = Model?.PageBasicInfoObj?.langCode })";
-
-
-
-        $.ajax({
-            type: "GET",
-            url: getUrl,
-            data: {},
-            // datatype: "json",
-            cache: false,
-            async: false,
-
-
-            success: function (data) {
-
-                if (data != undefined && data != null && data!="") {
-                    $('#header_languages_area').html(data);
-                }
-
-            },
-            error: function (xhr, status, error) {
-                //showSuccessErrorMsg("error", "Error", "Something went wrong. Please try again");
-            }
-        });
-    }
-
-
-    function setSelectedLanguageInSession(LanguageCode) {
-
-     
-
-       
-        if (!checkIfStringIsEmtpy(LanguageCode)) {
-            showSuccessErrorMsg("error", "Error", "Language code is empty!");
-            return false;
-        }
-
-       
-        //--make form data
-        var formData = {
-            LanguageCode: LanguageCode
-        }
-
-        // ✅ Show loader area starts here
-        showHideSiteMainLoader(true);
-        // ✅ Show loader area ends here
-
-        let saveUrl = "@Url.Action("setSelectedLanguageInSession", "Notifications" , new { langCode = Model?.PageBasicInfoObj?.langCode })";
-        $.ajax({
-            type: "POST",
-            url: saveUrl,
-            data: formData,
-            // datatype: "json",
-            cache: false,
-            async: false,
-
-            success: function (data) {
-                console.log(data);
-                if (data.success) {
-                    showSuccessErrorMsg("success", "Success", "Lang Changed Successfully!");
-                    setTimeout(function () {
-                        window.location.href = '@Url.Action("Index", "Home")';
-                    }, 1000);
-                } else {
-                    showSuccessErrorMsg("error", "Error", data.message ?? "An error occured. Please try again!");
-                }
-
-                // ✅ Stop loader area starts here
-                let LoaderTimeDuration = '@ConstantsHelper.SiteMainLoaderDuration()';
-                setTimeout(function () {
-                    showHideSiteMainLoader(false);
-                }, LoaderTimeDuration ?? 2000);
-                // ✅ Stop loader area ends here
-
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                showSuccessErrorMsg("error", "Error", "An error occured. Please try again!");
-
-                // ✅ Stop loader area starts here
-                let LoaderTimeDuration = '@ConstantsHelper.SiteMainLoaderDuration()';
-                setTimeout(function () {
-                    showHideSiteMainLoader(false);
-                }, LoaderTimeDuration ?? 2000);
-                // ✅ Stop loader area ends here
-            }
-        })
-
-    }
-
+				// ✅ Stop loader area starts here
+				let LoaderTimeDuration = '@ConstantsHelper.SiteMainLoaderDuration()';
+				setTimeout(function () {
+					showHideSiteMainLoader(false);
+				}, LoaderTimeDuration ?? 2000);
+				// ✅ Stop loader area ends here
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+				showSuccessErrorMsg("error", "Error", "An error occured. Please try again!");
+				// ✅ Stop loader area starts here
+				let LoaderTimeDuration = '@ConstantsHelper.SiteMainLoaderDuration()';
+				setTimeout(function () {
+					showHideSiteMainLoader(false);
+				}, LoaderTimeDuration ?? 2000);
+				// ✅ Stop loader area ends here
+			}
+		})
+	}
 </script>

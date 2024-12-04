@@ -9,12 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 using static Entities.DBInheritedModels.InheritedEntitiesLevelTwo;
 
-
 namespace Entities.MainModels
 {
     public class ConfigurationModel
     {
-
         public List<RoleRightEntity>? RoleRightList { get; set; }
         public List<EntityEntity>? EntityList { get; set; }
         public List<EntityEntity>? EntityListSearchDropDown { get; set; }

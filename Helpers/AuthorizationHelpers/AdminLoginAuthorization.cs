@@ -20,14 +20,10 @@ namespace Helpers.AuthorizationHelpers
             _sessionManag = sessionManag;
         }
 
-       
-
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             UserEntity? usr = new UserEntity();
-
             usr = _sessionManag.GetLoginUserFromSession();
-
 
             // --if user session null, then redirect to  login page
             if (usr == null || usr.UserId < 1)
@@ -38,9 +34,7 @@ namespace Helpers.AuthorizationHelpers
                     action = "Login",
                     area = ""
                 }));
-
             }
-
 
             base.OnActionExecuting(filterContext);
         }

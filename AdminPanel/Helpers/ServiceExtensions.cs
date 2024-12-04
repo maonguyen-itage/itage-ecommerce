@@ -21,12 +21,10 @@ namespace AdminPanel.Helpers
 {
     public static class ServiceExtensions
     {
-
         public static string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
         public static void ConfigureIServiceCollection(this WebApplicationBuilder builder)
         {
-
             #region CORS setting for API
 
             builder.Services.AddCors(options =>
@@ -38,17 +36,14 @@ namespace AdminPanel.Helpers
                                                           .AllowAnyHeader()
                                                           .AllowAnyMethod();
 
-                                      //policy.WithOrigins("https://noorecommerceshop.netlify.app" , "http://noornashad-001-site3.etempurl.com")
+                                      //policy.WithOrigins("https://itage-ecommerce.netlify.app" , "http://noornashad-001-site3.etempurl.com")
                                       //             .AllowAnyHeader()
                                       //             .AllowAnyMethod();
                                   });
             });
             #endregion
-
-
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
             #region main services registeration
             //---These are the services that we will use in our project for CRUD
             builder.Services.AddSingleton<IDatabase, Database>();
@@ -81,7 +76,6 @@ namespace AdminPanel.Helpers
             builder.Services.AddScoped<CustomerApiCallsAuthorization>();
 
             #endregion
-
             //--Configure IConfiguration Interface for static methods
             StaticMethodsDependencyInjctHelper.Initialize(builder.Configuration, null);
 
@@ -104,7 +98,6 @@ namespace AdminPanel.Helpers
             });
 
             #endregion
-
         }
 
         public static void ConfigureWebApplication(this WebApplication app)
@@ -122,26 +115,14 @@ namespace AdminPanel.Helpers
 
             //---For session purpose
             app.UseSession();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
-
             app.UseCors(MyAllowSpecificOrigins);
-
-
             ConfigureRoutes(app);
-
-
-
         }
 
         public static void ConfigureRoutes(this WebApplication app)
         {
-
-
-
             #region Other Routes
 
             app.MapControllerRoute(
@@ -404,8 +385,6 @@ namespace AdminPanel.Helpers
             //     new { action = "DataOperation", controller = "ApiDynamic" }
             //   );
             #endregion
-
-
         }
     }
 }

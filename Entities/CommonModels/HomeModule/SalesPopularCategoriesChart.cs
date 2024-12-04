@@ -15,15 +15,11 @@ namespace Entities.CommonModels.HomeModule
         public int TotalSale { get; set; }
     }
 
-
     public class DashboardLifeTimeStatistics
     {
         public int TotalOrders { get; set; }
         public int TotalProducts { get; set; }
         public int TotalUsers { get; set; }
         public int TotalIncome { get; set; }
-
     }
-
-
 }

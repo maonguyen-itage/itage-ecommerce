@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Entities.CommonModels.ConfigurationModule
 {
-
     //--Do not add any extra columns to this class. All the columns in this class should matched columns in ScrnsLocalization table json columns
     public class LocalizationLabelsInfo 
     {
@@ -15,7 +14,6 @@ namespace Entities.CommonModels.ConfigurationModule
         public string? text { get; set; }
         public string? description { get; set; }
         public string? toolTip { get; set; }
-
     }
 
     public class LocalizationLabelsInfoEntity : LocalizationLabelsInfo
@@ -35,10 +33,8 @@ namespace Entities.CommonModels.ConfigurationModule
 
     public class LocalizationLabelInfoBase //--Do not add more columns to this entity
     {
-     
         public int? langId { get; set; }
         public string? text { get; set; }
-     
     }
 
     public class LocalizationMenuLabelInfoChild : LocalizationLabelInfoBase

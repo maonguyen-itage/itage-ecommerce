@@ -20,6 +20,5 @@ namespace Entities.CommonModels.ProductsCatalogModule
         public int PageNo { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int? LoginUserId { get; set; }
-
     }
 }

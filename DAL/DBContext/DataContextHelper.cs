@@ -10,12 +10,9 @@ namespace DAL.DBContext
     public class DataContextHelper : IDataContextHelper
     {
         private readonly IConfiguration _configuration;
-
-
         public DataContextHelper(IConfiguration configuration)
         {
             _configuration = configuration;
-
             ConnetionString = _configuration.GetConnectionString("DBConnection");
             providerName = "System.Data.SqlClient";
         }
@@ -24,7 +21,6 @@ namespace DAL.DBContext
 
         public NoorPortalConnDB GetDataContextHelper(bool enableAutoSelect = true)
         {
-
             return (GetNewDataContext(ConnetionString, providerName, enableAutoSelect));
         }
 
@@ -33,9 +29,6 @@ namespace DAL.DBContext
             NoorPortalConnDB repository = new NoorPortalConnDB(ConnetionString, providerName);
             repository.EnableAutoSelect = enableAutoSelect;
             //repository.ELHelperInstance = elHelperInstance;
-
-
-
             return (repository);
         }
     }

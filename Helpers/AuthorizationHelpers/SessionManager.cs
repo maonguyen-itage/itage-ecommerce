@@ -28,15 +28,9 @@ namespace Helpers.AuthorizationHelpers
             _commonServicesDAL = commonServicesDAL;
         }
 
-
-
-
-
-
         //this method is getting login user info data from session
         public UserEntity? GetLoginUserFromSession()
         {
-
             UserEntity? user = new UserEntity();
             try
             {
@@ -70,13 +64,11 @@ namespace Helpers.AuthorizationHelpers
                                 SetAdminPanelBasicAppConfigsInSession(appConfigEntity);
                                 #endregion
                             }
-
                         }
                         else
                         {
                             user = null;
                         }
-
                     }
                 }
                 else
@@ -110,7 +102,6 @@ namespace Helpers.AuthorizationHelpers
                     {
                         user = null;
                     }
-
                 }
             }
             catch (Exception ex)
@@ -118,16 +109,12 @@ namespace Helpers.AuthorizationHelpers
                 string errorMsg = ex.Message;
                 user = null;
             }
-
-
             return user;
-
         }
 
         public AppConfigEntity? GetAdminPanelBasicAppConfigsFromSession(string AppConfigKey)
         {
             AppConfigEntity? AppConfigEntity = new AppConfigEntity();
-          
 
             var appConfigJsonData = _contx != null && _contx.HttpContext != null ? _contx.HttpContext.Session.GetString("AppConfigsListSession") : null;
 
@@ -143,7 +130,6 @@ namespace Helpers.AuthorizationHelpers
 
             return AppConfigEntity;
         }
-
         public void SetUserDataInSession(UserEntity model)
         {
             //set session
@@ -156,40 +142,29 @@ namespace Helpers.AuthorizationHelpers
             CookieOptions options = new CookieOptions();
 
             int CookiesTimeInDays = !string.IsNullOrEmpty(_configuration.GetSection("AppSetting").GetSection("CookiesExpiryDurationInDays").Value) ? Convert.ToInt32(_configuration.GetSection("AppSetting").GetSection("CookiesExpiryDurationInDays").Value) : 1;
-
             options.Expires = DateTime.Now.AddDays(CookiesTimeInDays);
-
             _contx.HttpContext.Response.Cookies.Append("UserName", string.IsNullOrWhiteSpace(model.UserName) ? "" : model.UserName, options);
             _contx.HttpContext.Response.Cookies.Append("UserId", model.UserId < 1 ? "" : model.UserId.ToString(), options);
-
         }
 
         public void SetMenusInSession()
         {
-
             //get main menus 
             var NavMenuList = _basicData.GetNavMenusList(new MenuNavigation());
             //---Saving menus in sessions
             var MainMenu = JsonConvert.SerializeObject(NavMenuList);
             _contx.HttpContext.Session.SetString("MainMenu", MainMenu);
-
-
-
         }
-
 
         public void SetUserRightsInSession(int UserID)
         {
-
             //get roles rights
             var roleRights = _basicData.GetUserRoleRightsForSession(UserID);
             //---Saving menus in sessions
             var roleRightsJsonData = JsonConvert.SerializeObject(roleRights);
             _contx.HttpContext.Session.SetString("UserRoleRights", roleRightsJsonData);
-
         }
 
-        
         public void SetAdminPanelBasicAppConfigsInSession(AppConfigEntity? FormData)
         {
             AppConfigEntity appConfigEntity = new AppConfigEntity()
@@ -197,7 +172,6 @@ namespace Helpers.AuthorizationHelpers
                 PageNo = FormData != null && FormData.PageNo > 0 ? FormData.PageNo : 1,
                 PageSize = FormData != null && FormData.PageSize > 0 ? FormData.PageSize : 100,
                 AppConfigKey = FormData != null && !String.IsNullOrWhiteSpace(FormData.AppConfigKey) ? FormData.AppConfigKey : ""
-
             };
          
             var AppConfigsList = _commonServicesDAL.GetAppConfigsValuesDAL(appConfigEntity);
@@ -205,16 +179,12 @@ namespace Helpers.AuthorizationHelpers
             //-- Save App Configs in Session
             var AppConfigsListJsonData = JsonConvert.SerializeObject(AppConfigsList);
             _contx.HttpContext.Session.SetString("AppConfigsListSession", AppConfigsListJsonData);
-
-
-
         }
 
         public async Task<int?> GetLoginUserIdFromSession()
         {
             try
             {
-
                 int UserId = Convert.ToInt32(_contx.HttpContext.Session.GetString("UserId"));
 
                 await Task.FromResult(UserId);
@@ -222,7 +192,6 @@ namespace Helpers.AuthorizationHelpers
             }
             catch (Exception)
             {
-
                 return 0;
             }
         }
@@ -234,7 +203,6 @@ namespace Helpers.AuthorizationHelpers
             {
                 //---Get user role rights from session
                 var UserRoleRightsString = _contx != null && _contx.HttpContext != null ? _contx.HttpContext.Session.GetString("UserRoleRights") : null;
-
                
                 if (!String.IsNullOrEmpty(UserRoleRightsString))
                 {
@@ -245,38 +213,31 @@ namespace Helpers.AuthorizationHelpers
                     RoleRighstList = new List<RoleRightEntity>();
                 }
 
-
                 await Task.FromResult(RoleRighstList);
                 return RoleRighstList;
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-
         public void SetViewSelfRightForLoginUserInSession()
         {
             _contx.HttpContext.Session.SetInt32("IsViewSelfRight",1);   //--1 is for set, 0 is for not set or null
         }
-
         public async Task<bool> GetViewSelfRightForLoginUserFromSession()
         {
             bool result = false;
             try
             {
-
                 int IsViewSelfRight = Convert.ToInt32(_contx.HttpContext.Session.GetInt32("IsViewSelfRight"));
                 result = IsViewSelfRight==1 ? true : false;
               
                 await Task.FromResult(result);
                 return result;
-
             }
             catch (Exception)
             {
-
                 return result;
             }
         }
@@ -292,7 +253,6 @@ namespace Helpers.AuthorizationHelpers
             {
                 throw;
             }
-            
         }
 
         public async Task<string> GetLanguageCodeFromSession()
@@ -300,22 +260,18 @@ namespace Helpers.AuthorizationHelpers
             string result = string.Empty;
             try
             {
-
                 result = _contx.HttpContext.Session.GetString("LangCode");
                 result = String.IsNullOrWhiteSpace(result) ? "en" : result;
 
                 await Task.FromResult(result);
                 return result;
-
             }
             catch (Exception)
             {
-
                 return result;
             }
         }
     }
-
 
     public interface ISessionManager
     {
@@ -331,6 +287,5 @@ namespace Helpers.AuthorizationHelpers
         AppConfigEntity? GetAdminPanelBasicAppConfigsFromSession(string AppConfigKey);
         void SetLanguageCodeInSession(string LangCode);
         Task<string> GetLanguageCodeFromSession();
-
     }
 }

@@ -18,7 +18,6 @@ namespace Entities.CommonModels
         public string? primaryKeyColumn { get; set; }
         public string? tableName { get; set; }
         public int SqlDeleteType { get; set; }
-
     }
 
     public class HtmlFormFieldsEntity
@@ -47,10 +46,7 @@ namespace Entities.CommonModels
 
     public class SearchFilterModel
     {
-
-
         public List<HtmlFormFieldsEntity>? SearchFilterEntityList { get; set; }
-
         public string? SearchJSFunctionName { get; set; }
         public string? SearchButtonType { get; set; } //--button | submit
 
@@ -81,8 +77,7 @@ namespace Entities.CommonModels
         public string? AddNewButtonNewLinkUrl { get; set; }
         public string? DataExportUrl { get; set; }
 
-         public  List<HtmlTags>? HtmlTagsList { get; set; }
-        
+        public  List<HtmlTags>? HtmlTagsList { get; set; }
     }
 
     public class PageBasicInfo
@@ -95,8 +90,6 @@ namespace Entities.CommonModels
         public string langCode { get; set; } = "en";
         public string? TitleTagHtmlId { get; set; }
     }
-
-   
 
     public class HtmlBootstrapModalEntity
     {
@@ -137,9 +130,5 @@ namespace Entities.CommonModels
         public string? FieldOnChangeFunction { get; set; }
         public string? FieldOnFocusFunction { get; set; }
         public string? FieldOnClickFunction { get; set; }
-
     }
-
-  
-
 }

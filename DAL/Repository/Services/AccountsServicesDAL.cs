@@ -27,12 +27,9 @@ namespace DAL.Repository.Services
             _contextHelper = contextHelper;
             _dapperConnectionHelper = dapperConnectionHelper;
         }
-
-
         public async Task<List<BankMasterEntity>> GetBankMasterDAL(BankMasterEntity FormData)
         {
             List<BankMasterEntity> result = new List<BankMasterEntity>();
-
             try
             {
                 using (var context = _contextHelper.GetDataContextHelper())
@@ -79,33 +76,23 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
-
         }
 
         public async Task<List<BankIndustryTypeEntity>> GetBankIndustryTypeDAL(BankIndustryTypeEntity FormData)
         {
-
             List<BankIndustryTypeEntity> result = new List<BankIndustryTypeEntity>();
-
 
             try
             {
-
                 using (var context = _contextHelper.GetDataContextHelper())
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
 
                     if (FormData.IndustryTypeId > 0)
                     {
@@ -144,33 +131,22 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
-
         }
-
         public async Task<List<BankStatusEntity>> GetBankStatusesDAL(BankStatusEntity FormData)
         {
-
             List<BankStatusEntity> result = new List<BankStatusEntity>();
-
 
             try
             {
-
                 using (var context = _contextHelper.GetDataContextHelper())
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
 
                     if (FormData.BankStatusId > 0)
                     {
@@ -209,30 +185,20 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
-
         }
-
         public async Task<string> SaveUpdateBankMasterDAL(BankMasterEntity FormData, int DataOperationType)
         {
             string result = "";
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
-
-
                     if (DataOperationType == 1)
                     {
                         context.Execute(@"INSERT INTO BankMaster(BankName	,IndustryTypeID	,BankCode,	SwiftCode,	BankStatusID,	CountryID,	WebUrl,	CreatedOn,	CreatedBy)
@@ -265,8 +231,6 @@ namespace DAL.Repository.Services
                            CountryId = FormData.CountryId,
                            WebUrl = FormData.WebUrl,
                            LoginUserId = FormData.LoginUserId,
-
-
                        });
                         result = "Saved Successfully!";
                     }
@@ -275,26 +239,15 @@ namespace DAL.Repository.Services
                         result = "Please define data operation type!";
                     }
 
-
-                    //context.EnableAutoSelect = false;
-
-                    //var QueryResponse = context.Execute(@";EXEC [dbo].[SP_LogRunTimeException] @ExceptionMessage,@StackTrace , @Source",
-                    //    new { ExceptionMessage = ExceptionMessage, StackTrace = StackTrace, Source = Source });
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
         }
-
         public async Task<List<BankAccountEntity>> GetUserBankAccountsDAL(BankAccountEntity FormData)
         {
             List<BankAccountEntity> result = new List<BankAccountEntity>();
@@ -325,7 +278,6 @@ namespace DAL.Repository.Services
                         SearchParameters.Append("AND BM.BankName LIKE  @0", "%" + FormData.BankName + "%");
                     }
 
-
                     if (!String.IsNullOrEmpty(FormData.AcountTitle))
                     {
                         SearchParameters.Append("AND (MTBL.AcountTitle LIKE  @0)", "%" + FormData.AcountTitle + "%");
@@ -340,7 +292,6 @@ namespace DAL.Repository.Services
                     {
                         SearchParameters.Append("AND MTBL.CreatedBy =  @0 ", FormData.CreatedBy);
                     }
-
 
                     if (!String.IsNullOrEmpty(FormData.FromDate))
                     {
@@ -367,40 +318,28 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
-
         }
 
         public async Task<List<BankAccountType>> GetBankAccountTypesDAL(BankAccountType FormData)
         {
-
             List<BankAccountType> result = new List<BankAccountType>();
-
 
             try
             {
-
                 using (var context = _contextHelper.GetDataContextHelper())
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
 
                     if (!String.IsNullOrEmpty(FormData.AccountTypeName))
                     {
                         SearchParameters.Append("AND MTBL.AccountTypeName LIKE  @0", "%" + FormData.AccountTypeName + "%");
                     }
-
-
 
                     var ppSql = PetaPoco.Sql.Builder.Select(@" COUNT(*) OVER () as TotalRecords,MTBL.*")
                       .From(" BankAccountType MTBL")
@@ -408,35 +347,26 @@ namespace DAL.Repository.Services
                       .Append(SearchParameters)
                      .OrderBy("MTBL.AccountTypeId DESC");
 
-
                     result = context.Fetch<BankAccountType>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
-
         }
 
         public async Task<string> CreateUpdateUserBankAccount(BankAccountEntity FormData)
         {
             string result = "";
 
-
             try
             {
                 using (IDbConnection dbConnection = _dapperConnectionHelper.GetDapperContextHelper())
                 {
                     dbConnection.Open();
-
                     dbConnection.Execute("SP_AdmPanel_CreateUpdateBankAccount",
                         new
                         {
@@ -465,34 +395,21 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
                 }
-
-
-
-
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
         }
 
         public async Task<BankAccountEntity?> GetBankAccountDetailByIdDAL(int BankAccountId)
         {
-
             BankAccountEntity? result = new BankAccountEntity();
-
-
             try
             {
-
                 using (var context = _contextHelper.GetDataContextHelper())
                 {
-
                     var ppSql = PetaPoco.Sql.Builder.Select(@" TOP 1 BA.* , USR.FirstName , USR.LastName, USR.EmailAddress, USRTYP.UserTypeName , BAT.AccountTypeName, BM.BankName, SP.StateName, CT.CityName")
                       .From(" BankAccounts BA")
                       .InnerJoin("Users USR").On(" BA.UserID= USR.UserID")
@@ -503,25 +420,16 @@ namespace DAL.Repository.Services
                       .LeftJoin("Cities CT ").On(" BA.CityID= CT.CityID")
                       .Where("BA.BankAccountID = @0", BankAccountId);
 
-
-
                     result = context.Fetch<BankAccountEntity>(ppSql).FirstOrDefault();
-
                     await Task.FromResult(result);
                     return result;
-
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
-
         }
-
         public async Task<List<BankAccountAttachmentEntity>> GetBankAccountAttachmentListDAL(BankAccountAttachmentEntity FormData)
         {
             List<BankAccountAttachmentEntity> result = new List<BankAccountAttachmentEntity>();
@@ -550,34 +458,21 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
-
         }
-
-
         public async Task<List<VendorsCommissionSetupEntity>> GetVendorsCommissionSetupDAL(VendorsCommissionSetupEntity FormData)
         {
-
             List<VendorsCommissionSetupEntity> result = new List<VendorsCommissionSetupEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
-
                     if (FormData.UserId > 0)
                     {
                         SearchParameters.Append("AND MTBL.UserID =  @0 ", FormData.UserId);
@@ -592,8 +487,6 @@ namespace DAL.Repository.Services
                         SearchParameters.Append("AND MTBL.LastName LIKE  @0", "%" + FormData.LastName + "%");
                     }
 
-
-
                     var ppSql = PetaPoco.Sql.Builder.Select(@" COUNT(MTBL.UserID) OVER () as TotalRecords, MTBL.UserID, MTBL.FirstName , MTBL.LastName, MTBL.EmailAddress , VCS.VendorCommissionID, VCS.CommissionType, VCS.CommissionValue, VCS.IsActive, VCS.ApplicableFrom,
                     VCS.ApplicableTo")
                       .From(" Users MTBL")
@@ -605,36 +498,25 @@ namespace DAL.Repository.Services
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
 
                     result = context.Fetch<VendorsCommissionSetupEntity>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception ex)
                 {
                     string errorMsg = ex.Message;
-
                     throw;
                 }
-
             }
-
         }
-
         public async Task<string> UpdateVendorCommissionDAL(VendorsCommissionSetupEntity FormData, int DataOperationType)
         {
             string result = "";
-
-
             try
             {
                 using (IDbConnection dbConnection = _dapperConnectionHelper.GetDapperContextHelper())
                 {
                     dbConnection.Open();
-
                     dbConnection.Execute(@"DECLARE @VendorCommissionId INT;
-
 	                        INSERT INTO VendorsCommissionSetup(UserID , CommissionType , CommissionValue , ApplicableFrom , ApplicableTo, IsActive, CreatedOn , CreatedBy)
 	                        VALUES(@UserId , 'Percentage' , @CommissionValue , @ApplicableFrom , @ApplicableTo, @IsActive, GETDATE() , @LoginUserId);
 							SET @VendorCommissionId = SCOPE_IDENTITY();
@@ -653,40 +535,24 @@ namespace DAL.Repository.Services
                         }
                         , commandType: CommandType.Text);
                     dbConnection.Close();
-
                     result = "Saved Successfully!";
-
                     await Task.FromResult(result);
                     return result;
-
                 }
-
-
-
-
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-          
-
         }
-
         public async Task<List<VendorsPayments>> GetVendorsPaymentsListDAL(VendorsPayments FormData)
         {
-
             List<VendorsPayments> result = new List<VendorsPayments>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     context.EnableAutoSelect = false;
-
                     result = context.Fetch<VendorsPayments>(@";EXEC [dbo].[SP_AdmPanel_GetVendorsPaymentsList] @VendorId,@VendorFirstName,@VendorLastName, @PageNo,@PageSize ",
                           new
                           {
@@ -697,33 +563,22 @@ namespace DAL.Repository.Services
                               PageSize = FormData.PageSize
 
                           }).ToList();
-
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
         public async Task<List<AccountTransactionsDetail>> GetAccountTransDetailByVendorIdDAL(AccountTransactionsDetail FormData)
         {
-
             List<AccountTransactionsDetail> result = new List<AccountTransactionsDetail>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
 
                     if (!String.IsNullOrEmpty(FormData.FromDate))
@@ -751,8 +606,7 @@ namespace DAL.Repository.Services
                     CTE_Final AS (
 	                    SELECT * FROM CTE_TransDetail
                     )
-
-                    SELECT CTF.*, COUNT(*) OVER () as TotalRecords FROM CTE_Final CTF " , FormData.VendorId)
+                    SELECT CTF.*, COUNT(*) OVER () as TotalRecords FROM CTE_Final CTF ", FormData.VendorId)
                       .Where("CTF.TransId is not null")
                      .Append(SearchParameters)
                      .OrderBy("CTF.TransID ASC")
@@ -760,37 +614,24 @@ namespace DAL.Repository.Services
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
 
                     result = context.Fetch<AccountTransactionsDetail>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception ex)
                 {
                     string errorMsg = ex.Message;
-
                     throw;
                 }
-
             }
-
         }
-
-
         public async Task<List<BankTransEventEntity>> GetBankTransEventListDAL(BankTransEventEntity FormData)
         {
-
             List<BankTransEventEntity> result = new List<BankTransEventEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.EventId > 0)
                     {
@@ -801,7 +642,6 @@ namespace DAL.Repository.Services
                     {
                         SearchParameters.Append("AND MTBL.EventName LIKE  @0", "%" + FormData.EventName + "%");
                     }
-                 
 
                     var ppSql = PetaPoco.Sql.Builder.Select(@" COUNT(MTBL.EventId) OVER () as TotalRecords, MTBL.* ")
                       .From(" BankTransEvent MTBL")
@@ -812,39 +652,24 @@ namespace DAL.Repository.Services
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
 
                     result = context.Fetch<BankTransEventEntity>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception ex)
                 {
                     string errorMsg = ex.Message;
-
                     throw;
                 }
-
             }
-
         }
-
-
         public async Task<string> CreateUpdateBankAccountTransDAL(AccountTransactionsDetail FormData)
         {
             string result = "";
-
-
-
-
-         
-
             try
             {
                 using (IDbConnection dbConnection = _dapperConnectionHelper.GetDapperContextHelper())
                 {
                     dbConnection.Open();
-
                     dbConnection.Execute("SP_AdmPanel_CreateUpdateBankAccountTrans",
                         new
                         {
@@ -866,42 +691,25 @@ namespace DAL.Repository.Services
                         }
                         , commandType: CommandType.StoredProcedure);
                     dbConnection.Close();
-
                     result = "Saved Successfully!";
-
                     await Task.FromResult(result);
                     return result;
-
                 }
-
-
-
-
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
         }
-
 
         public async Task<AccountTransactionsDetail?> GetAccountTransEditFormDataByIdDAL(int TransId)
         {
-
             AccountTransactionsDetail? result = new AccountTransactionsDetail();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
-
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
                     var ppSql = PetaPoco.Sql.Builder.Append(@";WITH CTE_TransDetail AS (
 	                    SELECT TOP 1 BATR.TransID ,BATR.TransType , BATR.TransAmount, BATR.BankAccountId   ,BATR.EventId ,
 	                    SUM(CASE WHEN BATR.TransType = 'Credit' then BATR.TransAmount ELSE -1*BATR.TransAmount END)OVER(PARTITION BY USR.UserID ORDER BY BATR.TransID ASC) AS RemainingBalance,
@@ -920,35 +728,27 @@ namespace DAL.Repository.Services
                     )
 
                     SELECT CTF.* FROM CTE_Final CTF ", TransId);
-                    
-                    result = context.Fetch<AccountTransactionsDetail>(ppSql).FirstOrDefault();
 
+                    result = context.Fetch<AccountTransactionsDetail>(ppSql).FirstOrDefault();
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception ex)
                 {
                     string errorMsg = ex.Message;
-
                     throw;
                 }
-
             }
-
         }
 
         public async Task<List<AccountTransAttachmentEntity>> GetAccountTransEditFormAttachmentsDAL(AccountTransAttachmentEntity FormData)
         {
             List<AccountTransAttachmentEntity> result = new List<AccountTransAttachmentEntity>();
-
             try
             {
                 using (var context = _contextHelper.GetDataContextHelper())
                 {
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
                     if (FormData.AcountTransAttachId > 0)
                     {
                         SearchParameters.Append("AND MTBL.AcountTransAttachId =  @0 ", FormData.AcountTransAttachId);
@@ -964,36 +764,25 @@ namespace DAL.Repository.Services
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
 
                     result = context.Fetch<AccountTransAttachmentEntity>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
-
         }
-
 
         public async Task<List<VendorsOrdersTotalReceivedBalance>> GetVendorsOrdersTotalReceivedBalanceDAL(string CommaSeperatedVendorsIds)
         {
             List<VendorsOrdersTotalReceivedBalance> result = new List<VendorsOrdersTotalReceivedBalance>();
-
             try
             {
                 using (var context = _contextHelper.GetDataContextHelper())
                 {
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
                     var ppSql = PetaPoco.Sql.Builder.Append(@" ;with CTE_MAIN AS (
-
                         SELECT USR.UserID,OI.OrderItemID, ISNULL(VCS.CommissionValue , 0) AS CommissionValue , OI.OrderItemTotal ,
                         OI.OrderItemTotal - (ISNULL(VCS.CommissionValue,0) * OI.OrderItemTotal/100) OrderItemTotalAfterCommission
                         FROM OrderItems OI
@@ -1030,25 +819,16 @@ namespace DAL.Repository.Services
                         )
 
                         SELECT * FROM CTE_Final", CommaSeperatedVendorsIds);
-                    
 
                     result = context.Fetch<VendorsOrdersTotalReceivedBalance>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
-
         }
-
-
     }
 }

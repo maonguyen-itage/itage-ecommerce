@@ -14,6 +14,8 @@ namespace AdminPanel.Controllers
 {
     public class BasicDataController : BaseController
     {
+
+
         private readonly IBasicDataServicesDAL _basicDataDAL;
         private readonly IConstants _constants;
         private readonly ICommonServicesDAL _commonServicesDAL;
@@ -485,6 +487,7 @@ namespace AdminPanel.Controllers
                 {
                     return Json(new { success = false, message = "Please fill the name field!" });
                 }
+
 
                 if (FormData.IsActive == null)
                 {
