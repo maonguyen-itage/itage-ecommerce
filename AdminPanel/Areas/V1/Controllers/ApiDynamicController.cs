@@ -22,9 +22,8 @@ namespace AdminPanel.Areas.V1.Controllers
         private readonly ICommonServicesDAL _commonServicesDAL;
         private readonly ISessionManager _sessionManag;
         private readonly IConstants _constants;
-
-        public ApiDynamicController(IApiOperationServicesDAL apiOperationServices, ICommonServicesDAL commonServicesDAL, ISessionManager sessionManag, 
-            IConstants constants , ICalculationHelper calculationHelper)
+        public ApiDynamicController(IApiOperationServicesDAL apiOperationServices, ICommonServicesDAL commonServicesDAL, ISessionManager sessionManag,
+            IConstants constants, ICalculationHelper calculationHelper)
         {
             this._apiOperationServicesDAL = apiOperationServices;
             _commonServicesDAL = commonServicesDAL;
@@ -83,7 +82,7 @@ namespace AdminPanel.Areas.V1.Controllers
                     #region set JWT Token
                     if (UrlName.Contains("get-user-login"))
                     {
-                        result.Token =JwtManager.GetJwtToken( data ?? "{}");
+                        result.Token = JwtManager.GetJwtToken(data ?? "{}");
                     }
 
                     #endregion
@@ -93,7 +92,7 @@ namespace AdminPanel.Areas.V1.Controllers
                     {
                         try
                         {
-                            data = await _calculationHelper.CalculateDiscountsForProducts( (data ?? "[]"));
+                            data = await _calculationHelper.CalculateDiscountsForProducts((data ?? "[]"));
                         }
                         catch (Exception ex) //--in case of exception, return normal json
                         {
@@ -105,7 +104,6 @@ namespace AdminPanel.Areas.V1.Controllers
                     }
                     #endregion
                 }
-
                 #region result
                 result.Data = data;
                 result.StatusCode = 200;
@@ -113,7 +111,6 @@ namespace AdminPanel.Areas.V1.Controllers
                 result.ErrorMessage = String.Empty;
                 apiActionResult = new APIActionResult(result);
                 #endregion
-
             }
             catch (Exception ex)
             {

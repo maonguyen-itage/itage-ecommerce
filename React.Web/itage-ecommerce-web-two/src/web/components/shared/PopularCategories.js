@@ -144,7 +144,6 @@ const PopularCategories = () => {
 								: " Popular Categories!"}
 						</h4>
 					</div>
-
 					<section className="rounded-category rounded-category-inverse">
 						<Container>
 							<Row>
@@ -167,6 +166,8 @@ const PopularCategories = () => {
 																			style={{
 																				width: "100%",
 																				height: "100%",
+																				borderRadius:
+																					"10px",
 																				objectFit:
 																					"cover",
 																			}}
@@ -222,7 +223,6 @@ const PopularCategories = () => {
 																				console.log(
 																					allProductsUrl
 																				);
-
 																				return (
 																					<>
 																						<Link

@@ -126,7 +126,6 @@ const SearchHeader = () => {
 			//--Get language code
 			let lnCode = getLanguageCodeFromSession();
 			await setLangCode(lnCode);
-
 			const headers = {
 				// customerid: userData?.UserID,
 				// customeremail: userData.EmailAddress,
@@ -141,7 +140,6 @@ const SearchHeader = () => {
 					recordValueJson: "[]",
 				},
 			};
-
 			const response = await MakeApiCallAsync(
 				Config.END_POINT_NAMES["GET_POPULAR_CATEGORIES"],
 				null,
@@ -153,14 +151,12 @@ const SearchHeader = () => {
 			if (response != null && response.data != null) {
 				setPopularCategories(JSON.parse(response.data.data));
 			}
-
 			//-- Get website localization data
 			let arryRespLocalization =
 				await GetLocalizationControlsJsonDataForScreen(
 					GlobalEnums.Entities["WebsiteSearchHeader"],
 					null
 				);
-
 			if (
 				arryRespLocalization != null &&
 				arryRespLocalization != undefined &&
@@ -255,7 +251,6 @@ const SearchHeader = () => {
 															  )
 															: "All Category"}
 													</DropdownItem>
-
 													{PopularCategoriesList &&
 														PopularCategoriesList?.filter(
 															(x) =>
@@ -373,7 +368,7 @@ const SearchHeader = () => {
 									</ul>
 								</div>
 								<div className={`cart-item`}>
-									<h5>
+									{/* <h5>
 										{LocalizationLabelsArray.length > 0
 											? replaceLoclizationLabel(
 													LocalizationLabelsArray,
@@ -381,7 +376,7 @@ const SearchHeader = () => {
 													"lbl_search_hdr_shopping"
 											  )
 											: "shopping"}
-									</h5>
+									</h5> */}
 									<h5>
 										{LocalizationLabelsArray.length > 0
 											? replaceLoclizationLabel(

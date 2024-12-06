@@ -42,14 +42,11 @@ namespace DAL.Repository.Services
         public async Task<string> CreateNewProductDAL(ProductEntity FormData)
         {
             string result = "";
-
-
             try
             {
                 using (IDbConnection dbConnection = _dapperConnectionHelper.GetDapperContextHelper())
                 {
                     dbConnection.Open();
-
                     dbConnection.Execute("SP_AdmPanel_CreateNewProduct",
                         new
                         {
@@ -99,34 +96,22 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
                 }
-
-
-
-
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
         }
-
         //--Update product using dapped method. I did not use here peta poco because it was creating issue for json parameters of stored procedure
         public async Task<string> UpdateProductDAL(ProductEntity FormData)
         {
             string result = "";
-
-
             try
             {
                 using (IDbConnection dbConnection = _dapperConnectionHelper.GetDapperContextHelper())
                 {
                     dbConnection.Open();
-
                     dbConnection.Execute("SP_AdmPanel_UpdateProduct",
                         new
                         {
@@ -1312,6 +1297,6 @@ namespace DAL.Repository.Services
 
         }
 
-     
+
     }
 }

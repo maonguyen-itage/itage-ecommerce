@@ -676,13 +676,13 @@ const ProductDetail = () => {
                                                         <h6 className="product-title size-text">
                                                             select size{" "}
                                                             <span>
-                                                                <a data-toggle="modal" data-target="#sizemodal" 
+                                                                <a data-toggle="modal" data-target="#sizemodal"
                                                                  onClick={(e) => {
                                                                     e.preventDefault();
                                                                     openSizeGuide();
-                                                                   
+
                                                                 }}
-                                                                
+
                                                                 >
                                                                     size chart
                                                                 </a>
@@ -833,12 +833,12 @@ const ProductDetail = () => {
                                                             </Link>
                                                         </li>
                                                         <li>
-                                                            <Link to="https://www.linkedin.com/in/noor-uddin-6b1992212/" target="_blank">
+                                                            <Link to="https://www.linkedin.com/in/marvin-nguyen%E2%9C%85-8a95a952/" target="_blank">
                                                                 <i className="fa fa-linkedin"></i>
                                                             </Link>
                                                         </li>
                                                         <li>
-                                                            <Link to="https://www.youtube.com/channel/UCN8LCF6Mak0Zi0l-WTnxvMg" target="_blank">
+                                                            <Link to="#" target="_blank">
                                                                 <i className="fa fa-youtube-play"></i>
                                                             </Link>
                                                         </li>

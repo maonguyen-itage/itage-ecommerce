@@ -1234,7 +1234,6 @@ namespace Entities.DBModels
                     .HasForeignKey(d => d.ProductId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__OrderItem__Produ__282DF8C2");
-
                 entity.HasOne(d => d.VendorCommission)
                     .WithMany(p => p.OrderItems)
                     .HasForeignKey(d => d.VendorCommissionId)
@@ -1244,17 +1243,11 @@ namespace Entities.DBModels
             modelBuilder.Entity<OrderNote>(entity =>
             {
                 entity.Property(e => e.OrderNoteId).HasColumnName("OrderNoteID");
-
                 entity.Property(e => e.CreatedOn).HasColumnType("datetime");
-
                 entity.Property(e => e.Message).HasMaxLength(1000);
-
                 entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
-
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
-
                 entity.Property(e => e.ParentOrderNoteId).HasColumnName("ParentOrderNoteID");
-
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderNotes)
                     .HasForeignKey(d => d.OrderId)
@@ -1265,23 +1258,16 @@ namespace Entities.DBModels
             modelBuilder.Entity<OrderProductAttributeMapping>(entity =>
             {
                 entity.HasKey(e => e.OrderAttributeMappingId);
-
                 entity.ToTable("OrderProductAttributeMapping");
-
                 entity.Property(e => e.OrderAttributeMappingId).HasColumnName("OrderAttributeMappingID");
-
                 entity.Property(e => e.AttrAdditionalPrice).HasColumnType("decimal(18, 2)");
-
                 entity.Property(e => e.OrderItemId).HasColumnName("OrderItemID");
-
                 entity.Property(e => e.ProductAttributeId).HasColumnName("ProductAttributeID");
-
                 entity.HasOne(d => d.OrderItem)
                     .WithMany(p => p.OrderProductAttributeMappings)
                     .HasForeignKey(d => d.OrderItemId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderProductAttributeMapping_OrderItems");
-
                 entity.HasOne(d => d.ProductAttribute)
                     .WithMany(p => p.OrderProductAttributeMappings)
                     .HasForeignKey(d => d.ProductAttributeId)
@@ -1292,48 +1278,31 @@ namespace Entities.DBModels
             modelBuilder.Entity<OrderRefundReasonType>(entity =>
             {
                 entity.HasKey(e => e.RefundReasonTypeId);
-
                 entity.ToTable("OrderRefundReasonType");
-
                 entity.Property(e => e.RefundReasonTypeId).HasColumnName("RefundReasonTypeID");
-
                 entity.Property(e => e.CreatedOn).HasColumnType("datetime");
-
                 entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
-
                 entity.Property(e => e.ReasonName).HasMaxLength(200);
             });
 
             modelBuilder.Entity<OrderRefundRequest>(entity =>
             {
                 entity.HasKey(e => e.RefundRequestId);
-
                 entity.ToTable("OrderRefundRequest");
-
                 entity.Property(e => e.RefundRequestId).HasColumnName("RefundRequestID");
-
                 entity.Property(e => e.CreatedOn).HasColumnType("datetime");
-
                 entity.Property(e => e.CurrencyId).HasColumnName("CurrencyID");
-
                 entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
-
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
-
                 entity.Property(e => e.RefundAmount).HasColumnType("decimal(18, 2)");
-
                 entity.Property(e => e.RefundReasonDesc).HasMaxLength(1000);
-
                 entity.Property(e => e.RefundReasonTypeId).HasColumnName("RefundReasonTypeID");
-
                 entity.Property(e => e.TaskId).HasColumnName("TaskID");
-
                 entity.HasOne(d => d.Currency)
                     .WithMany(p => p.OrderRefundRequests)
                     .HasForeignKey(d => d.CurrencyId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_PersonOrderRefundRequest");
-
                 entity.HasOne(d => d.Task)
                     .WithMany(p => p.OrderRefundRequests)
                     .HasForeignKey(d => d.TaskId)
@@ -1343,57 +1312,38 @@ namespace Entities.DBModels
             modelBuilder.Entity<OrderShippingDetail>(entity =>
             {
                 entity.HasKey(e => e.ShippingDetailId);
-
                 entity.ToTable("OrderShippingDetail");
-
                 entity.Property(e => e.ShippingDetailId).HasColumnName("ShippingDetailID");
-
                 entity.Property(e => e.DepartureDate).HasColumnType("datetime");
-
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
-
                 entity.Property(e => e.OrderItemId).HasColumnName("OrderItemID");
-
                 entity.Property(e => e.ReceivedDate).HasColumnType("datetime");
-
                 entity.Property(e => e.ReceiverIdentityNo).HasMaxLength(30);
-
                 entity.Property(e => e.ReceiverMobile).HasMaxLength(20);
-
                 entity.Property(e => e.ReceiverName).HasMaxLength(150);
-
                 entity.Property(e => e.ShipperComment).HasMaxLength(1000);
-
                 entity.Property(e => e.ShipperId).HasColumnName("ShipperID");
-
                 entity.Property(e => e.ShippingMethodId).HasColumnName("ShippingMethodID");
-
                 entity.Property(e => e.ShippingStatusId).HasColumnName("ShippingStatusID");
-
                 entity.Property(e => e.TrackingNo).HasMaxLength(250);
-
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderShippingDetails)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__OrderShip__Order__5AD97420");
-
                 entity.HasOne(d => d.OrderItem)
                     .WithMany(p => p.OrderShippingDetails)
                     .HasForeignKey(d => d.OrderItemId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__OrderShip__Order__5BCD9859");
-
                 entity.HasOne(d => d.Shipper)
                     .WithMany(p => p.OrderShippingDetails)
                     .HasForeignKey(d => d.ShipperId)
                     .HasConstraintName("FK__OrderShip__Shipp__5CC1BC92");
-
                 entity.HasOne(d => d.ShippingMethod)
                     .WithMany(p => p.OrderShippingDetails)
                     .HasForeignKey(d => d.ShippingMethodId)
                     .HasConstraintName("FK__OrderShip__Shipp__5DB5E0CB");
-
                 entity.HasOne(d => d.ShippingStatus)
                     .WithMany(p => p.OrderShippingDetails)
                     .HasForeignKey(d => d.ShippingStatusId)
@@ -1404,23 +1354,16 @@ namespace Entities.DBModels
             {
                 entity.HasKey(e => e.StatusId)
                     .HasName("PK_order_statuses");
-
                 entity.Property(e => e.StatusId).HasColumnName("StatusID");
-
                 entity.Property(e => e.CreatedOn)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
-
                 entity.Property(e => e.Description).HasMaxLength(500);
-
                 entity.Property(e => e.DisplaySeqNo).HasColumnType("decimal(10, 2)");
-
                 entity.Property(e => e.IsActive)
                     .IsRequired()
                     .HasDefaultValueSql("((1))");
-
                 entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
-
                 entity.Property(e => e.StatusName).HasMaxLength(150);
             });
 
@@ -1430,29 +1373,21 @@ namespace Entities.DBModels
                     .HasName("PK_order_statuses_mapping");
 
                 entity.ToTable("OrderStatusesMapping");
-
                 entity.Property(e => e.OrderStatusMappingId).HasColumnName("OrderStatusMappingID");
-
                 entity.Property(e => e.CreatedOn)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
-
                 entity.Property(e => e.IsActive)
                     .IsRequired()
                     .HasDefaultValueSql("((1))");
-
                 entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
-
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
-
                 entity.Property(e => e.StatusId).HasColumnName("StatusID");
-
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderStatusesMappings)
                     .HasForeignKey(d => d.OrderId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__OrderStat__Order__30C33EC3");
-
                 entity.HasOne(d => d.Status)
                     .WithMany(p => p.OrderStatusesMappings)
                     .HasForeignKey(d => d.StatusId)
@@ -1464,31 +1399,19 @@ namespace Entities.DBModels
             {
                 entity.HasKey(e => e.PaymentId)
                     .HasName("PK_OrdersPayment");
-
                 entity.Property(e => e.PaymentId).HasColumnName("PaymentID");
-
                 entity.Property(e => e.CurrencyId).HasColumnName("CurrencyID");
-
                 entity.Property(e => e.Guid).HasMaxLength(600);
-
                 entity.Property(e => e.MilestoneName).HasMaxLength(150);
-
                 entity.Property(e => e.MilestoneValue).HasColumnType("decimal(18, 2)");
-
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
-
                 entity.Property(e => e.PaymentDate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
-
                 entity.Property(e => e.PaymentMethodId).HasColumnName("PaymentMethodID");
-
                 entity.Property(e => e.StripeBalanceTransactionId).HasMaxLength(500);
-
                 entity.Property(e => e.StripeChargeId).HasMaxLength(500);
-
                 entity.Property(e => e.TransactionNo).HasMaxLength(600);
-
                 entity.HasOne(d => d.Currency)
                     .WithMany(p => p.OrdersPayments)
                     .HasForeignKey(d => d.CurrencyId)
@@ -1511,27 +1434,17 @@ namespace Entities.DBModels
             modelBuilder.Entity<Otplog>(entity =>
             {
                 entity.ToTable("OTPLogs");
-
                 entity.Property(e => e.OtplogId).HasColumnName("OTPLogID");
-
                 entity.Property(e => e.CustomMsg).HasMaxLength(500);
-
                 entity.Property(e => e.EmailAddress).HasMaxLength(150);
-
                 entity.Property(e => e.LastAttmptCreatedOn).HasColumnType("datetime");
-
                 entity.Property(e => e.Otp).HasColumnName("OTP");
-
                 entity.Property(e => e.OtpcreatedOn)
                     .HasColumnType("datetime")
                     .HasColumnName("OTPCreatedOn");
-
                 entity.Property(e => e.PhoneNo).HasMaxLength(20);
-
                 entity.Property(e => e.StatusMsg).HasMaxLength(200);
-
                 entity.Property(e => e.UserId).HasColumnName("UserID");
-
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Otplogs)
                     .HasForeignKey(d => d.UserId)
@@ -1542,76 +1455,47 @@ namespace Entities.DBModels
             {
                 entity.HasIndex(e => e.PaymentMethodName, "UQ__PaymentM__612080ED1E7B49F4")
                     .IsUnique();
-
                 entity.Property(e => e.PaymentMethodId).HasColumnName("PaymentMethodID");
-
                 entity.Property(e => e.CreatedOn)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
-
                 entity.Property(e => e.DisplaySeqNo).HasColumnType("decimal(10, 2)");
-
                 entity.Property(e => e.ImageUrl).HasMaxLength(500);
-
                 entity.Property(e => e.IsActive)
                     .IsRequired()
                     .HasDefaultValueSql("((1))");
-
                 entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
-
                 entity.Property(e => e.PaymentMethodName).HasMaxLength(150);
             });
 
             modelBuilder.Entity<Product>(entity =>
             {
                 entity.Property(e => e.ProductId).HasColumnName("ProductID");
-
                 entity.Property(e => e.AllowCustomerReviews).HasDefaultValueSql("((1))");
-
                 entity.Property(e => e.CreatedOn)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
-
                 entity.Property(e => e.DisplaySeqNo).HasColumnType("decimal(10, 2)");
-
                 entity.Property(e => e.DisplayStockQuantity).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.InventoryMethodId).HasColumnName("InventoryMethodID");
-
                 entity.Property(e => e.IsActive)
                     .IsRequired()
                     .HasDefaultValueSql("((1))");
-
                 entity.Property(e => e.IsBoundToStockQuantity).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.IsDigitalProduct).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.IsDiscountAllowed).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.IsReturnAble).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.IsShippingFree).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.IsTaxExempt).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.ManufacturerId).HasColumnName("ManufacturerID");
-
                 entity.Property(e => e.MarkAsNew).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.MetaDescription).HasMaxLength(500);
-
                 entity.Property(e => e.MetaKeywords).HasMaxLength(500);
-
                 entity.Property(e => e.MetaTitle).HasMaxLength(200);
-
                 entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
-
                 entity.Property(e => e.OldPrice).HasColumnType("decimal(18, 2)");
-
                 entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
-
                 entity.Property(e => e.ProductName).HasMaxLength(700);
-
                 entity.Property(e => e.SellEndDatetimeUtc)
                     .HasColumnType("datetime")
                     .HasColumnName("SellEndDatetimeUTC");

@@ -79,8 +79,8 @@ const TopHeader = () => {
 		>
 			<div className="custom-container">
 				<Row>
-					<Col xl="10" md="10" sm="6">
-						<span className="top-header-left">
+					<Col xl="5" md="7" sm="6">
+						<div className="top-header-left">
 							<div className="shpping-order">
 								<h6>
 									{LocalizationLabelsArray.length > 0
@@ -119,12 +119,9 @@ const TopHeader = () => {
 									</li>
 								</ul>
 							</div>
-						</span>
-						<span className="layout-header2">
-							<SearchHeader />
-						</span>
+						</div>
 					</Col>
-					<Col xl="2" md="2" sm="6">
+					<Col xl="7" md="5" sm="6">
 						<div className="top-header-right">
 							<div className="top-menu-block">
 								<ul>
@@ -207,6 +204,12 @@ const TopHeader = () => {
 									</Dropdown>
 								</div>
 							</div>
+						</div>
+					</Col>
+
+					<Col xl="12" md="12" sm="12">
+						<div className="layout-header2">
+							<SearchHeader />
 						</div>
 					</Col>
 				</Row>

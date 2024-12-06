@@ -53,7 +53,7 @@ namespace DAL.Repository.Services
                         SearchParameters.Append("AND dt.DiscountTypeId =  @0 ", FormData.DiscountTypeId);
                     }
 
-                    if (FormData.IsActiveSelected!=null && (FormData.IsActiveSelected==1 || FormData.IsActiveSelected == 0))
+                    if (FormData.IsActiveSelected != null && (FormData.IsActiveSelected == 1 || FormData.IsActiveSelected == 0))
                     {
                         SearchParameters.Append("AND dt.IsActive =  @0 ", FormData.IsActiveSelected);
                     }
@@ -149,32 +149,23 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception ex)
                 {
                     string errorMsg = ex.Message;
-
                     throw;
                 }
-
             }
-
         }
-
         public async Task<List<ProductEntity>> GetProductsListForDiscountDAL(ProductEntity FormData)
         {
-
             List<ProductEntity> result = new List<ProductEntity>();
 
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     context.EnableAutoSelect = false;
-
                     result = context.Fetch<ProductEntity>(@";EXEC [dbo].[SP_AdmPanel_GetProductsListForDiscount] @ProductId,@ProductName,@CategoryId,@PageNo,@PageSize",
                           new
                           {
@@ -183,39 +174,26 @@ namespace DAL.Repository.Services
                               CategoryId = FormData.CategoryId,
                               PageNo = FormData.PageNo,
                               PageSize = FormData.PageSize,
-
                           }).ToList();
-
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
 
         public async Task<List<CategoryEntity>> GetCategoriesListForDiscountDAL(CategoryEntity FormData)
         {
-
             List<CategoryEntity> result = new List<CategoryEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
-
                     if (FormData.CategoryId > 0)
                     {
                         SearchParameters.Append("AND MTBL.CategoryID =  @0 ", FormData.CategoryId);
@@ -230,7 +208,6 @@ namespace DAL.Repository.Services
                     {
                         SearchParameters.Append("AND MTBL.ParentCategoryId =  @0 ", FormData.ParentCategoryId);
                     }
-
 
                     if (!String.IsNullOrEmpty(FormData.Name))
                     {
@@ -255,34 +232,22 @@ namespace DAL.Repository.Services
                      .OrderBy("MTBL.CategoryID DESC")
                     .Append(@"OFFSET (@0-1)*@1 ROWS
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
-
                     result = context.Fetch<CategoryEntity>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
-
         public async Task<string> InsertUpdateDiscountDAL(DiscountEntity FormData)
         {
             string result = "";
 
-
             try
             {
-
-
                 using (IDbConnection dbConnection = _dapperConnectionHelper.GetDapperContextHelper())
                 {
                     dbConnection.Open();
@@ -304,7 +269,7 @@ namespace DAL.Repository.Services
                             IsActive = FormData.IsActive,
                             DiscountAssociatedProductsJson = FormData.DiscountAssociatedProductsJson,
                             DiscountAssociatedCategoriesJson = FormData.DiscountAssociatedCategoriesJson,
-                           
+
                             UserId = FormData.UserId,
                         }
                         , commandType: CommandType.StoredProcedure);
@@ -314,32 +279,20 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
                 }
-
-
-
-
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
         }
-
         public async Task<DiscountEntity?> GetDiscountDetailsById(int DiscountId)
         {
-
             DiscountEntity? result = new DiscountEntity();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     context.EnableAutoSelect = false;
 
                     result = context.Fetch<DiscountEntity>(@";EXEC [dbo].[SP_AdmPanel_GetDiscountDetailsById] @DiscountId",
@@ -352,34 +305,25 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
 
         public async Task<List<DiscountProductsMappingEntity>> GetDiscountProductsMappingListDAL(DiscountProductsMappingEntity FormData)
         {
 
             List<DiscountProductsMappingEntity> result = new List<DiscountProductsMappingEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
 
-
-
-                    if (FormData.DiscountId!=0)
+                    if (FormData.DiscountId != 0)
                     {
                         SearchParameters.Append("AND MTBL.DiscountId =  @0 ", FormData.DiscountId);
                     }
@@ -388,8 +332,6 @@ namespace DAL.Repository.Services
                     {
                         SearchParameters.Append("AND MTBL.ProductId =  @0", FormData.ProductId);
                     }
-
-
 
                     var ppSql = PetaPoco.Sql.Builder.Select(@" COUNT(*) OVER () as TotalRecords, MTBL.DiscountProductMappingID, MTBL.DiscountID, MTBL.ProductID,P.ProductName")
                       .From(" DiscountProductsMapping MTBL")
@@ -401,37 +343,27 @@ namespace DAL.Repository.Services
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
 
                     result = context.Fetch<DiscountProductsMappingEntity>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
 
         public async Task<List<DiscountCategoriesMappingEntity>> GetDiscountCategoriesMappingListDAL(DiscountCategoriesMappingEntity FormData)
         {
-
             List<DiscountCategoriesMappingEntity> result = new List<DiscountCategoriesMappingEntity>();
 
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
 
-
-
-                    if (FormData.DiscountId!=0)
+                    if (FormData.DiscountId != 0)
                     {
                         SearchParameters.Append("AND MTBL.DiscountId =  @0 ", FormData.DiscountId);
                     }
@@ -440,8 +372,6 @@ namespace DAL.Repository.Services
                     {
                         SearchParameters.Append("AND MTBL.CategoryId =  @0", FormData.CategoryId);
                     }
-
-
 
                     var ppSql = PetaPoco.Sql.Builder.Select(@" COUNT(*) OVER () as TotalRecords, MTBL.DiscountCategoryMappingID, MTBL.DiscountID, MTBL.CategoryID, c.Name , par.Name AS ParentCategoryName")
                       .From(" DiscountCategoriesMapping MTBL")
@@ -560,7 +490,7 @@ namespace DAL.Repository.Services
                         SearchParameters.Append("AND MTBL.Email LIKE  @0", "%" + FormData.Email + "%");
                     }
 
-                  
+
 
                     if (!String.IsNullOrEmpty(FormData.FromDate))
                     {
@@ -627,7 +557,7 @@ namespace DAL.Repository.Services
                         SearchParameters.Append("AND MTBL.MainTitle LIKE  @0", "%" + FormData.MainTitle + "%");
                     }
 
-                 
+
 
                     if (!String.IsNullOrEmpty(FormData.FromDate))
                     {
@@ -687,7 +617,7 @@ namespace DAL.Repository.Services
                         {
 
 
-                            TopTitle= FormData.TopTitle,
+                            TopTitle = FormData.TopTitle,
                             MainTitle = FormData.MainTitle,
                             BottomTitle = FormData.BottomTitle,
                             LeftButtonText = FormData.LeftButtonText,
@@ -824,7 +754,7 @@ namespace DAL.Repository.Services
                       .From(" DiscountsCampaign MTBL")
                       .LeftJoin("Attachments ATC").On("ATC.AttachmentID = MTBL.CoverPictureID")
                       .Where("MTBL.CampaignId = @0", CampaignId);
-                     
+
                     result = context.Fetch<DiscountsCampaignEntity>(ppSql).FirstOrDefault();
 
                     await Task.FromResult(result);

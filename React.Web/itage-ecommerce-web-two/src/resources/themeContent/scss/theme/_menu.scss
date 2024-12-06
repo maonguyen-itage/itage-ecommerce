@@ -316,7 +316,7 @@ $theme-deafult__toggle-spacing: floor($theme-deafult__item-height * 0.1);
 			font-weight: 700;
 			line-height: $theme-deafult__line-height;
 			text-decoration: none;
-			text-transform: uppercase;
+			text-transform: capitalize;
 			padding-top: 22px;
 			padding-bottom: 22px;
 			letter-spacing: 0.07em;

@@ -390,7 +390,6 @@ namespace AdminPanel.Areas.V1.Controllers
                 Dictionary<string, object>? requestParameters = new Dictionary<string, object>();
                 if (param != null && param.Count != 0)
                 {
-
                     if (param.ContainsKey("requestParameters"))
                     {
                         string? ParamKeyValue = param["requestParameters"].ToString();
@@ -400,9 +399,7 @@ namespace AdminPanel.Areas.V1.Controllers
 
                             paymentToken = requestParameters["paymentToken"].ToString(); // Using ASP.NET MVC 
                             PaymentMethod = Convert.ToInt32(requestParameters["PaymentMethod"].ToString());
-
                         }
-
                     }
                 }
                 //--strip testing card urls: https://stripe.com/docs/testing?numbers-or-method-or-token=card-numbers#visa
@@ -412,7 +409,6 @@ namespace AdminPanel.Areas.V1.Controllers
                 string cartJsonData = "[]";
                 decimal? OrderTotal = 0m;
                 decimal? ItemSubTotal = 0;
-
 
                 cartJsonData = requestParameters != null ? requestParameters["cartJsonData"].ToString() ?? "[]" : "[]";
                 var cartCustomerProducts = new List<CartCustomerProducts>();
@@ -427,7 +423,6 @@ namespace AdminPanel.Areas.V1.Controllers
                         rowData.ProductId = item.ProductId;
                         ProductIds.Add(rowData);
                     }
-
                     string ProductIdsJson = JsonConvert.SerializeObject(ProductIds);
 
                     //-- get products list by ids
@@ -438,15 +433,11 @@ namespace AdminPanel.Areas.V1.Controllers
                     if (ApiConfigurationForGetAllProducts != null)
                     {
                         allProductsDataJson = await this._apiOperationServicesDAL.GetApiData(requestParametersAllProducts, ApiConfigurationForGetAllProducts);
-
                     }
 
                     //--Calcualte Discount for products
                     string productsAfterDiscount = await _calculationHelper.CalculateDiscountsForProducts((allProductsDataJson ?? "[]"));
-
-
                     var CartItems = JsonConvert.DeserializeObject<List<ApiProductEntity?>>(productsAfterDiscount ?? "[]");
-
                     List<CustomerFinalOrderItemData> customerFinalOrderItemDataList = new List<CustomerFinalOrderItemData>();
 
                     if (CartItems != null)
@@ -455,17 +446,13 @@ namespace AdminPanel.Areas.V1.Controllers
                         {
                             foreach (var item in CartItems)
                             {
-
                                 //--get product attributes by product id
                                 var ApiConfigForProductAttributes = await this._apiOperationServicesDAL.GetAPIConfiguration("get-product-all-attributes-by-productId");
                                 var requestParametersAllAttributes = new Dictionary<string, object>();
                                 requestParametersAllAttributes.Add("ProductID", item?.ProductId ?? 0);
                                 string? productAllAttributesJson = await this._apiOperationServicesDAL.GetApiData(requestParametersAllAttributes, ApiConfigForProductAttributes);
-
                                 var _cartProductAllAttributes = JsonConvert.DeserializeObject<List<CartProductAllAttributes?>>(productAllAttributesJson ?? "[]");
-
                                 var _productSelectedAttributes = cartCustomerProducts?.FirstOrDefault(x => x.ProductId == item?.ProductId)?.productSelectedAttributes;
-
 
                                 item.Price = item.Price;
                                 item.Quantity = Convert.ToInt32(cartCustomerProducts?.FirstOrDefault(x => x.ProductId == item.ProductId)?.Quantity);
@@ -490,15 +477,11 @@ namespace AdminPanel.Areas.V1.Controllers
                                     item.OrderItemDiscount = item.OrderItemDiscount * item.Quantity;
                                 }
 
-
-
                                 item.ItemSubTotal = Convert.ToDecimal((item.DiscountedPrice > 0 ? item.DiscountedPrice : item.Price) * (item.Quantity));
                                 item.ItemSubTotal = item.ItemSubTotal + (item.ShippingCharges ?? 0);
                                 item.ItemSubTotal = item.ItemSubTotal + (additionalAttributesCharges);
 
-
                                 OrderTotal = Convert.ToDecimal(OrderTotal + (item.ItemSubTotal));
-
                                 //--Set All Selected attributes data for this row
                                 item.ProductAllSelectedAttributes = new List<CartProductAllAttributes>();
                                 if (_productSelectedAttributes != null)
@@ -508,7 +491,6 @@ namespace AdminPanel.Areas.V1.Controllers
                                         var fullDataAttribue = _cartProductAllAttributes.Where(x => x.ProductAttributeID == attr.ProductAttributeID && x.PrimaryKeyValue == attr.PrimaryKeyValue).FirstOrDefault();
                                         item.ProductAllSelectedAttributes.Add(fullDataAttribue);
                                     }
-
                                 }
                                 //--Fill final order item
                                 CustomerFinalOrderItemData customerFinalOrderItemData = new CustomerFinalOrderItemData()
@@ -530,17 +512,10 @@ namespace AdminPanel.Areas.V1.Controllers
                                 };
 
                                 customerFinalOrderItemDataList.Add(customerFinalOrderItemData);
-
-
                             }
-
-
-
-
                         }
                         else if (!String.IsNullOrWhiteSpace(CouponCode))
                         {
-
                             bool IsDiscountExecuted = false;
                             foreach (var item in CartItems)
                             {
@@ -551,7 +526,6 @@ namespace AdminPanel.Areas.V1.Controllers
                                 string? productAllAttributesJson = await this._apiOperationServicesDAL.GetApiData(requestParametersAllAttributes, ApiConfigForProductAttributes);
 
                                 var _cartProductAllAttributes = JsonConvert.DeserializeObject<List<CartProductAllAttributes?>>(productAllAttributesJson ?? "[]");
-
                                 var _productSelectedAttributes = cartCustomerProducts?.FirstOrDefault(x => x.ProductId == item?.ProductId)?.productSelectedAttributes;
 
                                 item.Price = item.Price;
@@ -569,9 +543,6 @@ namespace AdminPanel.Areas.V1.Controllers
                                     }
                                 }
                                 additionalAttributesCharges = additionalAttributesCharges * item.Quantity;
-
-
-
                                 //--Set All Selected attributes data for this row
                                 item.ProductAllSelectedAttributes = new List<CartProductAllAttributes>();
                                 if (_productSelectedAttributes != null)
@@ -581,7 +552,6 @@ namespace AdminPanel.Areas.V1.Controllers
                                         var fullDataAttribue = _cartProductAllAttributes.Where(x => x.ProductAttributeID == attr.ProductAttributeID && x.PrimaryKeyValue == attr.PrimaryKeyValue).FirstOrDefault();
                                         item.ProductAllSelectedAttributes.Add(fullDataAttribue);
                                     }
-
                                 }
 
                                 //--Fill final order item
@@ -597,7 +567,6 @@ namespace AdminPanel.Areas.V1.Controllers
                                     CouponCode = item.CouponCode ?? "",
                                     ProductAllSelectedAttributes = item.ProductAllSelectedAttributes
                                 };
-
 
                                 //--If discount is applied from the coupon to a product then do not execute again for each product
                                 if (item.IsDiscountAllowed == true && IsDiscountExecuted == false)
@@ -621,33 +590,20 @@ namespace AdminPanel.Areas.V1.Controllers
                                         {
                                             customerFinalOrderItemData.OrderItemDiscountTotal = ((item.OrderItemDiscount ?? 0) * item.Quantity);
                                         }
-                                       
+
                                         //--set the flag to true
                                         IsDiscountExecuted = DiscountValueAfterCouponApplied > 0 ? true : false;
                                     }
                                 }
-
-
 
                                 item.ItemSubTotal = Convert.ToDecimal((item.DiscountedPrice > 0 ? item.DiscountedPrice : item.Price) * (item.Quantity));
                                 item.ItemSubTotal = item.ItemSubTotal + (item.ShippingCharges ?? 0);
                                 item.ItemSubTotal = item.ItemSubTotal + (additionalAttributesCharges);
 
                                 customerFinalOrderItemData.ItemSubTotal = Convert.ToDecimal(item.ItemSubTotal);
-
-
                                 OrderTotal = Convert.ToDecimal(OrderTotal + (item.ItemSubTotal));
-
                                 customerFinalOrderItemDataList.Add(customerFinalOrderItemData);
-
-
                             }
-
-
-
-
-
-
                         }
 
                         else
@@ -661,14 +617,9 @@ namespace AdminPanel.Areas.V1.Controllers
                                 string? productAllAttributesJson = await this._apiOperationServicesDAL.GetApiData(requestParametersAllAttributes, ApiConfigForProductAttributes);
 
                                 var _cartProductAllAttributes = JsonConvert.DeserializeObject<List<CartProductAllAttributes?>>(productAllAttributesJson ?? "[]");
-
                                 var _productSelectedAttributes = cartCustomerProducts?.FirstOrDefault(x => x.ProductId == item?.ProductId)?.productSelectedAttributes;
-
                                 item.Price = item.Price;
                                 item.Quantity = Convert.ToInt32(cartCustomerProducts?.FirstOrDefault(x => x.ProductId == item.ProductId)?.Quantity);
-
-
-
                                 decimal additionalAttributesCharges = 0;
                                 if (_productSelectedAttributes != null)
                                 {
@@ -680,7 +631,6 @@ namespace AdminPanel.Areas.V1.Controllers
                                     }
                                 }
                                 additionalAttributesCharges = additionalAttributesCharges * item.Quantity;
-
 
                                 if (item.DiscountId > 0 && item.DiscountedPrice != null && item.DiscountedPrice > 0)
                                 {
@@ -695,8 +645,6 @@ namespace AdminPanel.Areas.V1.Controllers
                                 item.ItemSubTotal = Convert.ToDecimal((item.DiscountedPrice > 0 ? item.DiscountedPrice : item.Price) * (item.Quantity));
                                 item.ItemSubTotal = item.ItemSubTotal + (item.ShippingCharges ?? 0);
                                 item.ItemSubTotal = item.ItemSubTotal + (additionalAttributesCharges);
-
-
                                 OrderTotal = Convert.ToDecimal(OrderTotal + (item.ItemSubTotal));
 
                                 //--Set All Selected attributes data for this row
@@ -708,7 +656,6 @@ namespace AdminPanel.Areas.V1.Controllers
                                         var fullDataAttribue = _cartProductAllAttributes.Where(x => x.ProductAttributeID == attr.ProductAttributeID && x.PrimaryKeyValue == attr.PrimaryKeyValue).FirstOrDefault();
                                         item.ProductAllSelectedAttributes.Add(fullDataAttribue);
                                     }
-
                                 }
 
                                 //--Fill final order item
@@ -731,7 +678,6 @@ namespace AdminPanel.Areas.V1.Controllers
                                 };
 
                                 customerFinalOrderItemDataList.Add(customerFinalOrderItemData);
-
                             }
                         }
 
@@ -747,7 +693,6 @@ namespace AdminPanel.Areas.V1.Controllers
                         requestParameters.Add("OrderTotal", OrderTotal);
                         requestParameters["cartJsonData"] = JsonConvert.SerializeObject(customerFinalOrderItemDataList);
 
-
                         if (PaymentMethod == (short)PaymentMethodsEnum.Stripe)
                         {
                             if (String.IsNullOrWhiteSpace(paymentToken))
@@ -756,8 +701,7 @@ namespace AdminPanel.Areas.V1.Controllers
                             }
 
                             string currency = CommonConversionHelper.GetDefaultCurrencyCode()?.ToLower() ?? "usd";
-
-							var options = new ChargeCreateOptions
+                            var options = new ChargeCreateOptions
                             {
                                 Amount = currency == "usd" ? (long)(OrderTotal * 100) : (long)OrderTotal,
                                 Currency = currency,
@@ -769,7 +713,6 @@ namespace AdminPanel.Areas.V1.Controllers
 
                             if (charge.Status == "succeeded")
                             {
-
                                 requestParameters.Add("Description", Description);
                                 requestParameters.Add("StripeStatus", charge.Status);
                                 requestParameters.Add("StripeResponseJson", charge.StripeResponse.Content);
@@ -777,11 +720,8 @@ namespace AdminPanel.Areas.V1.Controllers
                                 requestParameters.Add("StripeChargeId", charge.Id);
                                 requestParameters.Add("PayPalResponseJson", string.Empty);
 
-
                                 //--save the information in data base
                                 data = await _orderHelper.SaveCustomerOrderInDbWithRetry(requestParameters, ApiConfiguration);
-
-
 
                                 #region result
                                 result.Data = data;
@@ -811,12 +751,8 @@ namespace AdminPanel.Areas.V1.Controllers
                             requestParameters.Add("StripeChargeId", "");
                             requestParameters.Add("PayPalResponseJson", string.Empty);
 
-                         
-
                             //--save the information in data base
                             data = await _orderHelper.SaveCustomerOrderInDbWithRetry(requestParameters, ApiConfiguration);
-
-
                             #region result
                             result.Data = data;
                             result.StatusCode = 200;
@@ -833,13 +769,8 @@ namespace AdminPanel.Areas.V1.Controllers
                             requestParameters.Add("StripeBalanceTransactionId", "");
                             requestParameters.Add("StripeChargeId", "");
                             requestParameters.Add("PayPalResponseJson", requestParameters["payPalOrderConfirmJson"].ToString() ?? "");
-
-
                             //--save the information in data base
                             data = await _orderHelper.SaveCustomerOrderInDbWithRetry(requestParameters, ApiConfiguration);
-
-
-
                             #region result
                             result.Data = data;
                             result.StatusCode = 200;
@@ -874,19 +805,16 @@ namespace AdminPanel.Areas.V1.Controllers
                                 var message = new EmailMessage(emailAddresses, "New Order Placed", content, String.Format("{0} , New Order Placed", SiteTitle));
                                 _emailSender.SendEmail(message);
 
-                               
+
 
                             }
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             //-- Do nothing
                             var noThing = ex.Message;
                         }
                         #endregion
-
-
-
                     }
                     else
                     {
@@ -897,7 +825,6 @@ namespace AdminPanel.Areas.V1.Controllers
                         result.ErrorMessage = "No cart itme selected!";
                         apiActionResult = new APIActionResult(result);
                         #endregion
-
                     }
                 }
                 else
@@ -1120,7 +1047,7 @@ namespace AdminPanel.Areas.V1.Controllers
                                     decimal DiscountValueAfterCouponApplied = Convert.ToDecimal(couponDiscount["DiscountValueAfterCouponApplied"].ToString());
                                     apiResponse.Add("DiscountValueAfterCouponApplied", DiscountValueAfterCouponApplied);
                                     apiResponse.Add("DiscountId", Convert.ToInt32(couponDiscount["DiscountId"].ToString()));
-                                   
+
 
                                     if (Convert.ToInt32(couponDiscount["DiscountTypeId"].ToString()) == (short)DiscountTypesEnum.AppliedOnOrderTotal)
                                     {
@@ -1224,9 +1151,9 @@ namespace AdminPanel.Areas.V1.Controllers
                 #region new
                 int EntityId = 0;
                 string langCode = string.Empty;
-                if (requestParameters!=null)
+                if (requestParameters != null)
                 {
-                     EntityId = Convert.ToInt32(requestParameters["entityId"].ToString() ?? "0");
+                    EntityId = Convert.ToInt32(requestParameters["entityId"].ToString() ?? "0");
                     langCode = requestParameters["languageCode"].ToString() ?? "en";
                 }
 
@@ -1251,7 +1178,7 @@ namespace AdminPanel.Areas.V1.Controllers
                 }
                 else
                 {
-                  
+
                     #region result
                     result.Data = "[]";
                     result.StatusCode = 501;
@@ -1313,13 +1240,13 @@ namespace AdminPanel.Areas.V1.Controllers
 
                 #region new
                 string Password = String.Empty;
-                if (requestParameters!=null && requestParameters.ContainsKey("Password"))
+                if (requestParameters != null && requestParameters.ContainsKey("Password"))
                 {
-                     Password = requestParameters["Password"].ToString() ?? "";
-                     Password = CommonConversionHelper.Encrypt(Password);
+                    Password = requestParameters["Password"].ToString() ?? "";
+                    Password = CommonConversionHelper.Encrypt(Password);
                 }
-              
-                Dictionary<string, string> responseDic= new Dictionary<string, string>();
+
+                Dictionary<string, string> responseDic = new Dictionary<string, string>();
                 responseDic.Add("Password", Password);
 
                 #region result
@@ -1356,7 +1283,7 @@ namespace AdminPanel.Areas.V1.Controllers
             try
             {
                 var digitalOrderInfo = await this._salesServicesDAL.GetDigitalOrderInfoForCustomerByIdDAL(order_item_id, user_id);
-                if (digitalOrderInfo!=null && digitalOrderInfo.IsDigitalProduct==true && !String.IsNullOrWhiteSpace(digitalOrderInfo.DigitalFileDownloadUrl))
+                if (digitalOrderInfo != null && digitalOrderInfo.IsDigitalProduct == true && !String.IsNullOrWhiteSpace(digitalOrderInfo.DigitalFileDownloadUrl))
                 {
                     if (digitalOrderInfo.DigitalFileDownloadUrl.StartsWith("https://") || digitalOrderInfo.DigitalFileDownloadUrl.StartsWith("http://"))
                     {

@@ -8,7 +8,6 @@ import CustomerTestimonial from "../../components/shared/CustomerTestimonial";
 
 const About = () => {
 	const [siteTitle, setSiteTitle] = useState(Config["SITE_TTILE"]);
-
 	return (
 		<>
 			<Helmet>

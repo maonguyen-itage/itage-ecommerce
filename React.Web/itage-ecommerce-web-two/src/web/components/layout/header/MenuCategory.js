@@ -113,7 +113,15 @@ const MenuCategory = () => {
 							onClick={() => setShowState(!showState)}
 						>
 							<span className="navbar-icon">
-								<i className="fa fa-arrow-down"></i>
+								{/* <i className="fa fa-arrow-down"></i> */}
+								<i
+									class="fa fa-bars fa-lg"
+									style={{ fontSize: "2.0em" }}
+								></i>
+								{/* style={{
+											color: "inherit",
+											textDecoration: "none",
+										}} */}
 							</span>
 						</button>
 						<h5 className="mb-0  text-white title-font">
