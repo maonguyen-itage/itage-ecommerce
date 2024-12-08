@@ -31,7 +31,6 @@ namespace DAL.DBContext
             return new SqlConnection(ConnectionString);
         }
     }
-
     public interface IDapperConnectionHelper
     {
         IDbConnection GetDapperContextHelper();

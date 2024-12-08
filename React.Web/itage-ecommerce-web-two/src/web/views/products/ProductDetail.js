@@ -21,7 +21,6 @@ import ProductVariants from "../../components/products/ProductVariants";
 import { Helmet } from 'react-helmet';
 import SizeGuide from "../../components/shared/SizeGuide";
 
-
 const ProductDetail = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -63,13 +62,10 @@ const ProductDetail = () => {
     const [ReviewTitle, setReviewTitle] = useState('');
     const [ReviewBody, setReviewBody] = useState('');
     const [ReviewRating, setReviewRating] = useState(1);
-
     //--set product id from url
     const params = useParams();
     const [ProductId, setProductId] = useState(params.product_id ?? 0);
-
     const DecreaseItem = () => {
-
         if (qty > 1) {
             setQuantity((qty) - 1);
         }
@@ -87,18 +83,11 @@ const ProductDetail = () => {
                 setQuantity((qty) + 1);
             }
         }
-
     }
-
-
-
 
     const [activeTab, setActiveTab] = useState("1");
     const [filterOpen, setFilterOpen] = useState(false);
-
     const [stock, setStock] = useState("InStock");
-
-
     const handleClick = (newRating) => {
         setReviewRating(newRating);
     };
@@ -120,7 +109,6 @@ const ProductDetail = () => {
     }
 
     const setProductVariantsFromPopup = (PrimaryKeyValue, ProductAttributeID) => {
-
         let tempProdAttr = [];
         tempProdAttr = productSelectedAttributes;
 
@@ -136,15 +124,11 @@ const ProductDetail = () => {
                 ProductId: ProductId,
                 ProductAttributeID: ProductAttributeID,
                 PrimaryKeyValue: PrimaryKeyValue,
-
             });
         }
 
         //--Set in product selected attributes
         setProductSelectedAttributes(tempProdAttr);
-
-
-
 
         //--Set any extra price if associated with this attribute
         let additionalPrice = 0;
@@ -153,16 +137,12 @@ const ProductDetail = () => {
             if (priceData != null && priceData != undefined && priceData.AdditionalPrice != undefined && priceData.AdditionalPrice > 0) {
                 additionalPrice = additionalPrice + priceData.AdditionalPrice;
             }
-
         }
-
 
         //--Set product actual price
         setProductActualPrice(makePriceRoundToTwoPlaces(productDetail.Price + additionalPrice));
-
         //--Set product discounted price
         setProductDiscountedPrice(makePriceRoundToTwoPlaces(productDetail.DiscountedPrice + additionalPrice));
-
         //--Set Product images according to product color
         if (ProductAttributeID == Config.PRODUCT_ATTRIBUTE_ENUM['Color']) {
             mappedProductImagesWithColor(PrimaryKeyValue);
@@ -245,11 +225,7 @@ const ProductDetail = () => {
         }
     }
 
-
     const SubmitReviewForm = async () => {
-
-
-
         let isValid = false;
         let validationArray = [];
 
@@ -302,14 +278,12 @@ const ProductDetail = () => {
             isValid = true;
         }
 
-
         if (isValid) {
 
             const headers = {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             }
-
 
             const param = {
                 requestParameters: {
@@ -321,7 +295,6 @@ const ProductDetail = () => {
                     ReviewRating: ReviewRating,
                 },
             };
-
 
             //--make api call for saving review data
             const response = await MakeApiCallAsync(Config.END_POINT_NAMES['INSERT_PRODUCT_REVIEW'], null, param, headers, "POST", true);
@@ -341,8 +314,6 @@ const ProductDetail = () => {
                 }
             }
         }
-
-
     }
 
     const HandleCustomerWishList = () => {
@@ -353,20 +324,15 @@ const ProductDetail = () => {
         //--store in storage
         localStorage.setItem("customerWishList", customerWishList);
         dispatch(rootAction.cartAction.setCustomerWishList(customerWishList));
-
     }
-
-
 
     useEffect(() => {
         // declare the data fetching function
         const getProductDetail = async () => {
-
             const headers = {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             }
-
 
             const param = {
                 requestParameters: {
@@ -374,8 +340,6 @@ const ProductDetail = () => {
                     recordValueJson: "[]",
                 },
             };
-
-
 
             //--Get product detail
             const response = await MakeApiCallAsync(Config.END_POINT_NAMES['GET_PRODUCT_DETAIL'], null, param, headers, "POST", true);
@@ -397,26 +361,19 @@ const ProductDetail = () => {
 
                 //--Set product discounted price
                 await setProductDiscountedPrice(detail[0].DiscountedPrice);
-
             }
-
-
 
             //--Get product reviews
             const responseReviews = await MakeApiCallAsync(Config.END_POINT_NAMES['GET_PRODUCT_REVIEWS'], null, param, headers, "POST", true);
             if (responseReviews != null && responseReviews.data != null) {
                 await setProductReviews(JSON.parse(responseReviews.data.data));
-
             }
 
             //--Get payment methods
             const responsePaymentMethods = await MakeApiCallAsync(Config.END_POINT_NAMES['GET_PAYMENT_METHODS'], null, param, headers, "POST", true);
             if (responsePaymentMethods != null && responsePaymentMethods.data != null) {
                 await setPaymentMethods(JSON.parse(responsePaymentMethods.data.data));
-
             }
-
-
         }
 
         //--start loader
@@ -435,13 +392,11 @@ const ProductDetail = () => {
             window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
         }, 500);
 
-
     }, [])
 
     useEffect(() => {
         // declare the data fetching function
         const dataOperationFunc = async () => {
-
             //-- Get website localization data
             let arryRespLocalization = await GetLocalizationControlsJsonDataForScreen(GlobalEnums.Entities["ProductDetail"], null);
             if (arryRespLocalization != null && arryRespLocalization != undefined && arryRespLocalization.length > 0) {
@@ -451,7 +406,6 @@ const ProductDetail = () => {
         // call the function
         dataOperationFunc().catch(console.error);
     }, [])
-
 
     return (
         <>
@@ -464,7 +418,6 @@ const ProductDetail = () => {
             <SiteBreadcrumb title="Product Detail" parent="Home" />
             <section className="section-big-pt-space bg-light">
                 <div className="collection-wrapper">
-
                     <div className="custom-container">
                         <Row>
                             <Col
@@ -497,8 +450,6 @@ const ProductDetail = () => {
                                 </Row>
                                 <Row>
                                     <Col lg="5">
-
-
                                         {
                                             filterProductImages?.length > 0 ?
                                                 <ProductDetailImages
@@ -524,18 +475,13 @@ const ProductDetail = () => {
                                                     </>
                                                     :
                                                     <>
-
                                                     </>
-
                                                 }
-
-
 
                                             </h4>
                                             <h3 style={{ marginBottom: '5px' }}>
                                                 {GetDefaultCurrencySymbol()}{productActualPrice}
                                             </h3>{" "}
-
                                             {
                                                 productDetail?.Rating != undefined && productDetail.Rating != null ?
                                                     <div className="product-det-rating-sec">
@@ -547,7 +493,6 @@ const ProductDetail = () => {
                                                                     :
                                                                     "reviews"
                                                                 }
-
                                                             </span>
                                                         </Link>
                                                     </div>
@@ -556,33 +501,21 @@ const ProductDetail = () => {
                                                     </>
                                             }
 
-
-
                                             {/* {swatch ? <ImageSwatch item={item} changeColorVar={changeColorVar} /> : ""} */}
                                             <div className="product-description border-product">
-
                                                 <div className="product-info-custom">
                                                     <div className="product-info-custom-item">
                                                         <span className="product-info-custom-label">Vendor:</span>
                                                         <span className="product-info-custom-value">{productDetail?.VendorName}</span>
                                                     </div>
 
-
-
-
-
-
                                                     <div className="product-info-custom-item">
                                                         <span className="product-info-custom-label">Availability:</span>
-
                                                         {(() => {
-
                                                             if (productDetail?.DisplayStockQuantity != undefined && productDetail.DisplayStockQuantity == true) {
-
                                                                 if (productDetail.StockQuantity != null && productDetail.StockQuantity != undefined && productDetail.StockQuantity > 0) {
                                                                     return (
                                                                         <>
-
                                                                             <span id="lbl_prd_det_instock" style={{ color: '#4CBB17' }}>
                                                                                 {LocalizationLabelsArray.length > 0 ?
                                                                                     replaceLoclizationLabel(LocalizationLabelsArray, "In Stock", "lbl_prd_det_instock")
@@ -590,39 +523,25 @@ const ProductDetail = () => {
                                                                                     "In Stock"
                                                                                 }
                                                                             </span>
-
                                                                             <span className="product-info-custom-value"> ({productDetail.StockQuantity} items)</span>
-
                                                                         </>
                                                                     );
                                                                 } else {
                                                                     return (
                                                                         <>
                                                                             <span className="product-info-custom-value">Out of stock</span>
-
                                                                         </>
                                                                     );
                                                                 }
-
-
                                                             }
-
                                                         })()}
-
-
                                                     </div>
-
-
-
 
                                                     <div className="product-info-custom-item">
                                                         <span className="product-info-custom-label">Brand:</span>
                                                         <span className="product-info-custom-value">{productDetail?.ManufacturerName}</span>
                                                     </div>
                                                 </div>
-
-
-
 
                                                 {
                                                     productDetail?.ProductColorsJson != undefined
@@ -634,16 +553,9 @@ const ProductDetail = () => {
                                                         <>
                                                         </>
                                                 }
-
-
                                                 <ul class="color-variant">
-
                                                     {
                                                         productDetail?.ProductColorsJson?.map((item, idx) =>
-
-
-
-
                                                             <li key={idx} title="color of product"
                                                                 className={(ActiveColor.ColorID === item.ColorID) ? "product-color-cell-active" : ""}
                                                                 style={{ backgroundColor: `${item.HexCode}` }}
@@ -658,16 +570,9 @@ const ProductDetail = () => {
                                                                     setProductVariantsFromPopup(item.ColorID, Config.PRODUCT_ATTRIBUTE_ENUM['Color']);
                                                                 }}
                                                             >
-
                                                             </li>
-
-
                                                         )}
-
-
-
                                                 </ul>
-
                                                 {
                                                     productDetail?.ProductSizesJson != undefined
                                                         && productDetail?.ProductSizesJson != null
@@ -693,15 +598,10 @@ const ProductDetail = () => {
                                                         </>
                                                 }
 
-
-
                                                 <div className="size-box-custom">
                                                     <ul>
-
                                                         {
                                                             productDetail?.ProductSizesJson?.map((item, idx) =>
-
-
                                                                 <li key={idx}
                                                                     className={(ActiveSize.SizeID === item.SizeID) ? "active" : null}
                                                                 >
@@ -717,31 +617,19 @@ const ProductDetail = () => {
                                                                             );
                                                                             setProductVariantsFromPopup(item.SizeID, Config.PRODUCT_ATTRIBUTE_ENUM['Size']);
                                                                         }}
-
                                                                     >
                                                                         {item.ShortName}
                                                                     </Link>
                                                                 </li>
-
                                                             )}
-
-
                                                     </ul>
                                                 </div>
-
-
-
-
                                                 {
                                                     productAllAttributes != undefined &&
                                                         productAllAttributes?.filter(x => x.ProductAttributeID != Config.PRODUCT_ATTRIBUTE_ENUM['Color']
                                                             && x.ProductAttributeID != Config.PRODUCT_ATTRIBUTE_ENUM['Size']).length > 0
                                                         ?
-
                                                         <>
-
-
-
                                                             <div className="size-box-custom mt-4">
                                                                 <div class="col-sm-4">
                                                                     <Link to="#"
@@ -759,15 +647,11 @@ const ProductDetail = () => {
                                                                     </Link>
                                                                 </div>
                                                             </div>
-
                                                         </>
                                                         :
                                                         <>
                                                         </>
                                                 }
-
-
-
                                             </div>
                                             <div className="product-description border-product">
                                                 {stock !== "InStock" ? <span className="instock-cls">{stock}</span> : ""}

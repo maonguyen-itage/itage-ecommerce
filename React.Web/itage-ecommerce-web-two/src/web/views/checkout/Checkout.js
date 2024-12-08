@@ -347,50 +347,33 @@ const Checkout = () => {
             if (customerCartResponse != null && customerCartResponse.data != null) {
 
                 let finalData = JSON.parse(customerCartResponse.data.data);
-                console.log(finalData);
-
                 if (finalData != null) {
                     setTimeout(() => {
-
                         setCartProductsData(finalData.productsData);
                         setCartSubTotal(finalData.cartSubTotal);
                         setShippingSubTotal(finalData.shippingSubTotal);
                         setOrderTotal(finalData.orderTotal);
-
                         if (finalData.productsData.length > 0 && finalData.productsData.some(el => el.DiscountedPrice > 0)) {
                             setIsAlreadyDiscountApplied(true);
                         }
-
                     }, 500);
                 }
-
-
-
-
             }
-
         }
-
 
         //--start loader
         dispatch(rootAction.commonAction.setLoading(true));
-
-
         // call the function
         dataOperationInUseEffect().catch(console.error);
-
         //--stop loader
         setTimeout(() => {
             dispatch(rootAction.commonAction.setLoading(false));
         }, LOADER_DURATION);
-
     }, [])
-
 
     useEffect(() => {
         // declare the data fetching function
         const dataOperationFunc = async () => {
-
             //-- Get website localization data
             let arryRespLocalization = await GetLocalizationControlsJsonDataForScreen(GlobalEnums.Entities["Checkout"], null);
             if (arryRespLocalization != null && arryRespLocalization != undefined && arryRespLocalization.length > 0) {
@@ -403,16 +386,12 @@ const Checkout = () => {
 
     return (
         <>
-
-
             <Helmet>
                 <title>{siteTitle} - Checkout</title>
                 <meta name="description" content={siteTitle + " - Checkout"} />
                 <meta name="keywords" content="Checkout"></meta>
             </Helmet>
             <SiteBreadcrumb title="Checkout" parent="Home" />
-
-
             <section className="section-big-py-space bg-light">
                 <div className="custom-container">
                     <div className="checkout-page contact-page">
@@ -446,7 +425,6 @@ const Checkout = () => {
                                                         readOnly
                                                         value={loginUser.CountryName}
                                                     />
-
                                                 </FormGroup>
                                                 <FormGroup className="col-md-6 col-sm-6 col-xs-12">
                                                     <Label className="field-label">
@@ -463,9 +441,7 @@ const Checkout = () => {
                                                         readOnly
                                                         value={loginUser.FirstName}
                                                     />
-
                                                 </FormGroup>
-
                                                 <FormGroup className="col-md-6 col-sm-6 col-xs-12">
                                                     <Label className="field-label">
                                                         {LocalizationLabelsArray.length > 0 ?
@@ -481,7 +457,6 @@ const Checkout = () => {
                                                         readOnly
                                                         value={loginUser.LastName}
                                                     />
-
                                                 </FormGroup>
                                                 <FormGroup className="col-md-6 col-sm-6 col-xs-12">
                                                     <Label className="field-label">
@@ -498,7 +473,6 @@ const Checkout = () => {
                                                         readOnly
                                                         value={loginUser.AddressLineOne}
                                                     />
-
                                                 </FormGroup>
                                                 <FormGroup className="col-md-6 col-sm-6 col-xs-12">
                                                     <Label className="field-label">
@@ -532,7 +506,6 @@ const Checkout = () => {
                                                         readOnly
                                                         value={loginUser.StateName}
                                                     />
-
                                                 </FormGroup>
                                                 <FormGroup className="col-md-6 col-sm-6 col-xs-12">
                                                     <Label className="field-label">
@@ -549,9 +522,7 @@ const Checkout = () => {
                                                         readOnly
                                                         value={loginUser.PostalCode}
                                                     />
-
                                                 </FormGroup>
-
                                                 <FormGroup className="col-md-6 col-sm-6 col-xs-12">
                                                     <Label className="field-label">
                                                         {LocalizationLabelsArray.length > 0 ?
@@ -567,7 +538,6 @@ const Checkout = () => {
                                                         readOnly
                                                         value={loginUser.EmailAddress}
                                                     />
-
                                                 </FormGroup>
                                                 <FormGroup className="col-md-6 col-sm-6 col-xs-12">
                                                     <Label className="field-label">
@@ -584,7 +554,6 @@ const Checkout = () => {
                                                         readOnly
                                                         value={loginUser.MobileNo}
                                                     />
-
                                                 </FormGroup>
                                                 <FormGroup className="col-md-12 col-sm-12 col-xs-12">
                                                     <Label className="field-label">
@@ -594,28 +563,16 @@ const Checkout = () => {
                                                             "Order Note"
                                                         }
                                                     </Label>
-
-
                                                     <textarea name="OrderNote" id="OrderNote" cols="30" rows="6" placeholder="Order Notes" className="form-control"
                                                         value={OrderNote}
                                                         onChange={(e) => setOrderNote(e.target.value)}
                                                     />
-
                                                 </FormGroup>
-
-
-
-
-
-
-
-
                                             </Row>
                                         </div>
                                     </Col>
                                     <Col lg="6" sm="12" xs="12">
                                         <div className="checkout-details theme-form  section-big-mt-space">
-
                                             {
                                                 cartProductsData != undefined && cartProductsData != null && cartProductsData.length > 0
                                                     ?

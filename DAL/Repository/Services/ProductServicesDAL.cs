@@ -19,11 +19,9 @@ namespace DAL.Repository.Services
 {
     public class ProductServicesDAL : IProductServicesDAL
     {
-
         private readonly IConfiguration _configuration;
         private readonly IDataContextHelper _contextHelper;
         private readonly IDapperConnectionHelper _dapperConnectionHelper;
-
 
         //--Constructor of the class
         public ProductServicesDAL(IConfiguration configuration, IDataContextHelper contextHelper, IDapperConnectionHelper dapperConnectionHelper)
@@ -31,12 +29,7 @@ namespace DAL.Repository.Services
             _configuration = configuration;
             _contextHelper = contextHelper;
             _dapperConnectionHelper = dapperConnectionHelper;
-
-
         }
-
-
-
 
         //--Save product using dapped method. I did not use here peta poco because it was creating issue for json parameters of stored procedure
         public async Task<string> CreateNewProductDAL(ProductEntity FormData)
@@ -161,39 +154,21 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
                 }
-
-
-
-
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
         }
-
-
-
-
         public async Task<List<ShippingMethodEntity>> GetShippingMethodsListDAL(ShippingMethodEntity FormData)
         {
-
             List<ShippingMethodEntity> result = new List<ShippingMethodEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
-
                     if (FormData.ShippingMethodId > 0)
                     {
                         SearchParameters.Append("AND MTBL.ShippingMethodId =  @0 ", FormData.ShippingMethodId);
@@ -226,32 +201,22 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
         public async Task<List<InventoryMethodEntity>> GetInventoryMethodsListDAL(InventoryMethodEntity FormData)
         {
-
             List<InventoryMethodEntity> result = new List<InventoryMethodEntity>();
 
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.InventoryMethodId > 0)
                     {
@@ -285,32 +250,22 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
 
         public async Task<List<WarehouseEntity>> GetWarehousesListDAL(WarehouseEntity FormData)
         {
-
             List<WarehouseEntity> result = new List<WarehouseEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.WarehouseId > 0)
                     {
@@ -341,35 +296,23 @@ namespace DAL.Repository.Services
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
 
                     result = context.Fetch<WarehouseEntity>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
         public async Task<List<ProductAttributeEntity>> GetProductAttributesListDAL(ProductAttributeEntity FormData)
         {
-
             List<ProductAttributeEntity> result = new List<ProductAttributeEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.ProductAttributeId > 0)
                     {
@@ -403,39 +346,26 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
         public async Task<List<TagEntity>> GetProductTagsListForCreateProductPageDAL(TagEntity FormData)
         {
-
             List<TagEntity> result = new List<TagEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (!String.IsNullOrEmpty(FormData.TagName))
                     {
                         SearchParameters.Append("AND MTBL.TagName LIKE  @0", "%" + FormData.TagName + "%");
                     }
-
-
 
                     var ppSql = PetaPoco.Sql.Builder.Select(@" COUNT(*) OVER () as TotalRecords,MTBL.*")
                       .From(" Tags MTBL")
@@ -446,29 +376,19 @@ namespace DAL.Repository.Services
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
 
                     result = context.Fetch<TagEntity>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception ex)
                 {
                     string errorMsg = ex.Message;
-
                     throw;
                 }
-
             }
-
         }
-
-
         public async Task<List<HtmlDropDownRemoteData>> GetProductAttributeValuesByAttributeID(string ProductAttributeId)
         {
-
             List<HtmlDropDownRemoteData> result = new List<HtmlDropDownRemoteData>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
@@ -487,26 +407,19 @@ namespace DAL.Repository.Services
                 catch (Exception ex)
                 {
                     string errorMsg = ex.Message;
-
                     throw;
                 }
-
             }
-
         }
 
         public async Task<ProductEntity?> GetProductDetailsById(int ProductId)
         {
-
             ProductEntity? result = new ProductEntity();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     context.EnableAutoSelect = false;
-
                     result = context.Fetch<ProductEntity>(@";EXEC [dbo].[SP_AdmPanel_GetProductDetailsById] @ProductId",
                           new
                           {
@@ -514,34 +427,23 @@ namespace DAL.Repository.Services
 
                           }).FirstOrDefault();
 
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
         public async Task<List<ProductEntity>> GetProductList(ProductEntity FormData)
         {
-
             List<ProductEntity> result = new List<ProductEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     context.EnableAutoSelect = false;
-
                     result = context.Fetch<ProductEntity>(@";EXEC [dbo].[SP_AdmPanel_GetProductsList] @ProductId,@ProductName,@CategoryId,@IsActive,@FromDate,@ToDate,@PageNo,@PageSize , @CreatedBy",
                           new
                           {
@@ -554,39 +456,25 @@ namespace DAL.Repository.Services
                               PageNo = FormData.PageNo,
                               PageSize = FormData.PageSize,
                               CreatedBy = FormData.CreatedBy,
-
                           }).ToList();
-
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
-
         public async Task<List<ProductEntity>> GetProductsReviewsDAL(ProductEntity FormData)
         {
-
             List<ProductEntity> result = new List<ProductEntity>();
 
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.ProductId > 0)
                     {
@@ -632,37 +520,24 @@ namespace DAL.Repository.Services
                      .OrderBy("MTBL.Rating DESC")
                     .Append(@"OFFSET (@0-1)*@1 ROWS
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
-
                     result = context.Fetch<ProductEntity>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
         public async Task<List<ProductReviewEntity>> GetProductReviewsByProductIdDAL(ProductReviewEntity FormData)
         {
-
             List<ProductReviewEntity> result = new List<ProductReviewEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.ReviewId > 0)
                     {
@@ -673,7 +548,6 @@ namespace DAL.Repository.Services
                     {
                         SearchParameters.Append("AND MTBL.Rating =  @0 ", FormData.Rating);
                     }
-
 
                     if (!String.IsNullOrEmpty(FormData.ReviewerName))
                     {
@@ -699,27 +573,18 @@ namespace DAL.Repository.Services
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
 
                     result = context.Fetch<ProductReviewEntity>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
-
         public async Task<string> UploadBulkProductsFromExcelDAL(ProductExcelUpload FormData)
         {
             string result = "";
-
 
             try
             {
@@ -730,7 +595,6 @@ namespace DAL.Repository.Services
                     dbConnection.Execute("SP_AdmPanel_UploadBulkProducts",
                         new
                         {
-
                             ProductName = FormData.ProductName,
                             ShortDescription = FormData.ShortDescription,
                             FullDescription = FormData.FullDescription,
@@ -760,14 +624,12 @@ namespace DAL.Repository.Services
                             MetaTitle = FormData.MetaTitle,
                             MetaKeywords = FormData.MetaKeywords,
                             MetaDescription = FormData.MetaDescription,
-
                             CategoriesIdsCommaSeperated = FormData.CategoriesIdsCommaSeperated,
                             TagsIdsCommaSeperated = FormData.TagsIdsCommaSeperated,
                             ShippingMethodsIdsCommaSeperated = FormData.ShippingMethodsIdsCommaSeperated,
                             ColorsIdsCommaSeperated = FormData.ColorsIdsCommaSeperated,
                             SizeIdsCommaSeperated = FormData.SizeIdsCommaSeperated,
                             ImagesIdsCommaSeperated = FormData.ImagesIdsCommaSeperated,
-
                             LoginUserId = FormData.LoginUserId,
                         }
                         , commandType: CommandType.StoredProcedure);
@@ -777,20 +639,12 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
                 }
-
-
-
-
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
         }
 
         public async Task<List<AttachmentEntity>> GetAttachmentsListForImageUploadPageDAL(AttachmentEntity FormData)
@@ -802,10 +656,7 @@ namespace DAL.Repository.Services
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.AttachmentId > 0)
                     {
@@ -845,38 +696,27 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
 
         public async Task<List<ProductAttributeEntity>> GetProductVariantsDAL(ProductAttributeEntity FormData)
         {
-
             List<ProductAttributeEntity> result = new List<ProductAttributeEntity>();
 
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
-
                     if (FormData.ProductAttributeId > 0)
                     {
                         SearchParameters.Append("AND MTBL.ProductAttributeId =  @0 ", FormData.ProductAttributeId);
                     }
-
 
                     if (!String.IsNullOrEmpty(FormData.AttributeName))
                     {
@@ -910,24 +750,16 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
-
         public async Task<List<ProductVariantDetail>> GetProductVariantsDetailByIdDAL(int ProductAttributeId)
         {
             List<ProductVariantDetail> result = new List<ProductVariantDetail>();
-
             try
             {
                 using (IDbConnection dbConnection = _dapperConnectionHelper.GetDapperContextHelper())
@@ -961,11 +793,8 @@ namespace DAL.Repository.Services
 		                    SET @SqlQuery = REPLACE( @SqlQuery, '##AttributeSqlTableName##'  , '''' + @AttributeSqlTableName + '''');
 		                    SET @SqlQuery = REPLACE( @SqlQuery, '##AttributeName##'  , '''' + @AttributeName + '''');
 		                    SET @SqlQuery = REPLACE( @SqlQuery, '##DisplayName##'  , '''' + @AttributeDisplayName + '''');
-
 		
 		                    EXECUTE sp_executesql @SqlQuery
-
-		
 	                    END",
                                                                                       new
                                                                                       {
@@ -975,42 +804,26 @@ namespace DAL.Repository.Services
                           , commandType: CommandType.Text);
                     dbConnection.Close();
 
-
                     result = resultIEnumerable.ToList();
-
                     await Task.FromResult(result);
                     return result;
-
                 }
-
-
-
-
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
-
         }
-
         public async Task<string> SaveUpdateProductVariantDAL(ProductVariantDetail FormData, int DataOperationType)
         {
             string result = "";
-
 
             try
             {
                 using (IDbConnection dbConnection = _dapperConnectionHelper.GetDapperContextHelper())
                 {
-
-
                     if (DataOperationType == 1)
                     {
-
                         dbConnection.Open();
 
                         var resultIEnumerable = await dbConnection.ExecuteAsync(@"DECLARE @AttributeSqlTableName NVARCHAR(200);
@@ -1024,7 +837,6 @@ namespace DAL.Repository.Services
                         BEGIN
 	                        SET @SqlInsertQuery = 'INSERT INTO ' + SPACE(1) + @AttributeSqlTableName + SPACE(1) + '(' + @ValueColumnName + ',' + 'IsActive , CreatedOn , CreatedBy )' +
 						                          'VALUES (' + '''' + @DisplayText +'''' + ',' + SPACE(1) + '1, GETDATE(),' + CAST(@LoginUserId AS NVARCHAR(200)) + ')';
-
 	                        EXECUTE sp_executesql @SqlInsertQuery
                         END",
                                                   new
@@ -1038,8 +850,6 @@ namespace DAL.Repository.Services
                         dbConnection.Close();
 
                         result = "Saved Successfully!";
-
-
                     }
                     else if (DataOperationType == 2)
                     {
@@ -1059,7 +869,6 @@ namespace DAL.Repository.Services
                         BEGIN
 	                        SET @SqlUpdateQuery = ('UPDATE ' + SPACE(1) + @AttributeSqlTableName + SPACE(1) + 'SET ' + @ValueColumnName + '=' + '''' + @DisplayText + '''' + SPACE(1) +
 						                          'WHERE ' + @PrimaryKeyColumnName  + '=' + '''' + CAST(@PrimaryKeyValue AS NVARCHAR(MAX)) + '''');
-
 	                        EXECUTE sp_executesql @SqlUpdateQuery
                         END",
                                                   new
@@ -1068,7 +877,6 @@ namespace DAL.Repository.Services
                                                       PrimaryKeyValue = FormData.PrimaryKeyValue,
                                                       DisplayText = FormData.DisplayText,
                                                       LoginUserId = FormData.LoginUserId,
-
                                                   }
                               , commandType: CommandType.Text);
                         dbConnection.Close();
@@ -1080,45 +888,29 @@ namespace DAL.Repository.Services
                         result = "Please define data operation type!";
                     }
 
-
-
                     await Task.FromResult(result);
                     return result;
-
-
-
                 }
-
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
         }
-
         public async Task<List<ProductsCategoriesMapping>> ReadProductCategoriesById(int ProductId)
         {
-
             List<ProductsCategoriesMapping> result = new List<ProductsCategoriesMapping>();
 
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (ProductId > 0)
                     {
                         SearchParameters.Append("AND MTBL.ProductId =  @0 ", ProductId);
                     }
-
-
 
                     var ppSql = PetaPoco.Sql.Builder.Select(@" MTBL.*")
                         .From(" ProductsCategoriesMapping MTBL")
@@ -1129,20 +921,13 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
-
         public async Task<bool> DeleteAnyProductImage(int AttachmentID)
         {
             bool result = false;
@@ -1151,36 +936,27 @@ namespace DAL.Repository.Services
             {
                 try
                 {
-
-
                     string deleteQuery = String.Format("DELETE TOP(2) FROM ProductPicturesMapping WHERE PictureID ='{0}'; {1} DELETE TOP(1) FROM Attachments WHERE AttachmentID ='{0}';", AttachmentID, Environment.NewLine);
                     context.Execute(deleteQuery);
                     result = true;
 
                     await Task.FromResult(result);
                     return result;
-
                 }
                 catch (Exception)
                 {
                     throw;
                 }
-
             }
         }
-
         public async Task<string> UpdateProductImgColorMappingDAL(ProductPicturesMappingEntity FormData)
         {
             string result = "";
-
 
             try
             {
                 using (IDbConnection dbConnection = _dapperConnectionHelper.GetDapperContextHelper())
                 {
-
-
-
                     dbConnection.Open();
 
                     var resultIEnumerable = await dbConnection.ExecuteAsync(@"UPDATE TOP(30) ProductPicturesMapping
@@ -1189,7 +965,6 @@ namespace DAL.Repository.Services
 		                    WITH (
 			                    prd_pic_mapping_id	INT '$.prd_pic_mapping_id' ,
 			                    prd_pic_color_id INT '$.prd_pic_color_id'
-	
 		                    )
 	                    JsonItem
                         WHERE ProductPicturesMapping.ProductPictureMappingID = JsonItem.prd_pic_mapping_id AND ProductPicturesMapping.ProductID = @ProductId 
@@ -1204,37 +979,24 @@ namespace DAL.Repository.Services
                     dbConnection.Close();
 
                     result = "Saved Successfully!";
-
                     await Task.FromResult(result);
                     return result;
-
-
-
                 }
-
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
         }
-
         public async Task<ProductDigitalFileMappingEntity?> GetProductDigitalFileInfoByIdDAL(int ProductId)
         {
-
             ProductDigitalFileMappingEntity? result = new ProductDigitalFileMappingEntity();
 
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
                     var ppSql = PetaPoco.Sql.Builder.Select(@"PDFM.*, ATC.AttachmentName, ATC.AttachmentURL")
                         .From(" ProductDigitalFileMapping PDFM")
                         .InnerJoin("Attachments ATC").On("ATC.AttachmentID =  PDFM.AttachmentID")
@@ -1245,36 +1007,25 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
         public async Task<bool> CheckIfProductDigitalDAL(int ProductId)
         {
-
             bool result = false;
 
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
                     var ppSql = PetaPoco.Sql.Builder.Select(@"PRD.ProductId, PRD.IsDigitalProduct")
                         .From("Products PRD")
                       .Where("PRD.ProductID = @0", ProductId);
-
 
                     var ProductObj = context.Fetch<Product>(ppSql).FirstOrDefault();
                     if (ProductObj != null && ProductObj.ProductId > 0 && ProductObj.IsDigitalProduct == true)
@@ -1284,19 +1035,12 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
-
     }
 }

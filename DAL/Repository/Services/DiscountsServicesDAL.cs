@@ -15,11 +15,9 @@ namespace DAL.Repository.Services
 {
     public class DiscountsServicesDAL : IDiscountsServicesDAL
     {
-
         private readonly IConfiguration _configuration;
         private readonly IDataContextHelper _contextHelper;
         private readonly IDapperConnectionHelper _dapperConnectionHelper;
-
 
         //--Constructor of the class
         public DiscountsServicesDAL(IConfiguration configuration, IDataContextHelper contextHelper, IDapperConnectionHelper dapperConnectionHelper)
@@ -31,17 +29,12 @@ namespace DAL.Repository.Services
 
         public async Task<List<DiscountEntity>> GetDiscountsListDAL(DiscountEntity FormData)
         {
-
             List<DiscountEntity> result = new List<DiscountEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.DiscountId > 0)
                     {
@@ -94,48 +87,33 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception ex)
                 {
                     string errorMsg = ex.Message;
-
                     throw;
                 }
-
             }
-
         }
-
 
         public async Task<List<DiscountTypeEntity>> GetDiscountTypesListDAL(DiscountTypeEntity FormData)
         {
-
             List<DiscountTypeEntity> result = new List<DiscountTypeEntity>();
 
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
-
                     if (FormData.DiscountTypeId > 0)
                     {
                         SearchParameters.Append("AND MTBL.DiscountTypeId =  @0 ", FormData.DiscountTypeId);
                     }
 
-
                     if (!String.IsNullOrEmpty(FormData.DiscountTypeName))
                     {
                         SearchParameters.Append("AND MTBL.DiscountTypeName LIKE  @0", "%" + FormData.DiscountTypeName + "%");
                     }
-
-
-
 
                     var ppSql = PetaPoco.Sql.Builder.Select(@" COUNT(*) OVER () as TotalRecords,MTBL.*")
                       .From(" DiscountTypes MTBL")
@@ -146,7 +124,6 @@ namespace DAL.Repository.Services
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
 
                     result = context.Fetch<DiscountTypeEntity>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
                 }
@@ -301,8 +278,6 @@ namespace DAL.Repository.Services
                               DiscountId = DiscountId
 
                           }).FirstOrDefault();
-
-
                     await Task.FromResult(result);
                     return result;
                 }
@@ -312,10 +287,8 @@ namespace DAL.Repository.Services
                 }
             }
         }
-
         public async Task<List<DiscountProductsMappingEntity>> GetDiscountProductsMappingListDAL(DiscountProductsMappingEntity FormData)
         {
-
             List<DiscountProductsMappingEntity> result = new List<DiscountProductsMappingEntity>();
             using (var context = _contextHelper.GetDataContextHelper())
             {
@@ -341,7 +314,6 @@ namespace DAL.Repository.Services
                      .OrderBy("MTBL.DiscountProductMappingID ASC")
                     .Append(@"OFFSET (@0-1)*@1 ROWS
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
-
                     result = context.Fetch<DiscountProductsMappingEntity>(ppSql);
                     await Task.FromResult(result);
                     return result;
@@ -352,7 +324,6 @@ namespace DAL.Repository.Services
                 }
             }
         }
-
         public async Task<List<DiscountCategoriesMappingEntity>> GetDiscountCategoriesMappingListDAL(DiscountCategoriesMappingEntity FormData)
         {
             List<DiscountCategoriesMappingEntity> result = new List<DiscountCategoriesMappingEntity>();
@@ -384,41 +355,28 @@ namespace DAL.Repository.Services
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
 
                     result = context.Fetch<DiscountCategoriesMappingEntity>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
         public async Task<List<ContactUsEntity>> GetContactUsListDAL(ContactUsEntity FormData)
         {
-
             List<ContactUsEntity> result = new List<ContactUsEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.ContactId > 0)
                     {
                         SearchParameters.Append("AND MTBL.ContactId =  @0 ", FormData.ContactId);
                     }
-
 
                     if (!String.IsNullOrEmpty(FormData.FullName))
                     {
@@ -449,48 +407,33 @@ namespace DAL.Repository.Services
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
 
                     result = context.Fetch<ContactUsEntity>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
         public async Task<List<SubscriberEntity>> GetSubscribersListDAL(SubscriberEntity FormData)
         {
-
             List<SubscriberEntity> result = new List<SubscriberEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.SubscriptionId > 0)
                     {
                         SearchParameters.Append("AND MTBL.SubscriptionId =  @0 ", FormData.SubscriptionId);
                     }
 
-
                     if (!String.IsNullOrEmpty(FormData.Email))
                     {
                         SearchParameters.Append("AND MTBL.Email LIKE  @0", "%" + FormData.Email + "%");
                     }
-
-
 
                     if (!String.IsNullOrEmpty(FormData.FromDate))
                     {
@@ -514,32 +457,21 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
         public async Task<List<HomeScreenBannerEntity>> GetHomeScreenBannersListDAL(HomeScreenBannerEntity FormData)
         {
-
             List<HomeScreenBannerEntity> result = new List<HomeScreenBannerEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.BannerId > 0)
                     {
@@ -551,13 +483,10 @@ namespace DAL.Repository.Services
                         SearchParameters.Append("AND MTBL.ThemeTypeId =  @0 ", FormData.ThemeTypeId);
                     }
 
-
                     if (!String.IsNullOrEmpty(FormData.MainTitle))
                     {
                         SearchParameters.Append("AND MTBL.MainTitle LIKE  @0", "%" + FormData.MainTitle + "%");
                     }
-
-
 
                     if (!String.IsNullOrEmpty(FormData.FromDate))
                     {
@@ -579,34 +508,22 @@ namespace DAL.Repository.Services
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
 
                     result = context.Fetch<HomeScreenBannerEntity>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
-
         public async Task<string> SaveUpdateHomeScreenBannerDAL(HomeScreenBannerEntity FormData, int DataOperationType)
         {
             string result = "";
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
-
-
                     if (DataOperationType == 1)
                     {
                         context.Execute(@"Insert into HomeScreenBanners(TopTitle,	MainTitle,	BottomTitle,	LeftButtonText, LeftButtonUrl,RightButtonText,RightButtonUrl,
@@ -615,8 +532,6 @@ namespace DAL.Repository.Services
                          @IsActive , @ThemeTypeId , @AttachmentId,     getdate(),	@UserId)",
                         new
                         {
-
-
                             TopTitle = FormData.TopTitle,
                             MainTitle = FormData.MainTitle,
                             BottomTitle = FormData.BottomTitle,
@@ -662,42 +577,28 @@ namespace DAL.Repository.Services
                         result = "Please define data operation type!";
                     }
 
-
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
         }
-
-
         public async Task<List<DiscountsCampaignEntity>> GetDiscountsCampaignDAL(DiscountsCampaignEntity FormData)
         {
-
             List<DiscountsCampaignEntity> result = new List<DiscountsCampaignEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.CampaignId > 0)
                     {
                         SearchParameters.Append("AND MTBL.CampaignId =  @0 ", FormData.CampaignId);
                     }
-
 
                     if (!String.IsNullOrEmpty(FormData.MainTitle))
                     {
@@ -727,25 +628,17 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
 
         public async Task<DiscountsCampaignEntity?> GetCampaignDetailByIdDAL(int CampaignId)
         {
-
             DiscountsCampaignEntity? result = new DiscountsCampaignEntity();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
@@ -759,19 +652,13 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
         public async Task<string> SaveUpdateDiscountsCampaignDAL(DiscountsCampaignEntity FormData, int DataOperationType)
         {
             string result = "";
@@ -780,9 +667,6 @@ namespace DAL.Repository.Services
             {
                 try
                 {
-
-
-
                     if (DataOperationType == 1)
                     {
                         context.Execute(@"insert into DiscountsCampaign(MainTitle,	DiscountTitle,	Body,	IsActive,	DisplayStartDate,	DisplayEndDate,	CoverPictureID,	CreatedOn	,CreatedBy)
@@ -834,19 +718,13 @@ namespace DAL.Repository.Services
                         result = "Please define data operation type!";
                     }
 
-
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
         }
     }

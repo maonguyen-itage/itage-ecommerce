@@ -198,7 +198,7 @@ const MenuBar = (props) => {
 						: "About"}
 				</Link>
 			</li>
-			<li>
+			{/* <li>
 				<Link
 					to={`/${getLanguageCodeFromSession()}/blackfriday`}
 					className="dark-menu-item has-submenu"
@@ -212,7 +212,7 @@ const MenuBar = (props) => {
 						  )
 						: "Black Friday"}
 				</Link>
-			</li>
+			</li> */}
 			<li>
 				<Link
 					to={`/${getLanguageCodeFromSession()}/giftcards`}

@@ -18,7 +18,6 @@ namespace Helpers.ConversionHelpers
 {
     public class CalculationHelper : ICalculationHelper
     {
-
         private readonly IConfiguration _configuration;
         private readonly IApiOperationServicesDAL _apiOperationServicesDAL;
         private readonly IProductServicesDAL _productServicesDAL;
@@ -33,15 +32,10 @@ namespace Helpers.ConversionHelpers
         public async Task<string> CalculateDiscountsForProducts(string JsonData)
         {
             string result = "";
-
-
             try
             {
-
                 result = JsonData;
-
                 var ApiProductList = new List<ApiProductEntity?>();
-
                 ApiProductList = JsonConvert.DeserializeObject<List<ApiProductEntity?>>(JsonData ?? "[]");
                 var ProductIds = String.Join(",", ApiProductList?.Where(p => p?.IsDiscountAllowed == true)?.Select(p => p.ProductId)?.ToArray());
 
@@ -62,50 +56,35 @@ namespace Helpers.ConversionHelpers
                         {
                             if (discountProduct != null)
                             {
-
                                 ApiProductList?.Where(p => p.ProductId == discountProduct.ProductId).Select(prdObject => { prdObject.DiscountId = discountProduct.DiscountId; return prdObject; }).ToList();
                                 ApiProductList?.Where(p => p.ProductId == discountProduct.ProductId).Select(prdObject => { prdObject.DiscountedPrice = discountProduct.DiscountedPrice; return prdObject; }).ToList();
                                 ApiProductList?.Where(p => p.ProductId == discountProduct.ProductId).Select(prdObject => { prdObject.IsDiscountCalculated = discountProduct.IsDiscountCalculated; return prdObject; }).ToList();
                                 ApiProductList?.Where(p => p.ProductId == discountProduct.ProductId).Select(prdObject => { prdObject.CouponCode = discountProduct.CouponCode; return prdObject; }).ToList();
-
                             }
-
                         }
-
                         result = JsonConvert.SerializeObject(ApiProductList);
                     }
                 }
-
-
                 await Task.FromResult(result);
                 return result;
-
-
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
         }
 
         public async Task<Dictionary<string, object>> CalcualteProductsTotalAndAdditionalPrices(string cartJsonData)
         {
-
             try
             {
                 Dictionary<string, object> result = new Dictionary<string, object>();
-
                 var cartCustomerProducts = new List<CartCustomerProducts>();
                 cartCustomerProducts = JsonConvert.DeserializeObject<List<CartCustomerProducts>>(cartJsonData);
-
 
                 if (cartCustomerProducts != null)
                 {
                     List<ProductsIds>? ProductIds = new List<ProductsIds>();
-
                     foreach (var item in cartCustomerProducts)
                     {
                         var rowData = new ProductsIds();
@@ -123,12 +102,10 @@ namespace Helpers.ConversionHelpers
                     if (ApiConfigurationForGetAllProducts != null)
                     {
                         allProductsDataJson = await this._apiOperationServicesDAL.GetApiData(requestParametersAllProducts, ApiConfigurationForGetAllProducts);
-
                     }
 
                     //--Calcualte Discount for products
                     string productsAfterDiscount = await CalculateDiscountsForProducts((allProductsDataJson ?? "[]"));
-
                     //--Calculate additional price for product attributes
                     var ApiProductList = JsonConvert.DeserializeObject<List<ApiProductEntity?>>(productsAfterDiscount ?? "[]");
                     decimal CartSubTotalDummy = 0;
@@ -158,15 +135,11 @@ namespace Helpers.ConversionHelpers
                                     additionalPrice = Convert.ToDecimal(additionalPrice + priceData?.AdditionalPrice);
                                 }
                             }
-
-
                             item.Price = item.Price + additionalPrice;
                             if (item.DiscountId > 0)
                             {
                                 item.DiscountedPrice = item.DiscountedPrice + additionalPrice;
                             }
-
-
                             item.Quantity = Convert.ToInt32(cartCustomerProducts?.FirstOrDefault(x => x.ProductId == item.ProductId).Quantity); ;
                             item.ItemSubTotal = Convert.ToDecimal((item.DiscountedPrice > 0 ? item.DiscountedPrice : item.Price) * (item.Quantity));
 
@@ -186,25 +159,17 @@ namespace Helpers.ConversionHelpers
                                     {
                                         item.ProductAllSelectedAttributes.AddRange(fullDataAttribue);
                                     }
-                                   
                                 }
                             }
-
-                           
-
                         }
                     }
 
-
                     //--Set CartSubTotal
                     result.Add("cartSubTotal", CartSubTotalDummy);
-
                     //--Set ShippingSubTotal
                     result.Add("shippingSubTotal", ShippingSubTotalDummuy);
-
                     //--Set OrderTotal
                     result.Add("orderTotal", OrderTotalDummu);
-
                     //--Set Products Data
                     result.Add("productsData", ApiProductList ?? new List<ApiProductEntity?>());
                 }
@@ -212,36 +177,27 @@ namespace Helpers.ConversionHelpers
                 {
                     //--Set CartSubTotal
                     result.Add("cartSubTotal", 0);
-
                     //--Set ShippingSubTotal
                     result.Add("shippingSubTotal", 0);
-
                     //--Set OrderTotal
                     result.Add("orderTotal", 0);
-
                     //--Set Products Data
                     result.Add("productsData", new List<ApiProductEntity>());
                 }
 
                 await Task.FromResult(result);
                 return result;
-
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
         }
 
         public async Task<Dictionary<string, object>> CalculateCouponDiscountValueForProduct(int ProductId, decimal ProductPrice, string CouponCode, string cartJsonData)
         {
-
             try
             {
-
                 Dictionary<string, object>? CouponCodeRequestDic = new Dictionary<string, object>();
                 string UrlName = "get-coupon-code-data";
                 var CouponCodeApiConfiguration = await _apiOperationServicesDAL.GetAPIConfiguration(UrlName);
@@ -265,7 +221,6 @@ namespace Helpers.ConversionHelpers
                         {
                             if (couponObj.DiscountValueType == (short)DiscountValueTypeEnum.FixedAmount) //--FixedValue
                             {
-
                                 DiscountValueAfterCouponApplied = couponObj.DiscountValue;
                             }
                             else if (couponObj.DiscountValueType == (short)DiscountValueTypeEnum.PercentageAmount) // --Percentage
@@ -274,13 +229,10 @@ namespace Helpers.ConversionHelpers
                             }
 
                             DiscountId = couponObj.DiscountId;
-
-
                         }
                     }
                     else if (couponObj.DiscountTypeId == (short)DiscountTypesEnum.AppliedOCategories)//-- case two
                     {
-
                         //--Read product categories
                         var productCategories = await this._productServicesDAL.ReadProductCategoriesById(ProductId);
                         if (productCategories != null && productCategories.Any(x => x.CategoryId == couponObj.CategoryID))
@@ -293,15 +245,8 @@ namespace Helpers.ConversionHelpers
                             {
                                 DiscountValueAfterCouponApplied = (couponObj.DiscountValue * ProductPrice) / 100;
                             }
-
-
                             DiscountId = couponObj.DiscountId;
-
-
-
                         }
-
-
                     }
                     else if (couponObj.DiscountTypeId == (short)DiscountTypesEnum.AppliedOnOrderTotal)
                     {
@@ -316,7 +261,6 @@ namespace Helpers.ConversionHelpers
                         }
 
                         DiscountId = couponObj.DiscountId;
-
                     }
                 }
 

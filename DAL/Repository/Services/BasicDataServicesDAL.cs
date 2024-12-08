@@ -23,7 +23,6 @@ namespace DAL.Repository.Services
             _contextHelper = contextHelper;
         }
 
-
         public UserEntity? GetUserDataByUserID(int UserId)
         {
             UserEntity? result = new UserEntity();
@@ -32,85 +31,54 @@ namespace DAL.Repository.Services
             {
                 try
                 {
-
                     var ppSql = PetaPoco.Sql.Builder.Select(@"TOP 1 usr.* , UROL.RoleID AS RoleId , ATC.AttachmentURL AS ProfilePictureUrl")
                         .From("Users usr")
                         .LeftJoin("UserRoles UROL").On("USR.UserID = UROL.UserID")
                         .LeftJoin("Attachments ATC").On("USR.ProfilePictureID = ATC.AttachmentID")
                         .Where("USR.UserID=@0", UserId);
-
-
                     result = repo.Query<UserEntity>(ppSql).FirstOrDefault();
-
-
                     return result;
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
-
             }
-
-
         }
-
-
         public List<MenuNavigation> GetNavMenusList(MenuNavigation FormData)
         {
-
             List<MenuNavigation> result = new List<MenuNavigation>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.MenuNavigationId > 0)
                     {
                         SearchParameters.Append("AND MTBL.MenuNavigationId =  @0 ", FormData.MenuNavigationId);
                     }
 
-
                     if (!String.IsNullOrEmpty(FormData.MenuNavigationName))
                     {
                         SearchParameters.Append("AND MTBL.MenuNavigationName LIKE  @0", "%" + FormData.MenuNavigationName + "%");
                     }
-
-
 
                     var ppSql = PetaPoco.Sql.Builder.Select(@" COUNT(*) OVER () as TotalRecords,MTBL.*")
                       .From(" MenuNavigations MTBL")
                       .Where("MTBL.MenuNavigationId is not null AND MTBL.IsActive = 1")
                       .Append(SearchParameters)
                      .OrderBy("MTBL.DisplaySeqNo, MTBL.MenuNavigationID ASC");
-
-
                     result = context.Fetch<MenuNavigation>(ppSql);
 
-
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
-
         public List<RoleRightEntity>? GetUserRoleRightsForSession(int UserID)
         {
             List<RoleRightEntity>? result = new List<RoleRightEntity>();
@@ -119,51 +87,35 @@ namespace DAL.Repository.Services
             {
                 try
                 {
-
                     var ppSql = PetaPoco.Sql.Builder.Select(@"RR.RoleRightID   , RR.RoleID, RR.RightID, RR.EntityID , RGT.RightName")
-
                         .From("RoleRights RR")
                         .InnerJoin("Roles RL").On("RR.RoleID=RL.RoleID")
                         .InnerJoin("UserRoles USR").On("USR.RoleID=RL.RoleID")
                         .InnerJoin("Rights RGT").On("RR.RightID=RGT.RightID")
                         .Where("USR.UserID=@0", UserID);
-
-
-
                     result = context.Fetch<RoleRightEntity>(ppSql).ToList();
-
                     return result;
-
                 }
                 catch (Exception)
                 {
                     throw;
                 }
-
-
             }
-
         }
-
         public async Task<List<ColorEntity>> GetColorsListDAL(ColorEntity FormData)
         {
-
             List<ColorEntity> result = new List<ColorEntity>();
 
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.ColorId > 0)
                     {
                         SearchParameters.Append("AND MTBL.ColorId =  @0 ", FormData.ColorId);
                     }
-
 
                     if (!String.IsNullOrEmpty(FormData.ColorName))
                     {
@@ -189,36 +141,23 @@ namespace DAL.Repository.Services
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
 
                     result = context.Fetch<ColorEntity>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
-
         public async Task<List<CategoryEntity>> GetCategoriesListDAL(CategoryEntity FormData)
         {
-
             List<CategoryEntity> result = new List<CategoryEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.CategoryId > 0)
                     {
@@ -234,7 +173,6 @@ namespace DAL.Repository.Services
                     {
                         SearchParameters.Append("AND MTBL.ParentCategoryId =  @0 ", FormData.ParentCategoryId);
                     }
-
 
                     if (!String.IsNullOrEmpty(FormData.Name))
                     {
@@ -260,34 +198,24 @@ namespace DAL.Repository.Services
                      .OrderBy("MTBL.CategoryID DESC")
                     .Append(@"OFFSET (@0-1)*@1 ROWS
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
-
                     result = context.Fetch<CategoryEntity>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
         public async Task<List<CategoryEntity>> GetParentCategoriesListDAL()
         {
-
             List<CategoryEntity> result = new List<CategoryEntity>();
 
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var ppSql = PetaPoco.Sql.Builder.Select(@"MTBL.*")
                       .From(" Categories MTBL")
                       .Where("MTBL.ParentCategoryID is null")
@@ -297,17 +225,12 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
 
         public async Task<string> SaveUpdateColorDAL(ColorEntity FormData, int DataOperationType)
@@ -318,9 +241,6 @@ namespace DAL.Repository.Services
             {
                 try
                 {
-
-
-
                     if (DataOperationType == 1)
                     {
                         context.Execute(@"Insert into Colors(ColorName,	HexCode,	IsActive,	DisplaySeqNo,	CreatedOn,	CreatedBy)
@@ -355,25 +275,16 @@ namespace DAL.Repository.Services
                     {
                         result = "Please define data operation type!";
                     }
-
-
-
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
 
             }
         }
-
-
         public async Task<string> SaveUpdateCategoryDAL(CategoryEntity FormData, int DataOperationType)
         {
             string result = "";
@@ -382,9 +293,6 @@ namespace DAL.Repository.Services
             {
                 try
                 {
-
-
-
                     if (DataOperationType == 1)
                     {
                         context.Execute(@"Insert into Categories(Name,	ParentCategoryID,	IsActive,	DisplaySeqNo, AttachmentID,	CreatedOn,	CreatedBy)
@@ -422,41 +330,27 @@ namespace DAL.Repository.Services
                         result = "Please define data operation type!";
                     }
 
-
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
         }
-
         public async Task<List<SizeEntity>> GetSizeListDAL(SizeEntity FormData)
         {
-
             List<SizeEntity> result = new List<SizeEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
-
                     if (FormData.SizeId > 0)
                     {
                         SearchParameters.Append("AND MTBL.SizeId =  @0 ", FormData.SizeId);
                     }
-
 
                     if (!String.IsNullOrEmpty(FormData.Name))
                     {
@@ -485,30 +379,20 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
         public async Task<string> SaveUpdateSizeDAL(SizeEntity FormData, int DataOperationType)
         {
             string result = "";
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
-
-
                     if (DataOperationType == 1)
                     {
                         context.Execute(@"Insert into Sizes(Name, ShortName,	Inches, Centimeters,	IsActive,	DisplaySeqNo,	CreatedOn,	CreatedBy)
@@ -548,7 +432,6 @@ namespace DAL.Repository.Services
                         result = "Please define data operation type!";
                     }
 
-
                     //context.EnableAutoSelect = false;
 
                     //var QueryResponse = context.Execute(@";EXEC [dbo].[SP_LogRunTimeException] @ExceptionMessage,@StackTrace , @Source",
@@ -556,37 +439,26 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
         }
-
         public async Task<List<ManufacturerEntity>> GetManufacturerListDAL(ManufacturerEntity FormData)
         {
-
             List<ManufacturerEntity> result = new List<ManufacturerEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.ManufacturerId > 0)
                     {
                         SearchParameters.Append("AND MTBL.ManufacturerId =  @0 ", FormData.ManufacturerId);
                     }
-
 
                     if (!String.IsNullOrEmpty(FormData.Name))
                     {
@@ -615,19 +487,13 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
         public async Task<string> SaveUpdateManufacturerDAL(ManufacturerEntity FormData, int DataOperationType)
         {
             string result = "";
@@ -636,7 +502,6 @@ namespace DAL.Repository.Services
             {
                 try
                 {
-
                     if (DataOperationType == 1)
                     {
                         context.Execute(@"Insert into Manufacturers(Name,	IsActive,	DisplaySeqNo,	CreatedOn,	CreatedBy)
@@ -647,7 +512,6 @@ namespace DAL.Repository.Services
                             IsActive = FormData.IsActive,
                             DisplaySeqNo = FormData.DisplaySeqNo,
                             UserId = FormData.UserId,
-
                         });
                         result = "Saved Successfully!";
                     }
@@ -661,7 +525,6 @@ namespace DAL.Repository.Services
                            IsActive = FormData.IsActive,
                            DisplaySeqNo = FormData.DisplaySeqNo,
                            UserId = FormData.UserId,
-
                        });
                         result = "Saved Successfully!";
                     }
@@ -670,42 +533,29 @@ namespace DAL.Repository.Services
                         result = "Please define data operation type!";
                     }
 
-
-
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
         }
-
         public async Task<List<CurrencyEntity>> GetCurrenciesListDAL(CurrencyEntity FormData)
         {
-
             List<CurrencyEntity> result = new List<CurrencyEntity>();
 
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.CurrencyId > 0)
                     {
                         SearchParameters.Append("AND MTBL.CurrencyId =  @0 ", FormData.CurrencyId);
                     }
-
 
                     if (!String.IsNullOrEmpty(FormData.CurrencyName))
                     {
@@ -731,22 +581,15 @@ namespace DAL.Repository.Services
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
 
                     result = context.Fetch<CurrencyEntity>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
         public async Task<string> SaveUpdateCurrencyDAL(CurrencyEntity FormData, int DataOperationType)
         {
             string result = "";
@@ -755,9 +598,6 @@ namespace DAL.Repository.Services
             {
                 try
                 {
-
-
-
                     if (DataOperationType == 1)
                     {
                         context.Execute(@"Insert into Currencies(CurrencyName,CurrencyCode,	IsActive,	DisplaySeqNo,	CreatedOn,	CreatedBy)
@@ -784,7 +624,6 @@ namespace DAL.Repository.Services
                            IsActive = FormData.IsActive,
                            DisplaySeqNo = FormData.DisplaySeqNo,
                            UserId = FormData.UserId,
-
                        });
                         result = "Saved Successfully!";
                     }
@@ -793,42 +632,28 @@ namespace DAL.Repository.Services
                         result = "Please define data operation type!";
                     }
 
-
-
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
         }
-
         public async Task<List<AttachmentTypeEntity>> GetAttachmentTypesListDAL(AttachmentTypeEntity FormData)
         {
-
             List<AttachmentTypeEntity> result = new List<AttachmentTypeEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.AttachmentTypeId > 0)
                     {
                         SearchParameters.Append("AND MTBL.AttachmentTypeId =  @0 ", FormData.AttachmentTypeId);
                     }
-
 
                     if (!String.IsNullOrEmpty(FormData.AttachmentTypeName))
                     {
@@ -857,38 +682,28 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
 
         public async Task<List<PaymentMethodEntity>> GetPaymentMethodsListDAL(PaymentMethodEntity FormData)
         {
-
             List<PaymentMethodEntity> result = new List<PaymentMethodEntity>();
 
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.PaymentMethodId > 0)
                     {
                         SearchParameters.Append("AND MTBL.PaymentMethodId =  @0 ", FormData.PaymentMethodId);
                     }
-
 
                     if (!String.IsNullOrEmpty(FormData.PaymentMethodName))
                     {
@@ -917,30 +732,20 @@ namespace DAL.Repository.Services
 
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
-
         public async Task<string> SaveUpdatePaymentMethodDAL(PaymentMethodEntity FormData, int DataOperationType)
         {
             string result = "";
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
-
-
                     if (DataOperationType == 1)
                     {
                         context.Execute(@"Insert into PaymentMethods(PaymentMethodName,	IsActive,	DisplaySeqNo,	CreatedOn,	CreatedBy)
@@ -965,7 +770,6 @@ namespace DAL.Repository.Services
                            IsActive = FormData.IsActive,
                            DisplaySeqNo = FormData.DisplaySeqNo,
                            UserId = FormData.UserId,
-
                        });
                         result = "Saved Successfully!";
                     }
@@ -974,36 +778,24 @@ namespace DAL.Repository.Services
                         result = "Please define data operation type!";
                     }
 
-
-
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
         }
 
         public async Task<List<TagEntity>> GetTagsListDAL(TagEntity FormData)
         {
-
             List<TagEntity> result = new List<TagEntity>();
-
             using (var context = _contextHelper.GetDataContextHelper())
             {
                 try
                 {
-
                     var SearchParameters = PetaPoco.Sql.Builder.Append(" ");
-
-
 
                     if (FormData.TagId > 0)
                     {
@@ -1014,7 +806,6 @@ namespace DAL.Repository.Services
                     {
                         SearchParameters.Append("AND MTBL.CreatedBy =  @0 ", FormData.CreatedBy);
                     }
-
 
                     if (!String.IsNullOrEmpty(FormData.TagName))
                     {
@@ -1040,20 +831,14 @@ namespace DAL.Repository.Services
 	                FETCH NEXT @1 ROWS ONLY", FormData.PageNo, FormData.PageSize);
 
                     result = context.Fetch<TagEntity>(ppSql);
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
-
         }
 
         public async Task<string> SaveUpdateTagDAL(TagEntity FormData, int DataOperationType)
@@ -1073,18 +858,14 @@ namespace DAL.Repository.Services
                             END",
                         new
                         {
-
                             TagName = FormData.TagName,
                             IsActive = FormData.IsActive,
                             UserId = FormData.UserId,
-
                         });
                         result = "Saved Successfully!";
                     }
                     else if (DataOperationType == 2)
                     {
-
-
                         context.Execute(@"IF NOT EXISTS(SELECT TOP 1 EXC.TagId FROM Tags EXC WHERE EXC.TagName=@TagName AND TagId!=@TagId)
                             BEGIN
                                  UPDATE TOP(1) Tags SET TagName = @TagName  ,IsActive = @IsActive , ModifiedOn=GetDate(), ModifiedBy = @UserId WHERE TagId = @TagId;
@@ -1098,30 +879,20 @@ namespace DAL.Repository.Services
 
                         });
                         result = "Saved Successfully!";
-
-
                     }
                     else
                     {
                         result = "Please define data operation type!";
                     }
 
-
-
                     await Task.FromResult(result);
                     return result;
-
-
                 }
                 catch (Exception)
                 {
-
                     throw;
                 }
-
             }
         }
-
-     
     }
 }

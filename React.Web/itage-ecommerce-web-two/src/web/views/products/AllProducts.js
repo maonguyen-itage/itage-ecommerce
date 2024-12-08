@@ -17,13 +17,11 @@ import sideBannerImg from '../../../resources/themeContent/images/category/side-
 import SitePagination from "../../components/shared/SitePagination";
 import { SiteLeftSidebarFilter } from "../../components/shared/SiteLeftSidebarFilter";
 
-
 const AllProducts = () => {
     const [leftSidebarOpen, setLeftSidebarOpen] = useState(false);
     const [cols, setCols] = useState("col-xl-3 col-md-4 col-6 col-grid-box");
     const [grid, setGrid] = useState(cols);
     const [layout, setLayout] = useState("");
-
 
     //--noor code starts here
     const dispatch = useDispatch();
@@ -40,14 +38,11 @@ const AllProducts = () => {
     const [OrderByColumnName, setOrderByColumnName] = useState('');
     const [LocalizationLabelsArray, setLocalizationLabelsArray] = useState([]);
 
-
     //--set product id from url
     const params = useParams();
     let categParamArray = [];
     categParamArray.push(parseInt(params.category_id) ?? 0);
     const [CategoryID, setCategoryID] = useState(categParamArray);
-
-
 
     const [SearchTerm, setSearchTerm] = useState(new URLSearchParams(search).get('SearchTerm'));
     const [SizeID, setSizeID] = useState([]);
@@ -60,7 +55,6 @@ const AllProducts = () => {
 
 
     const setFilterValueInParent = async (e, value, type) => {
-
         // e.preventDefault();
 
         //--intialize variables
@@ -72,10 +66,8 @@ const AllProducts = () => {
         let maxPriceLocal = MaxPrice;
         let colorIdLocal = ColorID;
         let ratingLocal = Rating;
-
     
         if (type == "category") {
-
             let updatedCategories = [...CategoryID];
             const index = updatedCategories.indexOf(value);
 
@@ -88,8 +80,6 @@ const AllProducts = () => {
 
             await setCategoryID(updatedCategories);
             categoriesIdsCommaSeperated = updatedCategories.join(",");
-
-
         } else if (type == "brand") {
 
             let updatedBrands = [...ManufacturerID];
@@ -104,8 +94,6 @@ const AllProducts = () => {
 
             await setManufacturerID(updatedBrands);
             brandsIdsCommaSeperated = updatedBrands.join(",");
-
-
         } else if (type == "size") {
 
             let updatedSize = [...SizeID];
@@ -123,7 +111,6 @@ const AllProducts = () => {
 
 
         } else if (type == "price") {
-
             // setTimeout(() => {
             //     const priceArray = value.split("-");
             //     setMinPrice(priceArray[0]);
@@ -136,26 +123,14 @@ const AllProducts = () => {
 
             minPriceLocal = priceArray[0];
             maxPriceLocal = priceArray[1];
-          
-
-           
-
         } else if (type == "color") {
-
             await setColorID(value);
             colorIdLocal = value;
-           
-
         }
         else if (type == "rating") {
-
             await setRating(value);
             ratingLocal = value;
-            
-
         } else if (type == "tag") {
-
-
             let updatedTags = [...TagID];
             const index = updatedTags.indexOf(value);
 
@@ -168,57 +143,40 @@ const AllProducts = () => {
 
             await setTagID(updatedTags);
             tagsIdsCommaSeperated = updatedTags.join(",");
-
         }
 
         await getAllProductsAfterAnyFilterChange(1, categoriesIdsCommaSeperated, brandsIdsCommaSeperated, sizeIdsCommaSeperated, minPriceLocal, maxPriceLocal, ratingLocal, tagsIdsCommaSeperated, colorIdLocal, null);
-
     }
 
     //--this function called from the ProductsFiltersOption component
     const setPageSizeFromProductFilter = async (e) => {
-
         setPageSize(parseInt(e.target.value));
         await getAllProductsAfterAnyFilterChange(1, null, null, null, null, null, null, null, null, null);
-
     }
 
     const setSortByFilter = async (e) => {
-
         setOrderByColumnName(parseInt(e.target.value));
         await getAllProductsAfterAnyFilterChange(1, null, null, null, null, null, null, null, null, e.target.value);
-
     }
 
     //--this function called from the SitePagination component
     const setCurrentPage = async (pageNumber) => {
-
-
         setTimeout(async () => {
             await getAllProductsAfterAnyFilterChange(pageNumber, null, null, null, null, null, null, null, null, null);
         }, 200);
-
-
-
     }
 
     const getAllProductsAfterAnyFilterChange = async (pageNumber, _categoryId, _manufacturerId, _sizeId,
         _minPrice, _maxPrice, _rating, _tagId, _colorId, _orderByColumnName) => {
-
-
         try {
-
-
             //--start loader
             dispatch(rootAction.commonAction.setLoading(true));
-
             await setPageNo(pageNumber);
 
             let headersFromPage = {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             }
-
 
             let paramFromPage = {
                 requestParameters: {
@@ -240,7 +198,6 @@ const AllProducts = () => {
 
             setshowPagination(false);
 
-
             let responseAllProducts = await MakeApiCallAsync(Config.END_POINT_NAMES['GET_All_PRODUCTS'], null, paramFromPage, headersFromPage, "POST", true);
             if (responseAllProducts != null && responseAllProducts.data != null) {
 
@@ -252,9 +209,7 @@ const AllProducts = () => {
                 if (AllProducts.length > 0) {
                     await setshowPagination(true);
                 }
-
             }
-
 
             //--stop loader
             setTimeout(() => {
@@ -263,39 +218,26 @@ const AllProducts = () => {
 
             //--Scroll to main div
             ScrollIntoSpecificDiv("all_products_main_sec", "smooth");
-
         }
         catch (error) {
-
             //--stop loader
             setTimeout(() => {
                 dispatch(rootAction.commonAction.setLoading(false));
             }, LOADER_DURATION);
-
         }
-
-
-
-
-
-
     }
 
     const setLeftSidebarOpenCloseFromFilter = async (e, value) => {
         e.preventDefault();
         await setLeftSidebarOpen(value);
-
     }
 
     useEffect(() => {
-
         const getAllProducts = async () => {
-
             const headers = {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             }
-
 
             const param = {
                 requestParameters: {
@@ -316,11 +258,8 @@ const AllProducts = () => {
             };
 
             setshowPagination(false);
-
-
             const response = await MakeApiCallAsync(Config.END_POINT_NAMES['GET_All_PRODUCTS'], null, param, headers, "POST", true);
             if (response != null && response.data != null) {
-
                 await setProductsList(JSON.parse(response.data.data));
                 let AllProducts = JSON.parse(response.data.data);
                 await setTotalRecords(parseInt(AllProducts[0]?.TotalRecords ?? 0))
@@ -329,17 +268,13 @@ const AllProducts = () => {
                 if (AllProducts.length > 0) {
                     await setshowPagination(true);
                 }
-
             }
-
 
             //-- Get website localization data
             let arryRespLocalization = await GetLocalizationControlsJsonDataForScreen(GlobalEnums.Entities["AllProducts"], null);
             if (arryRespLocalization != null && arryRespLocalization != undefined && arryRespLocalization.length > 0) {
                 await setLocalizationLabelsArray(arryRespLocalization);
             }
-
-
         }
 
         //--start loader
@@ -354,7 +289,6 @@ const AllProducts = () => {
         }, LOADER_DURATION);
 
     }, [])
-    //--noor code ends here
 
     return (
         <>
@@ -394,9 +328,7 @@ const AllProducts = () => {
                                 <div className="page-main-content">
                                     <Row>
                                         <Col sm="12">
-
                                             <div className="collection-product-wrapper">
-
                                                 <div className="product-top-filter">
                                                     <ProductsFilterOptions
                                                         setPageSizeFromProductFilter={setPageSizeFromProductFilter}
@@ -434,13 +366,11 @@ const AllProducts = () => {
                                                                 <div className={grid} key={i}>
                                                                     <div className="product">
                                                                         <div>
-
                                                                             <ProductBox
                                                                                 hoverEffect={""}
                                                                                 item={itm}
                                                                                 layout={layout}
                                                                                 ProductDetailPageForceUpload={false}
-
                                                                             />
                                                                         </div>
                                                                     </div>
@@ -452,8 +382,6 @@ const AllProducts = () => {
                                                 {/* Pagination */}
                                                 <div className="product-pagination loadmore-pagination">
                                                     <div className="theme-paggination-block">
-
-
                                                         <Row>
                                                             <Col xl="12" md="12" sm="12">
                                                                 {
@@ -464,12 +392,10 @@ const AllProducts = () => {
                                                                             PageSize={PageSize}
                                                                             setCurrentPage={setCurrentPage}
                                                                         />
-
                                                                         :
                                                                         <>
                                                                         </>
                                                                 }
-
                                                             </Col>
                                                         </Row>
                                                     </div>
@@ -483,9 +409,6 @@ const AllProducts = () => {
                     </div>
                 </div>
             </section>
-
-
-
         </>
     );
 };
