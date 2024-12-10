@@ -100,7 +100,6 @@ namespace AdminPanel.Areas.V1.Controllers
                             await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
                             #endregion
                         }
-
                     }
                     #endregion
                 }

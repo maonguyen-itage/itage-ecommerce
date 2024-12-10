@@ -26,7 +26,6 @@ namespace DAL.Repository.Services
             _contextHelper = contextHelper;
             _dapperConnectionHelper = dapperConnectionHelper;
         }
-
         public async Task<Apiconfiguration?> GetAPIConfiguration(string UrlName)
         {
             Apiconfiguration? result = new Apiconfiguration();
@@ -68,7 +67,7 @@ namespace DAL.Repository.Services
                     using (IDbConnection dbConnection = _dapperConnectionHelper.GetDapperContextHelper())
                     {
                         dbConnection.Open();
-                        result = dbConnection.Query<string>(apiConfiguration.SqlQuery, requestParameters , commandType: CommandType.Text).FirstOrDefault();
+                        result = dbConnection.Query<string>(apiConfiguration.SqlQuery, requestParameters, commandType: CommandType.Text).FirstOrDefault();
 
                         dbConnection.Close();
                         await Task.FromResult(result);

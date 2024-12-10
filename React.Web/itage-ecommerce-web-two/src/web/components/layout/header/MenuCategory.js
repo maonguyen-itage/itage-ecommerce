@@ -112,10 +112,10 @@ const MenuCategory = () => {
 							type="button"
 							onClick={() => setShowState(!showState)}
 						>
-							<span className="navbar-icon">
+							<span className="navbar-icon ">
 								{/* <i className="fa fa-arrow-down"></i> */}
 								<i
-									class="fa fa-bars fa-lg"
+									class="fa fa-bars sidebar-bar"
 									style={{ fontSize: "2.0em" }}
 								></i>
 								{/* style={{

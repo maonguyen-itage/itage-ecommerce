@@ -162,7 +162,6 @@ namespace DAL.Repository.Services
                 }
             }
         }
-
         public async Task<List<CategoryEntity>> GetCategoriesListForDiscountDAL(CategoryEntity FormData)
         {
             List<CategoryEntity> result = new List<CategoryEntity>();
@@ -568,7 +567,6 @@ namespace DAL.Repository.Services
                            ThemeTypeId = FormData.ThemeTypeId,
                            AttachmentId = FormData.AttachmentId,
                            UserId = FormData.UserId,
-
                        });
                         result = "Saved Successfully!";
                     }
@@ -635,7 +633,6 @@ namespace DAL.Repository.Services
                 }
             }
         }
-
         public async Task<DiscountsCampaignEntity?> GetCampaignDetailByIdDAL(int CampaignId)
         {
             DiscountsCampaignEntity? result = new DiscountsCampaignEntity();

@@ -206,9 +206,12 @@ export const calculatePriceDiscountPercentage = (
 	originalPrice,
 	discountedPrice
 ) => {
-	let discount = (originalPrice ?? 0) - (discountedPrice ?? 0);
-	let discountPercentage = (discount / originalPrice) * 100;
-	return discountPercentage.toFixed(2) + "%";
+	// let discount = (originalPrice ?? 0) - (discountedPrice ?? 0);
+	// let discountPercentage = (discount / originalPrice) * 100;
+	let discount = (discountedPrice ?? 0) - (originalPrice ?? 0);
+	let discountPercentage = (discount / discountedPrice) * 100;
+
+	return discountPercentage.toFixed(2) + "%" + " OFF";
 };
 
 export const getFileExtensionNameFromPath = (url) => {
@@ -219,7 +222,6 @@ export const getFileExtensionNameFromPath = (url) => {
 
 		// split the URL into an array using the dot as a separator
 		const urlParts = url.split(".");
-
 		// get the last item in the array, which should be the extension
 		const extension = urlParts[urlParts.length - 1];
 

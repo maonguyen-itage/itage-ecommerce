@@ -977,7 +977,6 @@ namespace AdminPanel.Areas.V1.Controllers
             //--This data variable will be used for storing data
             string? data = string.Empty;
             #endregion
-
             try
             {
                 Dictionary<string, object>? requestParameters = new Dictionary<string, object>();
@@ -997,7 +996,6 @@ namespace AdminPanel.Areas.V1.Controllers
                 string CouponCode = requestParameters["CouponCode"].ToString() ?? "";
                 string cartJsonData = "[]";
                 cartJsonData = requestParameters != null ? requestParameters["cartJsonData"].ToString() ?? "[]" : "[]";
-
 
                 var cartCustomerProducts = new List<CartCustomerProducts>();
                 cartCustomerProducts = JsonConvert.DeserializeObject<List<CartCustomerProducts>>(cartJsonData);
@@ -1022,13 +1020,10 @@ namespace AdminPanel.Areas.V1.Controllers
                     if (ApiConfigurationForGetAllProducts != null)
                     {
                         allProductsDataJson = await this._apiOperationServicesDAL.GetApiData(requestParametersAllProducts, ApiConfigurationForGetAllProducts);
-
                     }
 
                     //--Calcualte Discount for products
                     string productsAfterDiscount = await _calculationHelper.CalculateDiscountsForProducts((allProductsDataJson ?? "[]"));
-
-
                     var CartItems = JsonConvert.DeserializeObject<List<ApiProductEntity?>>(productsAfterDiscount ?? "[]");
 
                     if (CartItems != null)

@@ -21,7 +21,6 @@ export const GetDefaultCurrencyCode = () => {
 export const GetTokenForHeader = async () => {
 	try {
 		let Token = "";
-
 		let tokenFromStorage = localStorage.getItem("Token");
 
 		if (
@@ -41,7 +40,6 @@ export const GetTokenForHeader = async () => {
 export const GetUserIdForHeader = async () => {
 	try {
 		let UserID = "";
-
 		let loginUserDataJson = localStorage.getItem("user");
 		const loginUser = JSON.parse(loginUserDataJson ?? "{}");
 
@@ -66,7 +64,6 @@ export const setLanguageCodeInSession = async (LangCode) => {
 
 export const getLanguageCodeFromSession = () => {
 	let langCode = "en";
-
 	try {
 		langCode = localStorage.getItem("langCode");
 	} catch (err) {
