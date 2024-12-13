@@ -62,7 +62,7 @@ namespace AdminPanel.Areas.V1.Controllers
                         if (!String.IsNullOrWhiteSpace(ParamKeyValue))
                         {
                             requestParameters = JsonConvert.DeserializeObject<Dictionary<string, object>>(ParamKeyValue);
-                            //check of requestParameters contains any password key  
+                            //check of requestParameters contains any password key
                             if (UrlName == "get-user-login" || UrlName == "signup-user")
                             {
                                 if (requestParameters != null && requestParameters.ContainsKey("Password"))

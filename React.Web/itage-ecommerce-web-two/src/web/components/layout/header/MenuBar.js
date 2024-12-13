@@ -98,7 +98,7 @@ const MenuBar = (props) => {
 							document.body.style.overflow = "visible";
 						}}
 					>
-						Back
+						{t("back")}
 						<i
 							className="fa fa-angle-right ps-2"
 							aria-hidden="true"
@@ -129,13 +129,7 @@ const MenuBar = (props) => {
 					className="dark-menu-item has-submenu"
 					id="lbl_mgmenu_home"
 				>
-					{LocalizationLabelsArray.length > 0
-						? replaceLoclizationLabel(
-								LocalizationLabelsArray,
-								"Home",
-								"lbl_mgmenu_home"
-						  )
-						: "Home"}
+					{t("home")}
 				</Link>
 			</li>
 			<li>
@@ -144,13 +138,7 @@ const MenuBar = (props) => {
 					className="dark-menu-item has-submenu"
 					id="lbl_mgmenu_products"
 				>
-					{LocalizationLabelsArray.length > 0
-						? replaceLoclizationLabel(
-								LocalizationLabelsArray,
-								"All Products",
-								"lbl_mgmenu_products"
-						  )
-						: "All Products"}
+					{t("all_products")}
 				</Link>
 			</li>
 			<li>
@@ -159,13 +147,7 @@ const MenuBar = (props) => {
 					id="lbl_thead_contct"
 					className="dark-menu-item has-submenu"
 				>
-					{LocalizationLabelsArray.length > 0
-						? replaceLoclizationLabel(
-								LocalizationLabelsArray,
-								"Contact",
-								"lbl_thead_contct"
-						  )
-						: "Contact"}
+					{t("contact")}
 				</Link>
 			</li>
 			<li>
@@ -174,13 +156,7 @@ const MenuBar = (props) => {
 					id="lbl_thead_faq"
 					className="dark-menu-item has-submenu"
 				>
-					{LocalizationLabelsArray.length > 0
-						? replaceLoclizationLabel(
-								LocalizationLabelsArray,
-								" Faq's",
-								"lbl_thead_faq"
-						  )
-						: "FAQ's"}
+					{t("faq")}
 				</Link>
 			</li>
 			<li>
@@ -189,43 +165,16 @@ const MenuBar = (props) => {
 					className="dark-menu-item has-submenu"
 					id="lbl_thead_about"
 				>
-					{LocalizationLabelsArray.length > 0
-						? replaceLoclizationLabel(
-								LocalizationLabelsArray,
-								"About",
-								"lbl_thead_about"
-						  )
-						: "About"}
+					{t("about_us")}
 				</Link>
 			</li>
-			{/* <li>
-				<Link
-					to={`/${getLanguageCodeFromSession()}/blackfriday`}
-					className="dark-menu-item has-submenu"
-					id="lbl_thead_about"
-				>
-					{LocalizationLabelsArray.length > 0
-						? replaceLoclizationLabel(
-								LocalizationLabelsArray,
-								"Black Friday",
-								"lbl_thead_about"
-						  )
-						: "Black Friday"}
-				</Link>
-			</li> */}
 			<li>
 				<Link
 					to={`/${getLanguageCodeFromSession()}/giftcards`}
 					className="dark-menu-item has-submenu"
 					id="lbl_thead_gift_cards"
 				>
-					{LocalizationLabelsArray.length > 0
-						? replaceLoclizationLabel(
-								LocalizationLabelsArray,
-								"Gift Cards",
-								"lbl_thead_gift_cards"
-						  )
-						: "Gift Cards"}
+					{t("gift_cards")}
 				</Link>
 			</li>
 		</>

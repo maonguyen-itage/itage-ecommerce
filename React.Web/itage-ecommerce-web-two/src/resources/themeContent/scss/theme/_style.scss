@@ -1,12 +1,4 @@
 /*-----------------------------------------------------------------------------------
-
-    Template Name: Bigdeal
-    Template URI: themes.pixelstrap.com/bigdeal
-    Description: This is E-commerce Theme
-    Author: Pixelstrap
-    Author URI: https://themeforest.net/user/pixelstrap
------------------------------------------------------------------------------------ */
-/*-----------------------------------------------------------------------------------
 1.General CSS start
   1.1.Button CSS start
 2.Services CSS start
@@ -6205,7 +6197,7 @@ button {
 		display: inline-block;
 		margin-bottom: 0;
 		padding: 0 25px;
-		text-transform: uppercase;
+		text-transform: capitalize;
 		position: relative;
 		color: $dark;
 		&:before,

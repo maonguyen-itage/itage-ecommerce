@@ -377,15 +377,8 @@ const SearchHeader = () => {
 											  )
 											: "shopping"}
 									</h5> */}
-									<h5>
-										{LocalizationLabelsArray.length > 0
-											? replaceLoclizationLabel(
-													LocalizationLabelsArray,
-													"cart",
-													"lbl_search_hdr_cart"
-											  )
-											: "cart"}
-									</h5>
+									<h5>{t("shopping")}</h5>
+									<h5>{t("cart")}</h5>
 								</div>
 							</div>
 						</div>

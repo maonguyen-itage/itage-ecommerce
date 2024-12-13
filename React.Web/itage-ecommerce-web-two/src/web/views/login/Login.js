@@ -23,8 +23,11 @@ import {
 } from "../../../helpers/CommonHelper";
 import GlobalEnums from "../../../helpers/GlobalEnums";
 import { Row, Col, Input, Label } from "reactstrap";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
+	const { t } = useTranslation();
+
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [siteTitle, setSiteTitle] = useState(Config["SITE_TTILE"]);
@@ -107,7 +110,7 @@ const Login = () => {
 						userData[0].ResponseMsg != undefined &&
 						userData[0].ResponseMsg == "Login Successfully"
 					) {
-						showSuccessMsg("Login successfully!");
+						showSuccessMsg(t("login_successfully_msg"));
 
 						//--save user data in session
 						localStorage.setItem(
@@ -172,12 +175,17 @@ const Login = () => {
 	return (
 		<>
 			<Helmet>
-				<title>{siteTitle} - Login</title>
-				<meta name="description" content={siteTitle + " - Login"} />
-				<meta name="keywords" content="Login"></meta>
+				<title>
+					{siteTitle} - {t("login")}
+				</title>
+				<meta
+					name="description"
+					content={siteTitle + " - " + t("login")}
+				/>
+				<meta name="keywords" content={t("login")}></meta>
 			</Helmet>
 
-			<SiteBreadcrumb title="Login" parent="home" />
+			<SiteBreadcrumb title={t("login")} parent={t("home")} />
 			<section className="login-page section-big-py-space bg-light">
 				<div className="custom-container">
 					<Row className="row">
@@ -189,13 +197,14 @@ const Login = () => {
 						>
 							<div className="theme-card">
 								<h3 className="text-center">
-									{LocalizationLabelsArray.length > 0
+									{/* {LocalizationLabelsArray.length > 0
 										? replaceLoclizationLabel(
 												LocalizationLabelsArray,
 												"Login",
 												"lbl_login_title"
 										  )
-										: "Login"}
+										: "Login"} */}
+									{t("login")}
 								</h3>
 								<form
 									className="theme-form"
@@ -203,13 +212,14 @@ const Login = () => {
 								>
 									<div className="form-group">
 										<Label htmlFor="name">
-											{LocalizationLabelsArray.length > 0
+											{/* {LocalizationLabelsArray.length > 0
 												? replaceLoclizationLabel(
 														LocalizationLabelsArray,
 														"Email",
 														"lbl_login_email"
 												  )
-												: "Email"}
+												: "Email"} */}
+											{t("email")}
 										</Label>
 										<Input
 											type="email"
@@ -226,13 +236,14 @@ const Login = () => {
 									</div>
 									<div className="form-group">
 										<Label htmlFor="password">
-											{LocalizationLabelsArray.length > 0
+											{/* {LocalizationLabelsArray.length > 0
 												? replaceLoclizationLabel(
 														LocalizationLabelsArray,
 														"Password",
 														"lbl_login_password"
 												  )
-												: "Password"}
+												: "Password"} */}
+											{t("password")}
 										</Label>
 										<Input
 											type="password"
@@ -253,35 +264,32 @@ const Login = () => {
 										className="btn btn-normal"
 										id="lbl_login_loginbtn"
 									>
-										{LocalizationLabelsArray.length > 0
+										{/* {LocalizationLabelsArray.length > 0
 											? replaceLoclizationLabel(
 													LocalizationLabelsArray,
 													"Login",
 													"lbl_login_loginbtn"
 											  )
-											: "Login"}
+											: "Login"} */}
+										{t("login")}
 									</button>
 									<Link
 										to={`/${getLanguageCodeFromSession()}/reset-password`}
 										className="float-end txt-default mt-2"
 									>
-										{LocalizationLabelsArray.length > 0
+										{/* {LocalizationLabelsArray.length > 0
 											? replaceLoclizationLabel(
 													LocalizationLabelsArray,
 													"Forgot your password?",
 													"lbl_login_lostpass"
 											  )
-											: "Forgot your password?"}
+											: "Forgot your password?"} */}
+										{t("forgot_your_password")}
 									</Link>
 								</form>
 
 								<p id="lbl_login_inst_singup" className="mt-3">
-									{LocalizationLabelsArray.length > 0
-										? replaceLoclizationLabel(
-												LocalizationLabelsArray,
-												"Sign up for a free account at our store. Registration is quick and easy. It allows you to be able to order from our shop. To start shopping click register."
-										  )
-										: "Sign up for a free account at our store. Registration is quick and easy. It allows you to be able to order from our shop. To start shopping click register."}
+									{t("sign_up_for_a_free_account")}
 								</p>
 
 								<Link
@@ -289,13 +297,14 @@ const Login = () => {
 									className="txt-default pt-3 d-block"
 									id="lbl_login_createacnt_2"
 								>
-									{LocalizationLabelsArray.length > 0
+									{/* {LocalizationLabelsArray.length > 0
 										? replaceLoclizationLabel(
 												LocalizationLabelsArray,
 												"Create an Account",
 												"lbl_login_createacnt_2"
 										  )
-										: "Create an Account"}
+										: "Create an Account"} */}
+									{t("create_an_account")}
 								</Link>
 							</div>
 						</Col>

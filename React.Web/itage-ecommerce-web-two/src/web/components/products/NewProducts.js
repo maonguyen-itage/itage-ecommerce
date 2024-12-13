@@ -22,6 +22,7 @@ import { MakeApiCallAsync } from "../../../helpers/ApiHelpers";
 import GlobalEnums from "../../../helpers/GlobalEnums";
 import rootAction from "../../../stateManagment/actions/rootAction";
 import { LOADER_DURATION } from "../../../helpers/Constants";
+import { useTranslation } from "react-i18next";
 
 var settings = {
 	arrows: true,
@@ -67,26 +68,33 @@ var settings = {
 };
 
 const NewProducts = ({ effect }) => {
+	const { t } = useTranslation();
 	const dispatch = useDispatch();
-	const [activeTab, setActiveTab] = useState("new products");
+	const [activeTab, setActiveTab] = useState("new_products");
 	const [collection, setCollection] = useState([
-		{
-			nameEn: "new products",
-			nameAr: "منتجات جديدة",
-		},
-		{
-			nameEn: "on sale",
-			nameAr: "للبيع",
-		},
-		{
-			nameEn: "hotdeal",
-			nameAr: "صفقة حاسمة",
-		},
-		{
-			nameEn: "best sellers",
-			nameAr: "أفضل البائعين",
-		},
+		{ nameKey: "new_products" },
+		{ nameKey: "on_sale" },
+		{ nameKey: "hot_deal" },
+		{ nameKey: "best_sellers" },
 	]);
+	// const [collection, setCollection] = useState([
+	// 	{
+	// 		nameEn: "new products",
+	// 		nameAr: "منتجات جديدة",
+	// 	},
+	// 	{
+	// 		nameEn: "on sale",
+	// 		nameAr: "للبيع",
+	// 	},
+	// 	{
+	// 		nameEn: "hotdeal",
+	// 		nameAr: "صفقة حاسمة",
+	// 	},
+	// 	{
+	// 		nameEn: "best sellers",
+	// 		nameAr: "أفضل البائعين",
+	// 	},
+	// ]);
 
 	const [ProductsList, setProductsList] = useState([]);
 	const [langCode, setLangCode] = useState("");
@@ -96,6 +104,7 @@ const NewProducts = ({ effect }) => {
 		PageSize: 20,
 		TotalRecords: 0,
 	});
+
 	const getNewProductsList = async (TabName) => {
 		await setActiveTab(TabName);
 		//--empty list of product
@@ -123,27 +132,28 @@ const NewProducts = ({ effect }) => {
 			"POST",
 			true
 		);
+
 		if (response != null && response.data != null) {
 			let ProductData = JSON.parse(response.data.data);
-			let slidesToShow = 6;
+			// let slidesToShow = 6;
+			let slidesToShow = 0;
+
 			if (ProductData != undefined && ProductData.length < slidesToShow) {
-				//--just concating productData with existing data if size is less slidesToShow
-				//--so that items are complete for slide show other wise it will create issue in display
 				ProductData = ProductData.concat(ProductData);
 			}
+
 			await setProductsList(ProductData);
 		}
 	};
 
 	useEffect(() => {
-		// declare the data fetching function
 		const dataOperationInUseEffect = async () => {
-			//--Get language code
 			let lnCode = getLanguageCodeFromSession();
 			await setLangCode(lnCode);
 
-			await getNewProductsList("new products");
-			//-- Get website localization data
+			// await getNewProductsList("new_products");
+			await getNewProductsList("new_products");
+			// await getNewProductsList(t("new_products"));
 			let arryRespLocalization =
 				await GetLocalizationControlsJsonDataForScreen(
 					GlobalEnums.Entities["NewProducts"],
@@ -175,7 +185,7 @@ const NewProducts = ({ effect }) => {
 			<section className="section-pt-space">
 				<div className="tab-product-main">
 					<div className="tab-prodcut-contain">
-						<Nav tabs>
+						{/* <Nav tabs>
 							{collection &&
 								collection?.map((c, i) => (
 									<NavItem key={i}>
@@ -194,6 +204,25 @@ const NewProducts = ({ effect }) => {
 												Config.LANG_CODES_ENUM["Arabic"]
 												? c.nameAr
 												: c.nameEn}
+										</NavLink>
+									</NavItem>
+								))}
+						</Nav> */}
+						<Nav tabs>
+							{collection &&
+								collection.map((c, i) => (
+									<NavItem key={i}>
+										<NavLink
+											className={
+												activeTab === c.nameKey
+													? "active"
+													: ""
+											}
+											onClick={() =>
+												getNewProductsList(c.nameKey)
+											}
+										>
+											{t(c.nameKey)}
 										</NavLink>
 									</NavItem>
 								))}

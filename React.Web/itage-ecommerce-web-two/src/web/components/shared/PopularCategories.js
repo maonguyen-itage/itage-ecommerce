@@ -15,6 +15,7 @@ import {
 	makeAnyStringLengthShort,
 	replaceWhiteSpacesWithDashSymbolInUrl,
 } from "../../../helpers/ConversionHelper";
+import { useTranslation } from "react-i18next";
 
 var settings = {
 	dots: false,
@@ -68,6 +69,7 @@ const CategoryList = [
 ];
 
 const PopularCategories = () => {
+	const { t } = useTranslation();
 	const [PopularCategoriesList, setPopularCategories] = useState([]);
 	const [adminPanelBaseURL, setBaseUrl] = useState(Config["ADMIN_BASE_URL"]);
 	const [LocalizationLabelsArray, setLocalizationLabelsArray] = useState([]);
@@ -132,16 +134,17 @@ const PopularCategories = () => {
 			PopularCategoriesList != null &&
 			PopularCategoriesList.length > 0 ? (
 				<>
-					<div className="title6 ">
+					<div className="title6">
 						<h4>
-							{" "}
+							{/* {" "}
 							{LocalizationLabelsArray.length > 0
 								? replaceLoclizationLabel(
 										LocalizationLabelsArray,
 										" Popular Categories!",
 										"lbl_popct_category"
 								  )
-								: " Popular Categories!"}
+								: " Popular Categories!"} */}
+							{t("popular_categories")}
 						</h4>
 					</div>
 					<section className="rounded-category rounded-category-inverse">

@@ -5,13 +5,18 @@ import SiteBreadcrumb from "../../components/layout/SiteBreadcrumb";
 import { Media, Row, Col, Container } from "reactstrap";
 import aboutImg from "../../../resources/custom/images/about-us.jpg";
 import CustomerTestimonial from "../../components/shared/CustomerTestimonial";
+import { useTranslation } from "react-i18next";
 
 const About = () => {
+	const { t } = useTranslation();
+
 	const [siteTitle, setSiteTitle] = useState(Config["SITE_TTILE"]);
 	return (
 		<>
 			<Helmet>
-				<title>{siteTitle} - About Us</title>
+				<title>
+					{siteTitle} - {t("about_us")}
+				</title>
 				<meta
 					name="description"
 					content={siteTitle + " - About us page"}
@@ -43,13 +48,9 @@ const About = () => {
 							</p>
 							<p className="mb-2">
 								{" "}
-								Our website is built using the latest
-								technologies such as ASP.NET MVC .NET 8.0 and
-								ReactJS to provide you with a seamless and
-								intuitive shopping experience. We offer a wide
-								range of products from various categories,
-								including electronics, fashion, beauty, home and
-								living, sports and fitness, and much more.
+								Our website is electronics, fashion, beauty,
+								home and living, sports and fitness, and much
+								more.
 							</p>
 							<p className="mb-2">
 								{" "}

@@ -15,6 +15,7 @@ import {
 	GetDefaultCurrencySymbol,
 	getLanguageCodeFromSession,
 } from "../../../helpers/CommonHelper";
+import { useTranslation } from "react-i18next";
 
 var bestSellerSetting = {
 	dots: false,
@@ -172,6 +173,7 @@ const productCollection = [
 ];
 
 const TodayHotDeal = () => {
+	const { t } = useTranslation();
 	const [state, setState] = useState({ nav1: null, nav2: null });
 	const slider1 = useRef(null);
 	const slider2 = useRef(null);
@@ -269,7 +271,7 @@ const TodayHotDeal = () => {
 					<Col lg="12">
 						{/* <!--title start--> */}
 						<div className="title3 b-g-white text-center">
-							<h4>today&#39;s hot deal</h4>
+							<h4>{t("today_hot_deal")}</h4>
 						</div>
 						{/* <!--titel end--> */}
 					</Col>
@@ -446,7 +448,7 @@ const TodayHotDeal = () => {
 							<div className="media-banner border-0">
 								<div className="media-banner-box">
 									<div className="media-heading">
-										<h5>Customer Favorites</h5>
+										<h5>{t("customer_favorites")}</h5>
 									</div>
 								</div>
 

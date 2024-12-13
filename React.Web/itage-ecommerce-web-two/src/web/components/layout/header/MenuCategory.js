@@ -125,13 +125,7 @@ const MenuCategory = () => {
 							</span>
 						</button>
 						<h5 className="mb-0  text-white title-font">
-							{LocalizationLabelsArray.length > 0
-								? replaceLoclizationLabel(
-										LocalizationLabelsArray,
-										" All",
-										"lbl_shopby_category"
-								  )
-								: "All"}
+							{t("all")}
 						</h5>
 					</nav>
 					<div
@@ -163,7 +157,8 @@ const MenuCategory = () => {
 								}}
 							>
 								<a>
-									<i className="fa fa-angle-left"></i>Back
+									<i className="fa fa-angle-left"></i>
+									{t("back")}
 								</a>
 							</li>
 

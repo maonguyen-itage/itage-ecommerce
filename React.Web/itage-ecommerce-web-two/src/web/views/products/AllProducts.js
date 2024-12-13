@@ -19,8 +19,11 @@ import emptySearch from "../../../resources/themeContent/images/empty-search.jpg
 import sideBannerImg from "../../../resources/themeContent/images/category/side-banner.png";
 import SitePagination from "../../components/shared/SitePagination";
 import { SiteLeftSidebarFilter } from "../../components/shared/SiteLeftSidebarFilter";
+import { useTranslation } from "react-i18next";
 
 const AllProducts = () => {
+	const { t } = useTranslation();
+
 	const [leftSidebarOpen, setLeftSidebarOpen] = useState(false);
 	const [cols, setCols] = useState("col-xl-3 col-md-4 col-6 col-grid-box");
 	const [grid, setGrid] = useState(cols);
@@ -61,8 +64,6 @@ const AllProducts = () => {
 	const [Rating, setRating] = useState(null);
 
 	const setFilterValueInParent = async (e, value, type) => {
-		// e.preventDefault();
-
 		//--intialize variables
 		let categoriesIdsCommaSeperated =
 			CategoryID.length > 0 ? CategoryID.join(",") : "";
@@ -372,14 +373,16 @@ const AllProducts = () => {
 	return (
 		<>
 			<Helmet>
-				<title>{siteTitle} - All Products</title>
+				<title>
+					{siteTitle} - {t("all_products")}
+				</title>
 				<meta
 					name="description"
-					content={siteTitle + " - All Products"}
+					content={siteTitle + " - " + t("all_products")}
 				/>
-				<meta name="keywords" content="All Products"></meta>
+				<meta name="keywords" content={t("all_products")}></meta>
 			</Helmet>
-			<SiteBreadcrumb title="Products" parent="Home" />
+			<SiteBreadcrumb title={t("products")} parent={t("home")} />
 			<section className="section-big-pt-space section-big-pb-space ratio_asos bg-light">
 				<div className="collection-wrapper">
 					<div className="custom-container">

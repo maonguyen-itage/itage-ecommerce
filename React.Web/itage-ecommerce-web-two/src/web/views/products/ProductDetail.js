@@ -50,8 +50,11 @@ import RelatedProducts from "../../components/products/RelatedProducts";
 import ProductVariants from "../../components/products/ProductVariants";
 import { Helmet } from "react-helmet";
 import SizeGuide from "../../components/shared/SizeGuide";
+import { useTranslation } from "react-i18next";
 
 const ProductDetail = () => {
+	const { t } = useTranslation();
+
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [siteTitle, setSiteTitle] = useState(Config["SITE_TTILE"]);
@@ -603,7 +606,7 @@ const ProductDetail = () => {
 		<>
 			<Helmet>
 				<title>
-					{siteTitle} Product Detail -{" "}
+					{siteTitle} {t("product_detail")} -{" "}
 					{productDetail?.MetaTitle != undefined
 						? productDetail?.MetaTitle
 						: ""}
@@ -626,7 +629,7 @@ const ProductDetail = () => {
 					}
 				></meta>
 			</Helmet>
-			<SiteBreadcrumb title="Product Detail" parent="Home" />
+			<SiteBreadcrumb title="Product Detail" parent={t("home")} />
 			<section className="section-big-pt-space bg-light">
 				<div className="collection-wrapper">
 					<div className="custom-container">
@@ -650,7 +653,7 @@ const ProductDetail = () => {
 												className="fa fa-angle-left"
 												aria-hidden="true"
 											></i>
-											back
+											{t("back")}
 										</span>
 									</div>
 								</div>
@@ -671,7 +674,7 @@ const ProductDetail = () => {
 													className="fa fa-filter"
 													aria-hidden="true"
 												></i>{" "}
-												filter
+												{t("filter")}
 											</span>
 										</div>
 									</Col>
@@ -740,14 +743,15 @@ const ProductDetail = () => {
 															productDetail.TotalReviews
 														}{" "}
 														<span id="lbl_prd_det_reviews">
-															{LocalizationLabelsArray.length >
+															{/* {LocalizationLabelsArray.length >
 															0
 																? replaceLoclizationLabel(
 																		LocalizationLabelsArray,
 																		"reviews",
 																		"lbl_prd_det_reviews"
 																  )
-																: "reviews"}
+																: "reviews"} */}
+															{t("reviews")}
 														</span>
 													</Link>
 												</div>
@@ -759,7 +763,7 @@ const ProductDetail = () => {
 												<div className="product-info-custom">
 													<div className="product-info-custom-item">
 														<span className="product-info-custom-label">
-															Vendor:
+															{t("vendor")}
 														</span>
 														<span className="product-info-custom-value">
 															{
@@ -769,7 +773,7 @@ const ProductDetail = () => {
 													</div>
 													<div className="product-info-custom-item">
 														<span className="product-info-custom-label">
-															Availability:
+															{t("availability")}
 														</span>
 														{(() => {
 															if (
@@ -794,14 +798,17 @@ const ProductDetail = () => {
 																					color: "#4CBB17",
 																				}}
 																			>
-																				{LocalizationLabelsArray.length >
+																				{/* {LocalizationLabelsArray.length >
 																				0
 																					? replaceLoclizationLabel(
 																							LocalizationLabelsArray,
 																							"In Stock",
 																							"lbl_prd_det_instock"
 																					  )
-																					: "In Stock"}
+																					: "In Stock"} */}
+																				{t(
+																					"in_stock"
+																				)}
 																			</span>
 																			<span className="product-info-custom-value">
 																				{" "}
@@ -809,7 +816,11 @@ const ProductDetail = () => {
 																				{
 																					productDetail.StockQuantity
 																				}{" "}
-																				items)
+																				{t(
+																					"product"
+																				)}
+
+																				)
 																			</span>
 																		</>
 																	);
@@ -817,9 +828,9 @@ const ProductDetail = () => {
 																	return (
 																		<>
 																			<span className="product-info-custom-value">
-																				Out
-																				of
-																				stock
+																				{t(
+																					"out_of_stock"
+																				)}
 																			</span>
 																		</>
 																	);
@@ -829,7 +840,7 @@ const ProductDetail = () => {
 													</div>
 													<div className="product-info-custom-item">
 														<span className="product-info-custom-label">
-															Brand:
+															{t("brand")} :
 														</span>
 														<span className="product-info-custom-value">
 															{
@@ -845,7 +856,7 @@ const ProductDetail = () => {
 												productDetail?.ProductColorsJson
 													.length > 0 ? (
 													<h6 className="product-title">
-														select color
+														{t("select_color")}
 													</h6>
 												) : (
 													<></>
@@ -896,7 +907,7 @@ const ProductDetail = () => {
 												productDetail?.ProductSizesJson
 													.length > 0 ? (
 													<h6 className="product-title size-text">
-														select size{" "}
+														{t("select_size")}{" "}
 														<span>
 															<a
 																data-toggle="modal"
@@ -908,7 +919,9 @@ const ProductDetail = () => {
 																	openSizeGuide();
 																}}
 															>
-																size chart
+																{t(
+																	"size_chart"
+																)}{" "}
 															</a>
 														</span>
 													</h6>
@@ -991,7 +1004,7 @@ const ProductDetail = () => {
 																		openProductVariants();
 																	}}
 																>
-																	{LocalizationLabelsArray !=
+																	{/* {LocalizationLabelsArray !=
 																		undefined &&
 																	LocalizationLabelsArray.length >
 																		0
@@ -1000,7 +1013,10 @@ const ProductDetail = () => {
 																				"Select Variants",
 																				"lbl_prd_det_btn_variant"
 																		  )
-																		: "Select Variants"}
+																		: "Select Variants"} */}
+																	{t(
+																		"select_variants"
+																	)}
 																</Link>
 															</div>
 														</div>
@@ -1018,7 +1034,7 @@ const ProductDetail = () => {
 													""
 												)}
 												<h6 className="product-title">
-													quantity
+													{t("quantity")}
 												</h6>
 												<div className="qty-box">
 													<div className="input-group">
@@ -1075,14 +1091,15 @@ const ProductDetail = () => {
 														HandleAddToCart(false);
 													}}
 												>
-													{LocalizationLabelsArray.length >
+													{/* {LocalizationLabelsArray.length >
 													0
 														? replaceLoclizationLabel(
 																LocalizationLabelsArray,
 																"Add to Cart",
 																"lbl_prd_det_addcart"
 														  )
-														: "Add to Cart"}
+														: "Add to Cart"} */}
+													{t("add_to_cart")}
 												</Link>
 												<Link
 													to="#"
@@ -1092,12 +1109,12 @@ const ProductDetail = () => {
 														HandleAddToCart(true);
 													}}
 												>
-													buy now
+													{t("buy_now")}
 												</Link>
 											</div>
 											<div className="border-product">
 												<h6 className="product-title">
-													product details
+													{t("product_details")}
 												</h6>
 												<p>
 													{makeProductShortDescription(
@@ -1144,14 +1161,17 @@ const ProductDetail = () => {
 														>
 															<i className="fa fa-heart"></i>
 															<span className="title-font">
-																{LocalizationLabelsArray.length >
+																{/* {LocalizationLabelsArray.length >
 																0
 																	? replaceLoclizationLabel(
 																			LocalizationLabelsArray,
 																			"Add to Wishlist",
 																			"lbl_prd_det_addwish"
 																	  )
-																	: "Add to Wishlist"}
+																	: "Add to Wishlist"} */}
+																{t(
+																	"add_to_wishlist"
+																)}
 															</span>
 														</button>
 													</div>
@@ -1180,14 +1200,15 @@ const ProductDetail = () => {
 															setActiveTab("1")
 														}
 													>
-														{LocalizationLabelsArray.length >
+														{/* {LocalizationLabelsArray.length >
 														0
 															? replaceLoclizationLabel(
 																	LocalizationLabelsArray,
 																	"Description",
 																	"lbl_prd_det_desc"
 															  )
-															: "Description:"}
+															: "Description:"} */}
+														{t("description")}
 														<div className="material-border"></div>
 													</NavLink>
 												</NavItem>
@@ -1202,14 +1223,17 @@ const ProductDetail = () => {
 															setActiveTab("2")
 														}
 													>
-														{LocalizationLabelsArray.length >
+														{/* {LocalizationLabelsArray.length >
 														0
 															? replaceLoclizationLabel(
 																	LocalizationLabelsArray,
 																	"Additional information",
 																	"lbl_prd_det_addinfo"
 															  )
-															: "Additional information:"}
+															: "Additional information:"} */}
+														{t(
+															"additional_information"
+														)}
 														<div className="material-border"></div>
 													</NavLink>
 												</NavItem>
@@ -1224,14 +1248,15 @@ const ProductDetail = () => {
 															setActiveTab("3")
 														}
 													>
-														{LocalizationLabelsArray.length >
+														{/* {LocalizationLabelsArray.length >
 														0
 															? replaceLoclizationLabel(
 																	LocalizationLabelsArray,
 																	"Shipping",
 																	"lbl_prd_det_shipinfo"
 															  )
-															: "Shipping"}
+															: "Shipping"} */}
+														{t("shipping")}
 														<div className="material-border"></div>
 													</NavLink>
 												</NavItem>
@@ -1246,14 +1271,15 @@ const ProductDetail = () => {
 															setActiveTab("4")
 														}
 													>
-														{LocalizationLabelsArray.length >
+														{/* {LocalizationLabelsArray.length >
 														0
 															? replaceLoclizationLabel(
 																	LocalizationLabelsArray,
 																	"Why Buy From Us",
 																	"lbl_prd_det_whybuy"
 															  )
-															: "Why Buy From Us"}
+															: "Why Buy From Us"} */}
+														{t("why_buy_from_us")}
 														<div className="material-border"></div>
 													</NavLink>
 												</NavItem>
@@ -1268,14 +1294,15 @@ const ProductDetail = () => {
 															setActiveTab("5")
 														}
 													>
-														{LocalizationLabelsArray.length >
+														{/* {LocalizationLabelsArray.length >
 														0
 															? replaceLoclizationLabel(
 																	LocalizationLabelsArray,
 																	"Reviews",
 																	"lbl_prd_det_reviewstab"
 															  )
-															: "Reviews"}
+															: "Reviews"} */}
+														{t("reviews")}
 														<div className="material-border"></div>
 													</NavLink>
 												</NavItem>
@@ -1315,14 +1342,17 @@ const ProductDetail = () => {
 															<div class="product-info-custom">
 																<div class="product-info-custom-item">
 																	<span class="product-info-custom-label">
-																		{LocalizationLabelsArray.length >
+																		{/* {LocalizationLabelsArray.length >
 																		0
 																			? replaceLoclizationLabel(
 																					LocalizationLabelsArray,
 																					"Tags:",
 																					"lbl_prd_det_head_tags"
 																			  )
-																			: "Tags:"}
+																			: "Tags:"} */}
+																		{t(
+																			"tags"
+																		)}
 																	</span>
 																	<span class="product-info-custom-value">
 																		{productDetail?.ProductTagsJson?.map(
@@ -1353,32 +1383,42 @@ const ProductDetail = () => {
 															<div class="product-info-custom">
 																<div class="product-info-custom-item">
 																	<span class="product-info-custom-label">
-																		{LocalizationLabelsArray.length >
+																		{/* {LocalizationLabelsArray.length >
 																		0
 																			? replaceLoclizationLabel(
 																					LocalizationLabelsArray,
 																					"Shipping Free: ",
 																					"lbl_prd_det_head_shippingfree"
 																			  )
-																			: "Shipping Free: "}
+																			: "Shipping Free: "} */}
+																		{t(
+																			"tagshipping_frees"
+																		)}
 																	</span>
 																	<span class="product-info-custom-value">
 																		{productDetail?.IsShippingFree ==
 																		true
-																			? "Yes"
-																			: "No"}
+																			? t(
+																					"yes"
+																			  )
+																			: t(
+																					"no"
+																			  )}
 																	</span>
 																</div>
 																<div class="product-info-custom-item">
 																	<span class="product-info-custom-label">
-																		{LocalizationLabelsArray.length >
+																		{/* {LocalizationLabelsArray.length >
 																		0
 																			? replaceLoclizationLabel(
 																					LocalizationLabelsArray,
 																					"Delivery Methods: ",
 																					"lbl_prd_det_head_deliverymethod"
 																			  )
-																			: "Delivery Methods: "}
+																			: "Delivery Methods: "} */}
+																		{t(
+																			"delivery_methods"
+																		)}
 																	</span>
 																	<span class="product-info-custom-value">
 																		{productDetail?.ProductShipMethodsJson?.map(
@@ -1403,14 +1443,17 @@ const ProductDetail = () => {
 																</div>
 																<div class="product-info-custom-item">
 																	<span class="product-info-custom-label">
-																		{LocalizationLabelsArray.length >
+																		{/* {LocalizationLabelsArray.length >
 																		0
 																			? replaceLoclizationLabel(
 																					LocalizationLabelsArray,
 																					"Estimated Shipping Days: ",
 																					"lbl_prd_det_head_est_shippingdays"
 																			  )
-																			: "Estimated Shipping Days: "}
+																			: "Estimated Shipping Days: "} */}
+																		{t(
+																			"estimated_Shipping_days"
+																		)}
 																	</span>
 
 																	<span class="product-info-custom-value">
@@ -1499,8 +1542,9 @@ const ProductDetail = () => {
 																				"inline-block",
 																		}}
 																	>
-																		Customer
-																		Reviews
+																		{t(
+																			"customer_reviews"
+																		)}
 																	</h4>
 																</div>
 																<div className="mt-3">
@@ -1581,19 +1625,24 @@ const ProductDetail = () => {
 																				"inline-block",
 																		}}
 																	>
-																		{LocalizationLabelsArray.length >
+																		{/* {LocalizationLabelsArray.length >
 																		0
 																			? replaceLoclizationLabel(
 																					LocalizationLabelsArray,
 																					"Write a Review",
 																					"lbl_prd_det_writereview"
 																			  )
-																			: "Write a Review"}
+																			: "Write a Review"} */}
+																		{t(
+																			"write_a_review"
+																		)}
 																	</h4>
 																</div>
 																<div className="">
 																	<Label className="mb-0">
-																		Rating
+																		{t(
+																			"rating"
+																		)}
 																	</Label>
 																	<div className="star-rating-review-form">
 																		{[
@@ -1636,21 +1685,24 @@ const ProductDetail = () => {
 																	htmlFor="name"
 																	id="lbl_prd_det_name"
 																>
-																	{LocalizationLabelsArray.length >
+																	{/* {LocalizationLabelsArray.length >
 																	0
 																		? replaceLoclizationLabel(
 																				LocalizationLabelsArray,
 																				"Name",
 																				"lbl_prd_det_name"
 																		  )
-																		: "Name"}
+																		: "Name"} */}
+																	{t("name")}
 																</Label>
 																<Input
 																	type="text"
 																	className="form-control"
 																	id="name"
 																	name="name"
-																	placeholder="Enter Your name"
+																	placeholder={t(
+																		"enter_your_name"
+																	)}
 																	required
 																	value={
 																		ReviewerName
@@ -1671,21 +1723,24 @@ const ProductDetail = () => {
 																	htmlFor="email"
 																	id="lbl_prd_det_email"
 																>
-																	{LocalizationLabelsArray.length >
+																	{/* {LocalizationLabelsArray.length >
 																	0
 																		? replaceLoclizationLabel(
 																				LocalizationLabelsArray,
 																				"Email",
 																				"lbl_prd_det_email"
 																		  )
-																		: "Email"}
+																		: "Email"} */}
+																	{t("email")}
 																</Label>
 																<Input
 																	type="text"
 																	className="form-control"
 																	id="email"
 																	name="email"
-																	placeholder="Enter your email"
+																	placeholder={t(
+																		"enter_your_email"
+																	)}
 																	required
 																	value={
 																		ReviewerEmail
@@ -1706,21 +1761,26 @@ const ProductDetail = () => {
 																	htmlFor="review-title"
 																	id="lbl_prd_det_reviewtitle"
 																>
-																	{LocalizationLabelsArray.length >
+																	{/* {LocalizationLabelsArray.length >
 																	0
 																		? replaceLoclizationLabel(
 																				LocalizationLabelsArray,
 																				"Review Title",
 																				"lbl_prd_det_reviewtitle"
 																		  )
-																		: "Review Title"}
+																		: "Review Title"} */}
+																	{t(
+																		"review_title"
+																	)}
 																</Label>
 																<Input
 																	type="text"
 																	className="form-control"
 																	id="review-title"
 																	name="review-title"
-																	placeholder="Enter your Review Subjects"
+																	placeholder={t(
+																		"enter_your_review_subjects"
+																	)}
 																	required
 																	value={
 																		ReviewTitle
@@ -1741,19 +1801,24 @@ const ProductDetail = () => {
 																	htmlFor="review-body"
 																	id="lbl_prd_det_bodyreview"
 																>
-																	{LocalizationLabelsArray.length >
+																	{/* {LocalizationLabelsArray.length >
 																	0
 																		? replaceLoclizationLabel(
 																				LocalizationLabelsArray,
 																				"Body of Review (1000)",
 																				"lbl_prd_det_bodyreview"
 																		  )
-																		: "Body of Review (1000)"}
+																		: "Body of Review (1000)"} */}
+																	{t(
+																		"body_of_review"
+																	)}
 																</Label>
 																<textarea
 																	className="form-control"
 																	rows={4}
-																	placeholder="Write Your Testimonial Here"
+																	placeholder={t(
+																		"write_your_testimonia_here"
+																	)}
 																	name="review-body"
 																	id="review-body"
 																	required={
@@ -1781,14 +1846,17 @@ const ProductDetail = () => {
 																		SubmitReviewForm()
 																	}
 																>
-																	{LocalizationLabelsArray.length >
+																	{/* {LocalizationLabelsArray.length >
 																	0
 																		? replaceLoclizationLabel(
 																				LocalizationLabelsArray,
 																				"Submit Review",
 																				"lbl_prd_det_submitreview"
 																		  )
-																		: "Submit Review"}
+																		: "Submit Review"} */}
+																	{t(
+																		"submit_review"
+																	)}
 																</button>
 															</Col>
 														</div>

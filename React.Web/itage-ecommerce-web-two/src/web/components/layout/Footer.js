@@ -15,8 +15,11 @@ import {
 	replaceLoclizationLabel,
 } from "../../../helpers/CommonHelper";
 import GlobalEnums from "../../../helpers/GlobalEnums";
+import { useTranslation } from "react-i18next";
 
 const Footer = ({ layoutLogo }) => {
+	const { t } = useTranslation();
+
 	const dispatch = useDispatch();
 	const [paymentMethods, setPaymentMethods] = useState([]);
 	const [adminPanelBaseURL, setadminPanelBaseURL] = useState(
@@ -193,14 +196,17 @@ const Footer = ({ layoutLogo }) => {
 															<div className="footer-box">
 																<div className="footer-title">
 																	<h5>
-																		{LocalizationLabelsArray.length >
+																		{/* {LocalizationLabelsArray.length >
 																		0
 																			? replaceLoclizationLabel(
 																					LocalizationLabelsArray,
 																					"my account",
 																					"lbl_footr_myaccount"
 																			  )
-																			: "my account"}
+																			: "my account"} */}
+																		{t(
+																			"my_account"
+																		)}
 																	</h5>
 																</div>
 																<div className="footer-contant">
@@ -209,14 +215,17 @@ const Footer = ({ layoutLogo }) => {
 																			<Link
 																				to={`/${getLanguageCodeFromSession()}/login`}
 																			>
-																				{LocalizationLabelsArray.length >
+																				{/* {LocalizationLabelsArray.length >
 																				0
 																					? replaceLoclizationLabel(
 																							LocalizationLabelsArray,
 																							"Login",
 																							"lbl_footr_login"
 																					  )
-																					: "Login"}
+																					: "Login"} */}
+																				{t(
+																					"login"
+																				)}
 																			</Link>
 																		</li>
 																		<li>
@@ -224,14 +233,17 @@ const Footer = ({ layoutLogo }) => {
 																				to={`/${getLanguageCodeFromSession()}/about`}
 																				id="lbl_footr_about"
 																			>
-																				{LocalizationLabelsArray.length >
+																				{/* {LocalizationLabelsArray.length >
 																				0
 																					? replaceLoclizationLabel(
 																							LocalizationLabelsArray,
 																							"About Us",
 																							"lbl_footr_about"
 																					  )
-																					: "About Us"}
+																					: "About Us"} */}
+																				{t(
+																					"about_us"
+																				)}
 																			</Link>
 																		</li>
 																		<li>
@@ -239,14 +251,17 @@ const Footer = ({ layoutLogo }) => {
 																				to={`/${getLanguageCodeFromSession()}/contact-us`}
 																				id="lbl_footr_cont"
 																			>
-																				{LocalizationLabelsArray.length >
+																				{/* {LocalizationLabelsArray.length >
 																				0
 																					? replaceLoclizationLabel(
 																							LocalizationLabelsArray,
 																							"Contact Us",
 																							"lbl_footr_cont"
 																					  )
-																					: "Contact Us"}
+																					: "Contact Us"} */}
+																				{t(
+																					"contact_us"
+																				)}
 																			</Link>
 																		</li>
 
@@ -254,28 +269,34 @@ const Footer = ({ layoutLogo }) => {
 																			<Link
 																				to={`/${getLanguageCodeFromSession()}/signup`}
 																			>
-																				{LocalizationLabelsArray.length >
+																				{/* {LocalizationLabelsArray.length >
 																				0
 																					? replaceLoclizationLabel(
 																							LocalizationLabelsArray,
 																							"Create Account",
 																							"lbl_footr_create_acnt"
 																					  )
-																					: "Create Account"}
+																					: "Create Account"} */}
+																				{t(
+																					"create_an_account"
+																				)}
 																			</Link>
 																		</li>
 																		<li>
 																			<Link
 																				to={`/${getLanguageCodeFromSession()}/become-seller`}
 																			>
-																				{LocalizationLabelsArray.length >
+																				{/* {LocalizationLabelsArray.length >
 																				0
 																					? replaceLoclizationLabel(
 																							LocalizationLabelsArray,
 																							"Become Vendor",
 																							"lbl_footr_become_vendor"
 																					  )
-																					: "Become Vendor"}
+																					: "Become Vendor"} */}
+																				{t(
+																					"become_vendor"
+																				)}
 																			</Link>
 																		</li>
 																	</ul>
@@ -286,14 +307,17 @@ const Footer = ({ layoutLogo }) => {
 															<div className="footer-box">
 																<div className="footer-title">
 																	<h5>
-																		{LocalizationLabelsArray.length >
+																		{/* {LocalizationLabelsArray.length >
 																		0
 																			? replaceLoclizationLabel(
 																					LocalizationLabelsArray,
 																					"Quick Links",
 																					"lbl_footr_quicklink"
 																			  )
-																			: "Quick Links"}
+																			: "Quick Links"} */}
+																		{t(
+																			"quick_links"
+																		)}
 																	</h5>
 																</div>
 																<div className="footer-contant">
@@ -302,14 +326,17 @@ const Footer = ({ layoutLogo }) => {
 																			<Link
 																				to={`/${getLanguageCodeFromSession()}/cart`}
 																			>
-																				{LocalizationLabelsArray.length >
+																				{/* {LocalizationLabelsArray.length >
 																				0
 																					? replaceLoclizationLabel(
 																							LocalizationLabelsArray,
 																							"Cart",
 																							"lbl_footr_cart"
 																					  )
-																					: "Cart"}
+																					: "Cart"} */}
+																				{t(
+																					"cart"
+																				)}
 																			</Link>
 																		</li>
 																		<li>
@@ -332,42 +359,51 @@ const Footer = ({ layoutLogo }) => {
 																				to={`/${getLanguageCodeFromSession()}/`}
 																				id="lbl_footr_home"
 																			>
-																				{LocalizationLabelsArray.length >
+																				{/* {LocalizationLabelsArray.length >
 																				0
 																					? replaceLoclizationLabel(
 																							LocalizationLabelsArray,
 																							"Home",
 																							"lbl_footr_home"
 																					  )
-																					: "Home"}
+																					: "Home"} */}
+																				{t(
+																					"home"
+																				)}
 																			</Link>
 																		</li>
 																		<li>
 																			<Link
 																				to={`/${getLanguageCodeFromSession()}/compare`}
 																			>
-																				{LocalizationLabelsArray.length >
+																				{/* {LocalizationLabelsArray.length >
 																				0
 																					? replaceLoclizationLabel(
 																							LocalizationLabelsArray,
 																							"Compare",
 																							"lbl_footr_Compare"
 																					  )
-																					: "Compare"}
+																					: "Compare"} */}
+																				{t(
+																					"compare"
+																				)}
 																			</Link>
 																		</li>
 																		<li>
 																			<Link
 																				to={`/${getLanguageCodeFromSession()}/all-products/0/all-categories`}
 																			>
-																				{LocalizationLabelsArray.length >
+																				{/* {LocalizationLabelsArray.length >
 																				0
 																					? replaceLoclizationLabel(
 																							LocalizationLabelsArray,
 																							"All Products",
 																							"lbl_footr_all_prd"
 																					  )
-																					: "All Products"}
+																					: "All Products"} */}
+																				{t(
+																					"all_products"
+																				)}
 																			</Link>
 																		</li>
 																	</ul>
@@ -378,14 +414,17 @@ const Footer = ({ layoutLogo }) => {
 															<div className="footer-box footer-contact-box">
 																<div className="footer-title">
 																	<h5>
-																		{LocalizationLabelsArray.length >
+																		{/* {LocalizationLabelsArray.length >
 																		0
 																			? replaceLoclizationLabel(
 																					LocalizationLabelsArray,
 																					"Contact Us",
 																					"lbl_footr_cont"
 																			  )
-																			: "Contact Us"}
+																			: "Contact Us"} */}
+																		{t(
+																			"contact_us"
+																		)}
 																	</h5>
 																</div>
 																<div className="footer-contant">
@@ -414,9 +453,11 @@ const Footer = ({ layoutLogo }) => {
 																		<li>
 																			<i className="fa fa-envelope-o"></i>
 																			<span>
-																				email
-																				us:
-																				nguyenmao8x@gmail.com
+																				{t(
+																					"email"
+																				)}{" "}
+																				:
+																				nguyen.van.mao@itage.co.jp
 																			</span>
 																		</li>
 																		<li>
@@ -447,7 +488,7 @@ const Footer = ({ layoutLogo }) => {
 						<div className="app-link-bloc-contain app-link-bloc-contain-1">
 							<div className="app-item-group ">
 								<div className="social-block">
-									<h6>follow us</h6>
+									<h6>{t("follow_us")}</h6>
 									<ul className="social">
 										<li>
 											<Link
@@ -483,8 +524,8 @@ const Footer = ({ layoutLogo }) => {
 						<Col xs="12">
 							<div className="sub-footer-contain">
 								<p>
-									<span>2024 - 25 </span>copy right by ITage
-									Shop
+									<span>2024 - 25 </span>
+									{t("copy_right_by")}
 								</p>
 							</div>
 						</Col>

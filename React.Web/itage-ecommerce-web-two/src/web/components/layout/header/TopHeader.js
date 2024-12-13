@@ -10,6 +10,7 @@ import {
 } from "../../../../helpers/CommonHelper";
 import { Link } from "react-router-dom";
 import SearchHeader from "./SearchHeader";
+import { LANGUAGES } from "../../../../constants/";
 
 const langCodeArray = [
 	{
@@ -28,6 +29,16 @@ const TopHeader = () => {
 	const [url, setUrl] = useState("");
 	const toggleLang = () => {
 		setOpenLang(!openLang);
+	};
+
+	//  const onChangeLang = (e: React.ChangeEvent<HTMLSelectElement>) => {
+	// 		const lang_code = e.target.value;
+	// 		i18n.changeLanguage(lang_code);
+	// 	};
+
+	const onChangeLang = (e) => {
+		const lang_code = e.target.value;
+		i18n.changeLanguage(lang_code);
 	};
 
 	useEffect(() => {
@@ -82,15 +93,7 @@ const TopHeader = () => {
 					<Col xl="5" md="7" sm="6">
 						<div className="top-header-left">
 							<div className="shpping-order">
-								<h6>
-									{LocalizationLabelsArray.length > 0
-										? replaceLoclizationLabel(
-												LocalizationLabelsArray,
-												"free shipping on order over $99",
-												"lbl_thead_freeship"
-										  )
-										: "free shipping on order over $99"}
-								</h6>
+								<h6>{t("free_shipping_on_order_over")}</h6>
 							</div>
 							<div className="app-link">
 								<h6>
@@ -102,13 +105,7 @@ const TopHeader = () => {
 											textDecoration: "none",
 										}}
 									>
-										{LocalizationLabelsArray.length > 0
-											? replaceLoclizationLabel(
-													LocalizationLabelsArray,
-													"Become Seller",
-													"lbl_thead_seller"
-											  )
-											: "Become Seller"}
+										{t("become_seller")}
 									</Link>
 								</h6>
 								<ul>
@@ -150,58 +147,43 @@ const TopHeader = () => {
 							</div>
 							<div className="language-block">
 								<div className="language-dropdown">
-									<Dropdown
+									<select
+										defaultValue={i18n.language}
+										onChange={onChangeLang}
+									>
+										{LANGUAGES.map(({ code, label }) => (
+											<option key={code} value={code}>
+												{label}
+											</option>
+										))}
+									</select>
+
+									{/* <Dropdown
 										isOpen={openLang}
 										toggle={toggleLang}
 									>
 										<DropdownToggle
 											tag="span"
 											data-toggle="dropdown"
-											aria-expanded={openLang}
 											className="language-dropdown-click"
 										>
-											{
-												langCodeArray?.find(
-													(x) =>
-														x.langCode == langCode
-												)?.name
-											}
+											{LANGUAGES.map(({ code, label }) => (
+											<option key={code} value={code}>
+												{label}
+											</option>
+										))}
 											<i
 												className="fa fa-angle-down"
 												aria-hidden="true"
 											></i>
 										</DropdownToggle>
-										<ul
-											className={`language-dropdown-open ${
-												openLang ? "" : "open"
-											}`}
-										>
+										<ul>
 											<li>
-												<a
-													onClick={() =>
-														handleLangCodeInSession(
-															"en"
-														)
-													}
-													href="#"
-												>
-													English
-												</a>
+
 											</li>
-											<li>
-												<a
-													onClick={() =>
-														handleLangCodeInSession(
-															"ar"
-														)
-													}
-													href="#"
-												>
-													Arabic
-												</a>
-											</li>
+
 										</ul>
-									</Dropdown>
+									</Dropdown> */}
 								</div>
 							</div>
 						</div>

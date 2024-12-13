@@ -15,7 +15,6 @@ namespace AdminPanel.Controllers
 {
     public class HomeController : BaseController
     {
-
         private readonly IHomeServicesDAL _homeServicesDAL;
         private readonly IConstants _constants;
         private readonly ISessionManager _sessionManag;
@@ -27,7 +26,6 @@ namespace AdminPanel.Controllers
             this._sessionManag = sessionManag;
             _commonServicesDAL = commonServicesDAL;
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -49,18 +47,14 @@ namespace AdminPanel.Controllers
         {
             // ✅ Main Model
             HomeModel model = new HomeModel();
-
             #region page basic info
             model.PageBasicInfoObj = new PageBasicInfo();
             model.PageBasicInfoObj.EntityId = (int)EntitiesEnum.Dashboard;
             model.PageBasicInfoObj.langCode = await _sessionManag.GetLanguageCodeFromSession();
             #endregion
 
-
-
             try
             {
-
                 // -- only get login vendor list if user login is of vendor type
                 var LoginUser = _sessionManag.GetLoginUserFromSession();
                 int LoginUserId = 0;
@@ -77,7 +71,6 @@ namespace AdminPanel.Controllers
                 }
                 #endregion
 
-
                 #region sales per month
                 model.SalesPerMonthData = await this._homeServicesDAL.GetChartSalesPerMonthDataDAL(FromDate, ToDate, LoginUserId);
                 model.SalesPerMonthData = model.SalesPerMonthData?.OrderBy(y => y.Year).ThenBy(m => m.MonthInNumber).ToList();
@@ -87,7 +80,6 @@ namespace AdminPanel.Controllers
                 model.OrderRevenuePerMonth = await this._homeServicesDAL.GetChartOrderRevenuePerMonthDataDAL(FromDate, ToDate, LoginUserId);
                 model.OrderRevenuePerMonth = model.OrderRevenuePerMonth?.OrderBy(y => y.Year).ThenBy(m => m.MonthInNumber).ToList();
                 #endregion
-
                 #region popular categoreis
                 model.SalesPopularCategoriesData = await this._homeServicesDAL.GetSalesPopularCategoriesDataDAL(FromDate, ToDate, LoginUserId);
                 var DistinctParentCategoriesIds = model.SalesPopularCategoriesData.Select(x => x.ParentCategoryID).Distinct().ToList();
@@ -123,11 +115,7 @@ namespace AdminPanel.Controllers
 
                 }
                 #endregion
-
-
-
                 model.CustomersLocationWiseData = await this._homeServicesDAL.GetChartCustomersLocationWiseDataDAL(FromDate, ToDate, LoginUserId);
-
                 #region popular products
                 model.PopularProductsData = await this._homeServicesDAL.GetChartPopularProductsDataDAL(FromDate, ToDate, LoginUserId);
                 //--make product title/label short
@@ -136,30 +124,21 @@ namespace AdminPanel.Controllers
                     prd.ChartLabel = StringConversionHelper.TruncateAnyStringValue(prd.ChartLabel, 10, true);
                 }
                 #endregion
-
             }
             catch (Exception ex)
             {
                 await this._commonServicesDAL.LogRunTimeExceptionDAL(ex.Message, ex.StackTrace, ex.StackTrace);
-
                 #region error model
                 model.SuccessErrorMsgEntityObj = new SuccessErrorMsgEntity();
                 model.SuccessErrorMsgEntityObj.ErrorMsg = "An error occured. Please try again.";
                 #endregion
-
             }
 
             return PartialView("~/Views/Home/PartialViews/_DashboardChart.cshtml", model);
         }
-
         public IActionResult Privacy()
         {
             return View();
         }
-
-
-
-
-
     }
 }

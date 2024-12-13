@@ -45,8 +45,6 @@ const ProductBox = ({
 			item.DiscountedPrice > 0
 	);
 
-	console.log("item: ", item.ProductId);
-
 	const customerCompareList = useSelector(
 		(state) => state.cartReducer.customerCompareList
 	);
