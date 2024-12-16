@@ -92,9 +92,9 @@ const TopHeader = () => {
 				<Row>
 					<Col xl="5" md="7" sm="6">
 						<div className="top-header-left">
-							<div className="shpping-order">
+							{/* <div className="shpping-order">
 								<h6>{t("free_shipping_on_order_over")}</h6>
-							</div>
+							</div> */}
 							<div className="app-link">
 								<h6>
 									<Link

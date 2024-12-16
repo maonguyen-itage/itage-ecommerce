@@ -188,13 +188,14 @@ const SearchHeader = () => {
 								</span>
 							</div>
 							<div className="logo-block">
-								<a href="/#">
+								<h4 className="">傾奇MONO</h4>
+								{/* <a href="/#">
 									<Media
 										src={logoImage}
-										className="img-fluid  "
+										className="img-fluid"
 										alt="logo"
 									/>
-								</a>
+								</a> */}
 							</div>
 							<div className="input-block">
 								<div className="input-box">
@@ -203,6 +204,15 @@ const SearchHeader = () => {
 										onSubmit={submitSearchForm}
 									>
 										<InputGroup>
+											<Input
+												placeholder={t("itage_search")}
+												value={SearchTerm}
+												onChange={(e) =>
+													setSearchTerm(
+														e.target.value
+													)
+												}
+											/>
 											<InputGroupText
 												onClick={(e) =>
 													submitSearchForm(e)
@@ -212,16 +222,7 @@ const SearchHeader = () => {
 													<i className="fa fa-search"></i>
 												</span>
 											</InputGroupText>
-											<Input
-												placeholder="itage.co.jpを検索"
-												value={SearchTerm}
-												onChange={(e) =>
-													setSearchTerm(
-														e.target.value
-													)
-												}
-											/>
-											<ButtonDropdown
+											{/* <ButtonDropdown
 												isOpen={dropdownOpen}
 												toggle={toggleDropDown}
 											>
@@ -342,7 +343,7 @@ const SearchHeader = () => {
 															</DropdownItem>
 														))}
 												</DropdownMenu>
-											</ButtonDropdown>
+											</ButtonDropdown> */}
 										</InputGroup>
 									</form>
 								</div>
