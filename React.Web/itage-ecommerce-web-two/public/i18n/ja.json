@@ -56,6 +56,8 @@
 	"enter_email": "メールアドレスを入力",
 	"country": "国",
 	"state_province": "州/都道府県",
+	"postcode_Zip": "郵便番号 / 郵便番号",
+
 	"select_city": "都市を選択",
 	"city": "市",
 	"phone_no": "電話番号",
@@ -146,6 +148,12 @@
 	"brand": "ブランド",
 	"product_detail": "製品詳細",
 	"description": "説明",
+	"all_category": "すべて",
+	"ｂilling_details": "請求の詳細",
+	"phone": "電話",
+	"order_note": "注文メモ",
+	"product_name": "製品名",
+	"itage_search": "検索",
 
 	"what_shipping_methods_are_available": "利用可能な配送方法は何ですか?",
 	"what_shipping_methods_are_available_content": "it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years,All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures",

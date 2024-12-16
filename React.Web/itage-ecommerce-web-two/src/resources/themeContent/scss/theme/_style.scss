@@ -2592,7 +2592,7 @@ button {
    16. Header CSS start
 ==============================*/
 .top-header {
-	background-color: #131921;
+	background-color: $white;
 	padding: 10px 0;
 	z-index: 99;
 	.top-header-left {
@@ -2603,7 +2603,7 @@ button {
 			margin-right: 35px;
 			h6 {
 				font-family: $font-2, $font_1;
-				color: $white;
+				color: $black;
 				text-transform: capitalize;
 				font-size: 13px;
 			}
@@ -3183,7 +3183,7 @@ button {
 	}
 }
 .layout-header2 {
-	background-color: #131921;
+	background-color: $white;
 	// padding: 10px 0;
 	.main-menu-block {
 		display: flex;
