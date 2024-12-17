@@ -124,9 +124,7 @@ const MenuCategory = () => {
 										}} */}
 							</span>
 						</button>
-						<h5 className="mb-0  text-white title-font">
-							{t("all")}
-						</h5>
+						<h5 className="mb-0 title-font">{t("all")}</h5>
 					</nav>
 					<div
 						className={`collapse  nav-desk ${

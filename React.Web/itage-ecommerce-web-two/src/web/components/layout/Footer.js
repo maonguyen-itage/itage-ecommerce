@@ -16,9 +16,10 @@ import {
 } from "../../../helpers/CommonHelper";
 import GlobalEnums from "../../../helpers/GlobalEnums";
 import { useTranslation } from "react-i18next";
+import { LANGUAGES } from "../../../constants";
 
 const Footer = ({ layoutLogo }) => {
-	const { t } = useTranslation();
+	const { i18n, t } = useTranslation();
 
 	const dispatch = useDispatch();
 	const [paymentMethods, setPaymentMethods] = useState([]);
@@ -29,6 +30,11 @@ const Footer = ({ layoutLogo }) => {
 	const [LogoImageFromStorage, setLogoImageFromStorage] = useState(
 		useSelector((state) => state.commonReducer.websiteLogoInLocalStorage)
 	);
+
+	const onChangeLang = (e) => {
+		const lang_code = e.target.value;
+		i18n.changeLanguage(lang_code);
+	};
 
 	useEffect(() => {
 		// declare the data fetching function
@@ -521,12 +527,38 @@ const Footer = ({ layoutLogo }) => {
 			<div className="sub-footer">
 				<Container>
 					<Row>
-						<Col xs="12">
+						<Col xs="6">
 							<div className="sub-footer-contain">
 								<p>
 									<span>2024 - 25 </span>
 									{t("copy_right_by")}
 								</p>
+							</div>
+						</Col>
+						<Col xs="6">
+							<div
+								className="sub-footer-contain"
+								style={{ float: "right" }}
+							>
+								<div className="language-block">
+									<div className="language-dropdown">
+										<select
+											defaultValue={i18n.language}
+											onChange={onChangeLang}
+										>
+											{LANGUAGES.map(
+												({ code, label }) => (
+													<option
+														key={code}
+														value={code}
+													>
+														{label}
+													</option>
+												)
+											)}
+										</select>
+									</div>
+								</div>
 							</div>
 						</Col>
 					</Row>

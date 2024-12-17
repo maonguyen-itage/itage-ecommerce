@@ -10,21 +10,9 @@ import {
 } from "../../../../helpers/CommonHelper";
 import { Link } from "react-router-dom";
 import SearchHeader from "./SearchHeader";
-import { LANGUAGES } from "../../../../constants/";
-
-const langCodeArray = [
-	{
-		langCode: "en",
-		name: "Engligh",
-	},
-	{
-		langCode: "ar",
-		name: "Arabic",
-	},
-];
 
 const TopHeader = () => {
-	const { i18n, t } = useTranslation();
+	const { t } = useTranslation();
 	const [openLang, setOpenLang] = useState(false);
 	const [url, setUrl] = useState("");
 	const toggleLang = () => {
@@ -35,11 +23,6 @@ const TopHeader = () => {
 	// 		const lang_code = e.target.value;
 	// 		i18n.changeLanguage(lang_code);
 	// 	};
-
-	const onChangeLang = (e) => {
-		const lang_code = e.target.value;
-		i18n.changeLanguage(lang_code);
-	};
 
 	useEffect(() => {
 		const path = window.location.pathname.split("/");
@@ -55,8 +38,12 @@ const TopHeader = () => {
 
 		let homeUrl = "/" + value + "/";
 		window.location.href = homeUrl;
-		// navigate(homeUrl, { replace: true });
 	};
+
+	// const signin = (event) => {
+	// 	event.preventDefault();
+	// 	history.push("/en/login");
+	// };
 
 	useEffect(() => {
 		// declare the data fetching function
@@ -88,14 +75,20 @@ const TopHeader = () => {
 				url === "layout6" ? "top-header-inverse" : ""
 			}`}
 		>
-			<div className="custom-container">
+			<div className="custom-container ">
 				<Row>
-					<Col xl="5" md="7" sm="6">
+					<Col xl="3" md="3" sm="3">
 						<div className="top-header-left">
-							{/* <div className="shpping-order">
-								<h6>{t("free_shipping_on_order_over")}</h6>
-							</div> */}
-							<div className="app-link">
+							<div className="logo-block">
+								<h4 className="text-center mt-2 ms-5">
+									<Link to={`/`}>
+										<span className="text-black">
+											傾奇MONO
+										</span>
+									</Link>
+								</h4>
+							</div>
+							{/* <div className="app-link">
 								<h6>
 									<Link
 										to={`/${getLanguageCodeFromSession()}/become-seller`}
@@ -108,19 +101,33 @@ const TopHeader = () => {
 										{t("become_seller")}
 									</Link>
 								</h6>
-								<ul>
-									<li>
-										<a>
-											<i className="fa fa-android"></i>
-										</a>
-									</li>
-								</ul>
-							</div>
+							</div> */}
 						</div>
 					</Col>
-					<Col xl="7" md="5" sm="6">
+					<Col xl="6" md="6" sm="6">
+						<div className="layout-header2">
+							<SearchHeader />
+						</div>
+					</Col>
+					<Col xl="3" md="3" sm="3">
 						<div className="top-header-right">
-							<div className="top-menu-block">
+							<span>
+								<Link
+									to={`/signup`}
+									href="#"
+									className="btn btn-link text-primary"
+								>
+									{t("membership_registration")}
+								</Link>
+								<button className="btn btn-dark">
+									<Link to={`/login`}>
+										<span className="text-white">
+											{t("login")}
+										</span>
+									</Link>
+								</button>
+							</span>
+							{/* <div className="top-menu-block">
 								<ul>
 									<li>
 										<a href="#">gift cards</a>
@@ -144,54 +151,7 @@ const TopHeader = () => {
 										<a href="#">easy returns</a>
 									</li>
 								</ul>
-							</div>
-							<div className="language-block">
-								<div className="language-dropdown">
-									<select
-										defaultValue={i18n.language}
-										onChange={onChangeLang}
-									>
-										{LANGUAGES.map(({ code, label }) => (
-											<option key={code} value={code}>
-												{label}
-											</option>
-										))}
-									</select>
-
-									{/* <Dropdown
-										isOpen={openLang}
-										toggle={toggleLang}
-									>
-										<DropdownToggle
-											tag="span"
-											data-toggle="dropdown"
-											className="language-dropdown-click"
-										>
-											{LANGUAGES.map(({ code, label }) => (
-											<option key={code} value={code}>
-												{label}
-											</option>
-										))}
-											<i
-												className="fa fa-angle-down"
-												aria-hidden="true"
-											></i>
-										</DropdownToggle>
-										<ul>
-											<li>
-
-											</li>
-
-										</ul>
-									</Dropdown> */}
-								</div>
-							</div>
-						</div>
-					</Col>
-
-					<Col xl="12" md="12" sm="12">
-						<div className="layout-header2">
-							<SearchHeader />
+							</div> */}
 						</div>
 					</Col>
 				</Row>

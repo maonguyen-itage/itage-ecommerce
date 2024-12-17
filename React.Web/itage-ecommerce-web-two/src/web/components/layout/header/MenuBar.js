@@ -126,7 +126,7 @@ const MenuBar = (props) => {
 			<li>
 				<Link
 					to={`/${getLanguageCodeFromSession()}/`}
-					className="dark-menu-item has-submenu"
+					className="dark-menu-item border-end has-submenu"
 					id="lbl_mgmenu_home"
 				>
 					{t("home")}
@@ -135,7 +135,7 @@ const MenuBar = (props) => {
 			<li>
 				<Link
 					to={`/${getLanguageCodeFromSession()}/all-products/0/all-categories`}
-					className="dark-menu-item has-submenu"
+					className="dark-menu-item border-end has-submenu"
 					id="lbl_mgmenu_products"
 				>
 					{t("all_products")}
@@ -145,7 +145,7 @@ const MenuBar = (props) => {
 				<Link
 					to={`/${getLanguageCodeFromSession()}/contact-us`}
 					id="lbl_thead_contct"
-					className="dark-menu-item has-submenu"
+					className="dark-menu-item border-end has-submenu"
 				>
 					{t("contact")}
 				</Link>
@@ -154,7 +154,7 @@ const MenuBar = (props) => {
 				<Link
 					to={`/${getLanguageCodeFromSession()}/faq`}
 					id="lbl_thead_faq"
-					className="dark-menu-item has-submenu"
+					className="dark-menu-item border-end has-submenu"
 				>
 					{t("faq")}
 				</Link>
@@ -162,7 +162,7 @@ const MenuBar = (props) => {
 			<li>
 				<Link
 					to={`/${getLanguageCodeFromSession()}/about`}
-					className="dark-menu-item has-submenu"
+					className="dark-menu-item border-end has-submenu"
 					id="lbl_thead_about"
 				>
 					{t("about_us")}
@@ -171,7 +171,7 @@ const MenuBar = (props) => {
 			<li>
 				<Link
 					to={`/${getLanguageCodeFromSession()}/giftcards`}
-					className="dark-menu-item has-submenu"
+					className="dark-menu-item border-end has-submenu"
 					id="lbl_thead_gift_cards"
 				>
 					{t("gift_cards")}

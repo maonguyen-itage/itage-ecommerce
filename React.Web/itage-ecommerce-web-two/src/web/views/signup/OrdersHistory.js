@@ -86,7 +86,6 @@ const OrdersHistory = () => {
 			await setOrderItemsDetailList(
 				JSON.parse(responseDetailOrderDetail.data.data)
 			);
-			console.log(JSON.parse(responseDetailOrderDetail.data.data));
 		}
 
 		//--stop loader

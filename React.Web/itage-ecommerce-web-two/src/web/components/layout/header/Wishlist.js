@@ -215,9 +215,9 @@ const Wishlist = (props) => {
 								alt=""
 							/>
 							<h3>
-								<strong>Your wishlist is Empty</strong>
+								<strong>{t("wishlist")}</strong>
 							</h3>
-							<h4>Explore more shortlist some items.</h4>
+							<h4>{t("shortlist")}</h4>
 						</div>
 					)}
 				</div>

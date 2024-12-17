@@ -10,7 +10,7 @@
 	"about": "会社概要",
 	"gift_cards": "ギフトカード",
 	"wish_list": "欲しい物リスト",
-	"my_wishlist": "私のウィッシュリスト",
+	"my_wishlist": "欲しいリスト",
 	"continue_shopping": "買い物を続ける",
 	"item": "製品",
 	"free_shipping": "送料無料",
@@ -154,6 +154,14 @@
 	"order_note": "注文メモ",
 	"product_name": "製品名",
 	"itage_search": "検索",
+	"wishlist": "欲しいものリストは空です",
+	"shortlist": "さらにいくつかのアイテムを絞り込んで検索します。",
+	"membership_registration": "会員登録",
+
+	"home_body_text1": "和の雅へようこそ。私たちのショップは、日本の伝統的な美しさと",
+	"home_body_text2": "現代的なデザインを融合させた手作りの工芸品やアクセサリーを取",
+	"home_body_text3": "り扱っております。心を込めた一品一品が、皆様の日常に彩りを添",
+	"home_body_text4": "えることを願っております。ぜひ一度お立ち寄りください。",
 
 	"what_shipping_methods_are_available": "利用可能な配送方法は何ですか?",
 	"what_shipping_methods_are_available_content": "it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years,All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures",
