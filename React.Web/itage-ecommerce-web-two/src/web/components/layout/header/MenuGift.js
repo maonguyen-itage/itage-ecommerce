@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Media } from "reactstrap";
 
+import Wishlist from "./Wishlist";
+import { Row, Col } from "reactstrap";
+
 const giftData = [
 	{
 		img1: "/images/icon/1.png",
@@ -58,36 +61,38 @@ const GiftList = (props) => {
 const MenuGift = () => {
 	const [showState, setShowState] = useState(false);
 	return (
-		<div
-			className={`d-lg-inline-block d-none btn-group ${
-				showState ? "show" : ""
-			}`}
-		>
-			<div
-				className="gift-block"
-				data-toggle="dropdown"
-				onClick={() => setShowState(!showState)}
-			>
-				<div className="grif-icon">
-					<i className="icon-gift"></i>
-				</div>
-				<div className="gift-offer">
-					<p>gift box</p>
-					<span className="d-xl-inline-block d-none">
-						Festivel Offer
-					</span>
-				</div>
-			</div>
-			<div
-				className={`dropdown-menu gift-dropdown ${
+		<>
+			{/* <div
+				className={`d-lg-inline-block d-none btn-group ${
 					showState ? "show" : ""
 				}`}
 			>
-				{giftData.map((data, i) => (
-					<GiftList gift={data} key={i} />
-				))}
-			</div>
-		</div>
+				<div
+					className="gift-block"
+					data-toggle="dropdown"
+					onClick={() => setShowState(!showState)}
+				>
+					<div className="grif-icon">
+						<i className="icon-gift"></i>
+					</div>
+					<div className="gift-offer">
+						<p>gift box</p>
+						<span className="d-xl-inline-block d-none">
+							Festivel Offer
+						</span>
+					</div>
+				</div>
+				<div
+					className={`dropdown-menu gift-dropdown ${
+						showState ? "show" : ""
+					}`}
+				>
+					{giftData.map((data, i) => (
+						<GiftList gift={data} key={i} />
+					))}
+				</div>
+			</div> */}
+		</>
 	);
 };
 

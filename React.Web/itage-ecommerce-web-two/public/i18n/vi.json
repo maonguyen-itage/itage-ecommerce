@@ -30,6 +30,7 @@
 	"logout": "Đăng xuất",
 	"order_history": "Lịch sử đơn hàng",
 	"update_profile": "Cập nhật hồ sơ",
+	"go_to_home_page": "Đi đến trang chủ",
 
 	"quick_links": "Liên kết nhanh",
 	"contact_us": "Liên hệ với chúng tôi",
@@ -39,10 +40,13 @@
 	"email": "Email",
 	"password": "Mật khẩu",
 	"enter_your_password": "Nhập mật khẩu",
+	"enter_new_password": "Nhập mật khẩu mới",
 	"confirm_password": "Xác nhận mật khẩu",
+	"change_password": "Thay đổi mật khẩu",
+	"reset_password": "Đặt lại mật khẩu",
 	"forgot_your_password": "Quên mật khẩu?",
-	"create_an_account": "Tạo tài khoản",
-	"sign_up_for_a_free_account": "Đăng ký tài khoản miễn phí tại cửa hàng của chúng tôi. Đăng ký nhanh chóng và dễ dàng. Nó cho phép bạn có thể đặt hàng từ cửa hàng của chúng tôi. Để bắt đầu mua sắm, hãy nhấp vào đăng ký.",
+	"create_an_account": "Đăng ký tài khoản",
+	"do_not_account": "Bạn chưa có tài khoản?",
 
 	"first_name": "Tên",
 	"last_name": "Họ",
@@ -155,7 +159,19 @@
 	"itage_search": "Tìm kiếm",
 	"wishlist": "Danh sách yêu thích trống",
 	"shortlist": "Khám phá thêm một số mục được liệt kê.",
-	"membership_registration": "Đăng ký thành viên",
+	"membership_registration": "Đăng ký",
+
+	"password_incorrect_msg": "Địa chỉ email hoặc mật khẩu không chính xác",
+	"error_occurred_msg": "Đã xảy ra lỗi. Vui lòng thử lại!",
+	"success_otp_msg": "OTP đã được gửi đến email của bạn. Vui lòng xác nhận OTP và nhập mật khẩu mới!",
+	"success_pwd_changed": "Mật khẩu đã thay đổi thành công. Vui lòng đăng nhập bằng mật khẩu mới của bạn!",
+	"error_pwd_do_not_match_msg": "Mật khẩu không khớp!",
+
+	"enter_OTP": "Nhập OTP",
+	"OTP": "OTP",
+	"submit": "Gửi",
+
+	"forget_your_password": "Quên mật khẩu",
 
 	"home_body_text1": "Chào mừng đến với sự thanh lịch của Nhật Bản. Cửa hàng của chúng tôi dành riêng cho vẻ đẹp truyền thống của Nhật Bản và",
 	"home_body_text2": "Có đồ thủ công và phụ kiện thủ công kết hợp thiết kế hiện đại.",

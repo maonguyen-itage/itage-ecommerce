@@ -1,22 +1,28 @@
-import React, { useContext, useEffect, useState, Component } from "react";
-import { Row, Col, Dropdown, DropdownToggle } from "reactstrap";
+import React, { useEffect, useState } from "react";
+import { Row, Col } from "reactstrap";
 import { useTranslation } from "react-i18next";
 import GlobalEnums from "../../../../helpers/GlobalEnums";
 import {
 	getLanguageCodeFromSession,
 	GetLocalizationControlsJsonDataForScreen,
-	replaceLoclizationLabel,
 	setLanguageCodeInSession,
 } from "../../../../helpers/CommonHelper";
 import { Link } from "react-router-dom";
 import SearchHeader from "./SearchHeader";
+import { LANGUAGES } from "../../../../constants";
 
 const TopHeader = () => {
-	const { t } = useTranslation();
-	const [openLang, setOpenLang] = useState(false);
+	const { i18n, t } = useTranslation();
+
+	// const [openLang, setOpenLang] = useState(false);
 	const [url, setUrl] = useState("");
-	const toggleLang = () => {
-		setOpenLang(!openLang);
+	// const toggleLang = () => {
+	// 	setOpenLang(!openLang);
+	// };
+
+	const onChangeLang = (e) => {
+		const lang_code = e.target.value;
+		i18n.changeLanguage(lang_code);
 	};
 
 	//  const onChangeLang = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -77,7 +83,7 @@ const TopHeader = () => {
 		>
 			<div className="custom-container ">
 				<Row>
-					<Col xl="3" md="3" sm="3">
+					<Col xl="2" md="2" sm="2">
 						<div className="top-header-left">
 							<div className="logo-block">
 								<h4 className="text-center mt-2 ms-5">
@@ -109,8 +115,8 @@ const TopHeader = () => {
 							<SearchHeader />
 						</div>
 					</Col>
-					<Col xl="3" md="3" sm="3">
-						<div className="top-header-right">
+					<Col xl="4" md="4" sm="4">
+						<div className="">
 							<span>
 								<Link
 									to={`/signup`}
@@ -126,6 +132,31 @@ const TopHeader = () => {
 										</span>
 									</Link>
 								</button>
+								<div
+									className="sub-footer-contain"
+									style={{ float: "right" }}
+								>
+									<div className="language-block">
+										<div className="language-dropdown">
+											<select
+												class="form-select"
+												defaultValue={i18n.language}
+												onChange={onChangeLang}
+											>
+												{LANGUAGES.map(
+													({ code, label }) => (
+														<option
+															key={code}
+															value={code}
+														>
+															{label}
+														</option>
+													)
+												)}
+											</select>
+										</div>
+									</div>
+								</div>
 							</span>
 							{/* <div className="top-menu-block">
 								<ul>

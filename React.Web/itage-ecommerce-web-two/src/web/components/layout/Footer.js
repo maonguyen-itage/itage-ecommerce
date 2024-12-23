@@ -518,6 +518,27 @@ const Footer = ({ layoutLogo }) => {
 											</Link>
 										</li>
 									</ul>
+									<div className="footer-box">
+										<div className="footer-contant">
+											<ul>
+												<li>リンク</li>
+												<li>
+													特定商取引法に基づく表記
+												</li>
+												<li>プライバシーポリシー</li>
+												<li>利用規約</li>
+												<li>お問い合わせ</li>
+											</ul>
+										</div>
+									</div>
+									<div className="footer-box footer-contact-box">
+										<div className="footer-contant">
+											<ul className="contact-list">
+												<li>連絡</li>
+												<li>お問い合わせ</li>
+											</ul>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -543,6 +564,7 @@ const Footer = ({ layoutLogo }) => {
 								<div className="language-block">
 									<div className="language-dropdown">
 										<select
+											class="form-select"
 											defaultValue={i18n.language}
 											onChange={onChangeLang}
 										>

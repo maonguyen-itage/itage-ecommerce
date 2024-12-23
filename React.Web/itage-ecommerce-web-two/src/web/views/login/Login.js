@@ -24,6 +24,10 @@ import {
 import GlobalEnums from "../../../helpers/GlobalEnums";
 import { Row, Col, Input, Label } from "reactstrap";
 import { useTranslation } from "react-i18next";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
+import Visibility from "@material-ui/icons/VisibilityOff";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 const Login = () => {
 	const { t } = useTranslation();
@@ -34,6 +38,22 @@ const Login = () => {
 	const [LocalizationLabelsArray, setLocalizationLabelsArray] = useState([]);
 	const [Email, setEmail] = useState("yamamoto@itageshop.com");
 	const [Password, setPassword] = useState("123456");
+
+	const [values, setValues] = useState({
+		password: "",
+		showPassword: false,
+	});
+
+	const [showPassword, setShowPassword] = useState(false);
+	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+	const togglePasswordVisibility = () => {
+		setShowPassword(!showPassword);
+	};
+
+	const toggleConfirmPasswordVisibility = () => {
+		setShowConfirmPassword(!showConfirmPassword);
+	};
 
 	const submitLoginForm = async (event) => {
 		//--start loader
@@ -104,11 +124,10 @@ const Login = () => {
 				);
 				if (response != null && response.data != null) {
 					let userData = JSON.parse(response.data.data);
-					console.log("userData: ", userData);
 					if (
 						userData.length > 0 &&
 						userData[0].ResponseMsg != undefined &&
-						userData[0].ResponseMsg == "Login Successfully"
+						userData[0].ResponseMsg === "Login Successfully"
 					) {
 						showSuccessMsg(t("login_successfully_msg"));
 
@@ -131,14 +150,14 @@ const Login = () => {
 
 						navigate("/" + getLanguageCodeFromSession() + "/");
 					} else {
-						showErrorMsg("Incorrect email or password!");
+						showErrorMsg(t("password_incorrect_msg"));
 						return false;
 					}
 				}
 			}
 		} catch (err) {
 			console.log(err);
-			showErrorMsg("An error occured. Please try again!");
+			showErrorMsg(t("error_occurred_msg"));
 			//--empty existing user data if set at some level in above line of code
 			localStorage.setItem("user", "{}");
 			dispatch(rootAction.userAction.setUser("{}"));
@@ -196,35 +215,19 @@ const Login = () => {
 							className="offset-xl-4 offset-lg-3 offset-md-2"
 						>
 							<div className="theme-card">
-								<h3 className="text-center">
-									{/* {LocalizationLabelsArray.length > 0
-										? replaceLoclizationLabel(
-												LocalizationLabelsArray,
-												"Login",
-												"lbl_login_title"
-										  )
-										: "Login"} */}
-									{t("login")}
-								</h3>
+								<h3 className="text-center">{t("login")}</h3>
 								<form
 									className="theme-form"
 									onSubmit={submitLoginForm}
 								>
 									<div className="form-group">
 										<Label htmlFor="name">
-											{/* {LocalizationLabelsArray.length > 0
-												? replaceLoclizationLabel(
-														LocalizationLabelsArray,
-														"Email",
-														"lbl_login_email"
-												  )
-												: "Email"} */}
 											{t("email")}
 										</Label>
 										<Input
 											type="email"
 											className="form-control"
-											placeholder="Enter your email"
+											placeholder={t("enter_your_email")}
 											id="name"
 											name="name"
 											required={true}
@@ -234,62 +237,69 @@ const Login = () => {
 											}
 										/>
 									</div>
-									<div className="form-group">
+									<div className="">
 										<Label htmlFor="password">
-											{/* {LocalizationLabelsArray.length > 0
-												? replaceLoclizationLabel(
-														LocalizationLabelsArray,
-														"Password",
-														"lbl_login_password"
-												  )
-												: "Password"} */}
 											{t("password")}
 										</Label>
-										<Input
-											type="password"
-											className="form-control"
-											placeholder="Enter your password"
-											id="password"
-											name="password"
-											required={true}
-											value={Password}
-											onChange={(e) =>
-												setPassword(e.target.value)
-											}
-										/>
+										<span className="input-group border">
+											<Input
+												type={
+													showPassword
+														? "text"
+														: "password"
+												}
+												className="form-control"
+												placeholder={t(
+													"enter_your_password"
+												)}
+												id="password"
+												name="password"
+												required={true}
+												value={Password}
+												onChange={(e) =>
+													setPassword(e.target.value)
+												}
+											/>
+
+											<button
+												type="button"
+												style={{
+													padding: "14px 10px",
+													backgroundColor: "#ffffff",
+												}}
+												className="btn btn-light input-group-text border"
+												onClick={
+													togglePasswordVisibility
+												}
+											>
+												<i
+													className={
+														showPassword
+															? "fa fa-eye"
+															: "fa fa-eye-slash"
+													}
+												></i>
+											</button>
+										</span>
 									</div>
 
-									<button
-										type="submit"
-										className="btn btn-normal"
-										id="lbl_login_loginbtn"
-									>
-										{/* {LocalizationLabelsArray.length > 0
-											? replaceLoclizationLabel(
-													LocalizationLabelsArray,
-													"Login",
-													"lbl_login_loginbtn"
-											  )
-											: "Login"} */}
-										{t("login")}
-									</button>
 									<Link
 										to={`/${getLanguageCodeFromSession()}/reset-password`}
-										className="float-end txt-default mt-2"
+										className="float-end txt-default mt-2 form-group"
 									>
-										{/* {LocalizationLabelsArray.length > 0
-											? replaceLoclizationLabel(
-													LocalizationLabelsArray,
-													"Forgot your password?",
-													"lbl_login_lostpass"
-											  )
-											: "Forgot your password?"} */}
 										{t("forgot_your_password")}
 									</Link>
+									<button
+										type="submit"
+										className="btn btn-normal w-100"
+										id="lbl_login_loginbtn"
+									>
+										{t("login")}
+									</button>
 								</form>
 
 								<p id="lbl_login_inst_singup" className="mt-3">
-									{t("sign_up_for_a_free_account")}
+									{t("do_not_account")}
 								</p>
 
 								<Link
@@ -297,13 +307,6 @@ const Login = () => {
 									className="txt-default pt-3 d-block"
 									id="lbl_login_createacnt_2"
 								>
-									{/* {LocalizationLabelsArray.length > 0
-										? replaceLoclizationLabel(
-												LocalizationLabelsArray,
-												"Create an Account",
-												"lbl_login_createacnt_2"
-										  )
-										: "Create an Account"} */}
 									{t("create_an_account")}
 								</Link>
 							</div>

@@ -30,19 +30,24 @@
 	"logout": "ログアウト",
 	"order_history": "注文履歴",
 	"update_profile": "プロフィールを更新",
+	"go_to_home_page": "ホームページへ",
 
 	"quick_links": "クイックリンク",
 	"contact_us": "お問い合わせ",
 
 	"login": "ログイン",
 	"register": "登録",
-	"email": "メール",
+	"email": "Eメール",
 	"password": "パスワード",
 	"enter_your_password": "パスワードを入力",
+	"enter_new_password": "新しいパスワードを入力",
 	"confirm_password": "パスワードを認証",
+	"change_password": "パスワードを変更する",
+	"reset_password": "パスワードの再設定",
+
 	"forgot_your_password": "パスワードをお忘れですか?",
-	"create_an_account": "アカウントを作成",
-	"sign_up_for_a_free_account": "当店で無料アカウントを登録してください。登録は迅速かつ簡単です。登録すると当店から注文できるようになります。ショッピングを開始するには、[登録] をクリックしてください。",
+	"create_an_account": "サインアップ",
+	"do_not_account": "アカウントをお持ちではありませんか？",
 
 	"first_name": "名",
 	"last_name": "姓",
@@ -157,6 +162,18 @@
 	"wishlist": "欲しいものリストは空です",
 	"shortlist": "さらにいくつかのアイテムを絞り込んで検索します。",
 	"membership_registration": "会員登録",
+
+	"password_incorrect_msg": "メールアドレスまたはパスワードが正しくありません。",
+	"error_occurred_msg": "エラーが発生しました。もう一度お試しください。",
+	"success_otp_msg": "OTPがあなたのメールに送信されました。OTPを確認して新しいパスワードを入力してください!",
+	"success_pwd_changed": "パスワードが正常に変更されました。新しいパスワードでログインしてください!",
+	"error_pwd_do_not_match_msg": "パスワードが一致しません!",
+
+	"enter_OTP": "OTPを入力",
+	"OTP": "OTP",
+	"submit": "提出する",
+
+	"forget_your_password": "パスワードをお忘れですか",
 
 	"home_body_text1": "和の雅へようこそ。私たちのショップは、日本の伝統的な美しさと",
 	"home_body_text2": "現代的なデザインを融合させた手作りの工芸品やアクセサリーを取",
