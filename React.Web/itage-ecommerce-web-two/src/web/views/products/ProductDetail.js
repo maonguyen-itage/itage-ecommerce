@@ -630,7 +630,7 @@ const ProductDetail = () => {
 				></meta>
 			</Helmet>
 			<SiteBreadcrumb title="Product Detail" parent={t("home")} />
-			<section className="section-big-pt-space bg-light">
+			<section className="" style={{ paddingTop: "0px !important" }}>
 				<div className="collection-wrapper">
 					<div className="custom-container">
 						<Row>
@@ -660,7 +660,13 @@ const ProductDetail = () => {
 								<ProductService />
 								<SidePopularProducts />
 							</Col>
-							<Col sm="12" lg="9" xs="12">
+							<Col
+								sm="12"
+								lg="9"
+								xs="12"
+								className="Regular shadow"
+								style={{ paddingTop: "30px" }}
+							>
 								<Row>
 									<Col xl="12">
 										<div className="filter-main-btn mb-sm-4">
@@ -743,14 +749,6 @@ const ProductDetail = () => {
 															productDetail.TotalReviews
 														}{" "}
 														<span id="lbl_prd_det_reviews">
-															{/* {LocalizationLabelsArray.length >
-															0
-																? replaceLoclizationLabel(
-																		LocalizationLabelsArray,
-																		"reviews",
-																		"lbl_prd_det_reviews"
-																  )
-																: "reviews"} */}
 															{t("reviews")}
 														</span>
 													</Link>
@@ -758,7 +756,6 @@ const ProductDetail = () => {
 											) : (
 												<></>
 											)}
-											{/* {swatch ? <ImageSwatch item={item} changeColorVar={changeColorVar} /> : ""} */}
 											<div className="product-description border-product">
 												<div className="product-info-custom">
 													<div className="product-info-custom-item">
@@ -798,14 +795,6 @@ const ProductDetail = () => {
 																					color: "#4CBB17",
 																				}}
 																			>
-																				{/* {LocalizationLabelsArray.length >
-																				0
-																					? replaceLoclizationLabel(
-																							LocalizationLabelsArray,
-																							"In Stock",
-																							"lbl_prd_det_instock"
-																					  )
-																					: "In Stock"} */}
 																				{t(
 																					"in_stock"
 																				)}
@@ -871,7 +860,7 @@ const ProductDetail = () => {
 																	ActiveColor.ColorID ===
 																	item.ColorID
 																		? "product-color-cell-active"
-																		: ""
+																		: "border border-secondary"
 																}
 																style={{
 																	backgroundColor: `${item.HexCode}`,
@@ -1004,16 +993,6 @@ const ProductDetail = () => {
 																		openProductVariants();
 																	}}
 																>
-																	{/* {LocalizationLabelsArray !=
-																		undefined &&
-																	LocalizationLabelsArray.length >
-																		0
-																		? replaceLoclizationLabel(
-																				LocalizationLabelsArray,
-																				"Select Variants",
-																				"lbl_prd_det_btn_variant"
-																		  )
-																		: "Select Variants"} */}
 																	{t(
 																		"select_variants"
 																	)}
@@ -1041,14 +1020,15 @@ const ProductDetail = () => {
 														<span className="input-group-prepend">
 															<button
 																type="button"
-																className="btn quantity-left-minus"
+																className="btn btn-outline-secondary btn-sm rounded-end"
 																data-type="minus"
 																data-field=""
 																onClick={
 																	DecreaseItem
 																}
 															>
-																<i className="ti-angle-left"></i>
+																{/* <i className="ti-angle-left"></i> */}
+																-
 															</button>
 														</span>
 														<Input
@@ -1068,14 +1048,15 @@ const ProductDetail = () => {
 														<span className="input-group-prepend">
 															<button
 																type="button"
-																className="btn quantity-right-plus"
+																className="btn btn-outline-secondary btn-sm rounded-end"
 																data-type="plus"
 																data-field=""
 																onClick={
 																	IncrementItem
 																}
 															>
-																<i className="ti-angle-right"></i>
+																{/* <i className="ti-angle-right"></i> */}
+																+
 															</button>
 														</span>
 													</div>
@@ -1091,14 +1072,6 @@ const ProductDetail = () => {
 														HandleAddToCart(false);
 													}}
 												>
-													{/* {LocalizationLabelsArray.length >
-													0
-														? replaceLoclizationLabel(
-																LocalizationLabelsArray,
-																"Add to Cart",
-																"lbl_prd_det_addcart"
-														  )
-														: "Add to Cart"} */}
 													{t("add_to_cart")}
 												</Link>
 												<Link
@@ -1161,14 +1134,6 @@ const ProductDetail = () => {
 														>
 															<i className="fa fa-heart"></i>
 															<span className="title-font">
-																{/* {LocalizationLabelsArray.length >
-																0
-																	? replaceLoclizationLabel(
-																			LocalizationLabelsArray,
-																			"Add to Wishlist",
-																			"lbl_prd_det_addwish"
-																	  )
-																	: "Add to Wishlist"} */}
 																{t(
 																	"add_to_wishlist"
 																)}
@@ -1200,14 +1165,6 @@ const ProductDetail = () => {
 															setActiveTab("1")
 														}
 													>
-														{/* {LocalizationLabelsArray.length >
-														0
-															? replaceLoclizationLabel(
-																	LocalizationLabelsArray,
-																	"Description",
-																	"lbl_prd_det_desc"
-															  )
-															: "Description:"} */}
 														{t("description")}
 														<div className="material-border"></div>
 													</NavLink>
@@ -1223,14 +1180,6 @@ const ProductDetail = () => {
 															setActiveTab("2")
 														}
 													>
-														{/* {LocalizationLabelsArray.length >
-														0
-															? replaceLoclizationLabel(
-																	LocalizationLabelsArray,
-																	"Additional information",
-																	"lbl_prd_det_addinfo"
-															  )
-															: "Additional information:"} */}
 														{t(
 															"additional_information"
 														)}
@@ -1248,14 +1197,6 @@ const ProductDetail = () => {
 															setActiveTab("3")
 														}
 													>
-														{/* {LocalizationLabelsArray.length >
-														0
-															? replaceLoclizationLabel(
-																	LocalizationLabelsArray,
-																	"Shipping",
-																	"lbl_prd_det_shipinfo"
-															  )
-															: "Shipping"} */}
 														{t("shipping")}
 														<div className="material-border"></div>
 													</NavLink>
@@ -1271,14 +1212,6 @@ const ProductDetail = () => {
 															setActiveTab("4")
 														}
 													>
-														{/* {LocalizationLabelsArray.length >
-														0
-															? replaceLoclizationLabel(
-																	LocalizationLabelsArray,
-																	"Why Buy From Us",
-																	"lbl_prd_det_whybuy"
-															  )
-															: "Why Buy From Us"} */}
 														{t("why_buy_from_us")}
 														<div className="material-border"></div>
 													</NavLink>
@@ -1294,14 +1227,6 @@ const ProductDetail = () => {
 															setActiveTab("5")
 														}
 													>
-														{/* {LocalizationLabelsArray.length >
-														0
-															? replaceLoclizationLabel(
-																	LocalizationLabelsArray,
-																	"Reviews",
-																	"lbl_prd_det_reviewstab"
-															  )
-															: "Reviews"} */}
 														{t("reviews")}
 														<div className="material-border"></div>
 													</NavLink>
@@ -1342,14 +1267,6 @@ const ProductDetail = () => {
 															<div class="product-info-custom">
 																<div class="product-info-custom-item">
 																	<span class="product-info-custom-label">
-																		{/* {LocalizationLabelsArray.length >
-																		0
-																			? replaceLoclizationLabel(
-																					LocalizationLabelsArray,
-																					"Tags:",
-																					"lbl_prd_det_head_tags"
-																			  )
-																			: "Tags:"} */}
 																		{t(
 																			"tags"
 																		)}
@@ -1383,14 +1300,6 @@ const ProductDetail = () => {
 															<div class="product-info-custom">
 																<div class="product-info-custom-item">
 																	<span class="product-info-custom-label">
-																		{/* {LocalizationLabelsArray.length >
-																		0
-																			? replaceLoclizationLabel(
-																					LocalizationLabelsArray,
-																					"Shipping Free: ",
-																					"lbl_prd_det_head_shippingfree"
-																			  )
-																			: "Shipping Free: "} */}
 																		{t(
 																			"tagshipping_frees"
 																		)}
@@ -1408,14 +1317,6 @@ const ProductDetail = () => {
 																</div>
 																<div class="product-info-custom-item">
 																	<span class="product-info-custom-label">
-																		{/* {LocalizationLabelsArray.length >
-																		0
-																			? replaceLoclizationLabel(
-																					LocalizationLabelsArray,
-																					"Delivery Methods: ",
-																					"lbl_prd_det_head_deliverymethod"
-																			  )
-																			: "Delivery Methods: "} */}
 																		{t(
 																			"delivery_methods"
 																		)}
@@ -1443,14 +1344,6 @@ const ProductDetail = () => {
 																</div>
 																<div class="product-info-custom-item">
 																	<span class="product-info-custom-label">
-																		{/* {LocalizationLabelsArray.length >
-																		0
-																			? replaceLoclizationLabel(
-																					LocalizationLabelsArray,
-																					"Estimated Shipping Days: ",
-																					"lbl_prd_det_head_est_shippingdays"
-																			  )
-																			: "Estimated Shipping Days: "} */}
 																		{t(
 																			"estimated_Shipping_days"
 																		)}
@@ -1625,14 +1518,6 @@ const ProductDetail = () => {
 																				"inline-block",
 																		}}
 																	>
-																		{/* {LocalizationLabelsArray.length >
-																		0
-																			? replaceLoclizationLabel(
-																					LocalizationLabelsArray,
-																					"Write a Review",
-																					"lbl_prd_det_writereview"
-																			  )
-																			: "Write a Review"} */}
 																		{t(
 																			"write_a_review"
 																		)}
@@ -1685,14 +1570,6 @@ const ProductDetail = () => {
 																	htmlFor="name"
 																	id="lbl_prd_det_name"
 																>
-																	{/* {LocalizationLabelsArray.length >
-																	0
-																		? replaceLoclizationLabel(
-																				LocalizationLabelsArray,
-																				"Name",
-																				"lbl_prd_det_name"
-																		  )
-																		: "Name"} */}
 																	{t("name")}
 																</Label>
 																<Input
@@ -1723,14 +1600,6 @@ const ProductDetail = () => {
 																	htmlFor="email"
 																	id="lbl_prd_det_email"
 																>
-																	{/* {LocalizationLabelsArray.length >
-																	0
-																		? replaceLoclizationLabel(
-																				LocalizationLabelsArray,
-																				"Email",
-																				"lbl_prd_det_email"
-																		  )
-																		: "Email"} */}
 																	{t("email")}
 																</Label>
 																<Input
@@ -1761,14 +1630,6 @@ const ProductDetail = () => {
 																	htmlFor="review-title"
 																	id="lbl_prd_det_reviewtitle"
 																>
-																	{/* {LocalizationLabelsArray.length >
-																	0
-																		? replaceLoclizationLabel(
-																				LocalizationLabelsArray,
-																				"Review Title",
-																				"lbl_prd_det_reviewtitle"
-																		  )
-																		: "Review Title"} */}
 																	{t(
 																		"review_title"
 																	)}
@@ -1801,14 +1662,6 @@ const ProductDetail = () => {
 																	htmlFor="review-body"
 																	id="lbl_prd_det_bodyreview"
 																>
-																	{/* {LocalizationLabelsArray.length >
-																	0
-																		? replaceLoclizationLabel(
-																				LocalizationLabelsArray,
-																				"Body of Review (1000)",
-																				"lbl_prd_det_bodyreview"
-																		  )
-																		: "Body of Review (1000)"} */}
 																	{t(
 																		"body_of_review"
 																	)}
@@ -1846,14 +1699,6 @@ const ProductDetail = () => {
 																		SubmitReviewForm()
 																	}
 																>
-																	{/* {LocalizationLabelsArray.length >
-																	0
-																		? replaceLoclizationLabel(
-																				LocalizationLabelsArray,
-																				"Submit Review",
-																				"lbl_prd_det_submitreview"
-																		  )
-																		: "Submit Review"} */}
 																	{t(
 																		"submit_review"
 																	)}

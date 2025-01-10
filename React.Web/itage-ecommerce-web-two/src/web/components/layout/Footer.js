@@ -136,7 +136,7 @@ const Footer = ({ layoutLogo }) => {
 	}, []);
 
 	return (
-		<footer className="footer-2">
+		<footer className="footer-2 border-top mt-5">
 			<Container>
 				<Row className="row">
 					<Col xs="12">

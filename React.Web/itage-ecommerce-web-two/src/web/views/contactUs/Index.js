@@ -18,8 +18,11 @@ import {
 } from "../../../helpers/CommonHelper";
 import GlobalEnums from "../../../helpers/GlobalEnums";
 import { Input, Row, Col, Form, FormGroup, Label } from "reactstrap";
+import { useTranslation } from "react-i18next";
 
 const ContactUs = () => {
+	const { t } = useTranslation();
+
 	const dispatch = useDispatch();
 	const [siteTitle, setSiteTitle] = useState(Config["SITE_TTILE"]);
 	const [FullName, setFullName] = useState("");
@@ -201,7 +204,9 @@ const ContactUs = () => {
 	return (
 		<>
 			<Helmet>
-				<title>{siteTitle} - Contact Us</title>
+				<title>
+					{siteTitle} - {t("contact_us")}
+				</title>
 				<meta
 					name="description"
 					content={siteTitle + " - Contact Us"}
@@ -212,15 +217,7 @@ const ContactUs = () => {
 
 			<section className="contact-page section-big-py-space bg-light">
 				<div className="custom-container">
-					<h3 className="text-center mb-3">
-						{LocalizationLabelsArray.length > 0
-							? replaceLoclizationLabel(
-									LocalizationLabelsArray,
-									"Get in touch",
-									"lbl_cont_title_touch"
-							  )
-							: "Get in touch"}
-					</h3>
+					<h3 className="text-center mb-3">{t("get_in_touch")}</h3>
 					<Row className="section-big-pb-space g-4">
 						<Col xl="6">
 							<Form
@@ -234,14 +231,7 @@ const ContactUs = () => {
 												htmlFor="FullName"
 												id="lbl_cont_form_name"
 											>
-												{LocalizationLabelsArray.length >
-												0
-													? replaceLoclizationLabel(
-															LocalizationLabelsArray,
-															"Name",
-															"lbl_cont_form_name"
-													  )
-													: "Name"}
+												{t("name")}
 												<span className="required-field">
 													*
 												</span>
@@ -252,8 +242,12 @@ const ContactUs = () => {
 												id="FullName"
 												className="form-control"
 												required={true}
-												data-error="Please enter your name"
-												placeholder="Enter your name"
+												data-error={t(
+													"enter_your_name_msg"
+												)}
+												placeholder={t(
+													"enter_your_name"
+												)}
 												value={FullName}
 												onChange={(e) =>
 													setFullName(e.target.value)
@@ -267,14 +261,7 @@ const ContactUs = () => {
 												htmlFor="Email"
 												id="lbl_cont_form_email"
 											>
-												{LocalizationLabelsArray.length >
-												0
-													? replaceLoclizationLabel(
-															LocalizationLabelsArray,
-															"Email",
-															"lbl_cont_form_email"
-													  )
-													: "Email"}
+												{t("email")}
 												<span className="required-field">
 													*
 												</span>
@@ -285,8 +272,12 @@ const ContactUs = () => {
 												id="Email"
 												className="form-control"
 												required={true}
-												data-error="Please enter your email"
-												placeholder="Enter your Email Address"
+												data-error={t(
+													"enter_your_email_msg"
+												)}
+												placeholder={t(
+													"enter_your_email"
+												)}
 												value={Email}
 												onChange={(e) =>
 													setEmail(e.target.value)
@@ -300,14 +291,7 @@ const ContactUs = () => {
 												htmlFor="PhoneNumber"
 												id="lbl_cont_form_phon"
 											>
-												{LocalizationLabelsArray.length >
-												0
-													? replaceLoclizationLabel(
-															LocalizationLabelsArray,
-															"Phone Number",
-															"lbl_cont_form_phone"
-													  )
-													: "Phone Number"}
+												{t("phone_number")}
 											</Label>
 											<Input
 												type="text"
@@ -315,8 +299,12 @@ const ContactUs = () => {
 												id="PhoneNumber"
 												className="form-control"
 												required={false}
-												data-error="Please enter your phone number"
-												placeholder="Enter your Phone Number"
+												data-error={t(
+													"enter_your_phone_msg"
+												)}
+												placeholder={t(
+													"enter_your_phone_number"
+												)}
 												value={PhoneNumber}
 												onChange={(e) =>
 													setPhoneNumber(
@@ -332,14 +320,7 @@ const ContactUs = () => {
 												htmlFor="Subject"
 												id="lbl_cont_form_subj"
 											>
-												{LocalizationLabelsArray.length >
-												0
-													? replaceLoclizationLabel(
-															LocalizationLabelsArray,
-															"Subject",
-															"lbl_cont_form_subject"
-													  )
-													: "Subject"}
+												{t("subject")}
 												<span className="required-field">
 													*
 												</span>
@@ -350,8 +331,12 @@ const ContactUs = () => {
 												id="Subject"
 												className="form-control"
 												required={true}
-												data-error="Please enter subject"
-												placeholder="Enter subject here"
+												data-error={t(
+													"enter_subject_msg"
+												)}
+												placeholder={t(
+													"enter_subject_here"
+												)}
 												value={Subject}
 												onChange={(e) =>
 													setSubject(e.target.value)
@@ -365,14 +350,7 @@ const ContactUs = () => {
 												htmlFor="message"
 												id="lbl_cont_form_msg"
 											>
-												{LocalizationLabelsArray.length >
-												0
-													? replaceLoclizationLabel(
-															LocalizationLabelsArray,
-															"Your Message",
-															"lbl_cont_form_message"
-													  )
-													: "Your Message"}
+												{t("your_message")}
 												<span className="required-field">
 													*
 												</span>
@@ -383,9 +361,13 @@ const ContactUs = () => {
 												cols="30"
 												rows="8"
 												required={true}
-												data-error="Please enter your message"
+												data-error={t(
+													"enter_your_message_msg"
+												)}
 												className="form-control"
-												placeholder="Enter your Message"
+												placeholder={t(
+													"enter_your_message"
+												)}
 												value={Message}
 												onChange={(e) =>
 													setMessage(e.target.value)
@@ -398,13 +380,7 @@ const ContactUs = () => {
 											className="btn btn-normal"
 											type="submit"
 										>
-											{LocalizationLabelsArray.length > 0
-												? replaceLoclizationLabel(
-														LocalizationLabelsArray,
-														"Send Your Message",
-														"lbl_cont_form_save"
-												  )
-												: "Send Your Message"}
+											{t("send_your_message")}
 										</button>
 									</Col>
 								</div>
@@ -412,9 +388,6 @@ const ContactUs = () => {
 						</Col>
 						<Col xl="6" className="map">
 							<div className="theme-card">
-								{/* <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1605.811957341231!2d25.45976406005396!3d36.3940974010114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1550912388321"
-                  allowFullScreen></iframe> */}
 								<iframe
 									src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3261.6449684495624!2d136.90080398790641!3d35.165474087904826!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600370d187729707%3A0x817ed32202a24f6f!2z5qCq5byP5Lya56S-77yp77y077yh77yn77yl77yn77ys77yv77yi77yh77ys!5e0!3m2!1sen!2sjp!4v1731336613991!5m2!1sen!2sjp"
 									width="800"

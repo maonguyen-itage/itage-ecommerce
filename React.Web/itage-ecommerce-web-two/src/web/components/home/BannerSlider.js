@@ -142,8 +142,9 @@ const BannerSlider = () => {
 										))}
 								</Slider> */}
 								<main class="container">
-									<p class="text-sm mb-4">
+									<p class="text-sm mb-4 text-center">
 										{t("home_body_text1")}
+										<br />
 										{t("home_body_text2")}
 										{t("home_body_text3")}
 										{t("home_body_text4")}

@@ -2308,7 +2308,8 @@ button {
 		}
 	}
 	.hot-deal-contain {
-		background-color: $body-back;
+		// background-color: $body-back;
+		background-color: #ffffff;
 		padding: 50px;
 		&.hot-deal-contain2 {
 			padding-top: 30px;
@@ -5209,7 +5210,8 @@ button {
 	}
 }
 .footer-2 {
-	background-color: $white;
+	// background-color: $white;
+	background-color: #f5f5fa;
 	padding: calc(20px + (50 - 20) * ((100vw - 320px) / (1920 - 320))) 0 0 0;
 	.footer-main-contian {
 		border-bottom: 1px solid $light-border;
@@ -6237,7 +6239,7 @@ button {
 			border: none;
 			li {
 				margin: 0 20px;
-				padding: 40px 0;
+				padding: 20px 0;
 				position: relative;
 				a.active {
 					color: var(--theme-color1);
@@ -6733,7 +6735,8 @@ button {
 .collection-filter {
 	> div {
 		&:nth-child(n + 2) {
-			margin-top: 30px;
+			// margin-top: 30px;
+			margin-top: 0px;
 		}
 	}
 }
@@ -8208,10 +8211,16 @@ button {
 		justify-content: center;
 		span {
 			button {
-				background: $white !important;
+				// background: $white !important;
+				// border: 1px solid $light-border !important;
+				// border-radius: 0;
+				// height: 100%;
+				background: $black !important;
 				border: 1px solid $light-border !important;
-				border-radius: 0;
+				// border-radius: 5px;
 				height: 100%;
+				padding: 12px;
+				color: #fff;
 			}
 		}
 		.form-control {
@@ -8545,6 +8554,7 @@ button {
 .creative-card {
 	padding: 30px;
 	background-color: $white;
+
 	&.creative-inner {
 		border-width: 15px;
 		margin-bottom: 30px;
@@ -8975,7 +8985,7 @@ button {
 		margin-bottom: 20px;
 		text-transform: uppercase;
 		a {
-			padding: 13px 30px;
+			padding: 13px 15px;
 			&:last-child {
 				margin-left: 10px;
 			}
@@ -9257,7 +9267,8 @@ button {
 	}
 }
 .tab-border {
-	background-color: $white;
+	// background-color: $white;
+	background-color: #f8f8f8;
 	// border: 1px solid $light-border;
 	margin: 0;
 	padding: 8px 0;

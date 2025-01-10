@@ -116,7 +116,7 @@ const SearchHeader = () => {
 			// navigate(url, { replace: true });
 			// window.location.reload();
 		} else {
-			showInfoMsg("Enter something then search");
+			showInfoMsg(t("enter_keyword_search"));
 		}
 	};
 

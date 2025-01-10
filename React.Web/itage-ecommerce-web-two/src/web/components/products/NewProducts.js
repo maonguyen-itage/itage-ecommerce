@@ -23,6 +23,10 @@ import GlobalEnums from "../../../helpers/GlobalEnums";
 import rootAction from "../../../stateManagment/actions/rootAction";
 import { LOADER_DURATION } from "../../../helpers/Constants";
 import { useTranslation } from "react-i18next";
+import NewProduct from "../../../resources/themeContent/images/icon/New_Product.png";
+import Deal from "../../../resources/themeContent/images/icon/Deal.png";
+import Coupon from "../../../resources/themeContent/images/icon/Coupon.png";
+import BestSeller from "../../../resources/themeContent/images/icon/Best_Seller.png";
 
 var settings = {
 	arrows: true,
@@ -71,30 +75,25 @@ const NewProducts = ({ effect }) => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const [activeTab, setActiveTab] = useState("new_products");
+	const [adminPanelBaseURL, setBaseUrl] = useState(Config["ADMIN_BASE_URL"]);
 	const [collection, setCollection] = useState([
-		{ nameKey: "new_products" },
-		{ nameKey: "on_sale" },
-		{ nameKey: "hot_deal" },
-		{ nameKey: "best_sellers" },
+		{
+			nameKey: "new_products",
+			image: NewProduct,
+		},
+		{
+			nameKey: "on_sale",
+			image: Deal,
+		},
+		{
+			nameKey: "hot_deal",
+			image: Coupon,
+		},
+		{
+			nameKey: "best_sellers",
+			image: BestSeller,
+		},
 	]);
-	// const [collection, setCollection] = useState([
-	// 	{
-	// 		nameEn: "new products",
-	// 		nameAr: "منتجات جديدة",
-	// 	},
-	// 	{
-	// 		nameEn: "on sale",
-	// 		nameAr: "للبيع",
-	// 	},
-	// 	{
-	// 		nameEn: "hotdeal",
-	// 		nameAr: "صفقة حاسمة",
-	// 	},
-	// 	{
-	// 		nameEn: "best sellers",
-	// 		nameAr: "أفضل البائعين",
-	// 	},
-	// ]);
 
 	const [ProductsList, setProductsList] = useState([]);
 	const [langCode, setLangCode] = useState("");
@@ -183,8 +182,8 @@ const NewProducts = ({ effect }) => {
 	return (
 		<>
 			<section className="section-pt-space">
-				<div className="tab-product-main">
-					<div className="tab-prodcut-contain">
+				<div className="tab-product-main border-top">
+					<div className="tab-prodcut-contain shadow-sm bg-body rounded">
 						{/* <Nav tabs>
 							{collection &&
 								collection?.map((c, i) => (
@@ -222,6 +221,15 @@ const NewProducts = ({ effect }) => {
 												getNewProductsList(c.nameKey)
 											}
 										>
+											<img
+												src={c.image}
+												alt=""
+												style={{
+													width: "44px",
+													height: "44px",
+													marginRight: "5px",
+												}}
+											/>
 											{t(c.nameKey)}
 										</NavLink>
 									</NavItem>

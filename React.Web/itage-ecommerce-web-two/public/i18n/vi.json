@@ -97,7 +97,9 @@
 	"order_date": "Ngày đặt hàng",
 	"status": "Trạng thái",
 	"total_items": "Tổng số mặt hàng",
-	"total": "Tổng cộng",
+	"total": "Tổng cộng giỏ hàng",
+	"order_total": "Tổng đơn hàng",
+	"cart_subtotal": "カート小計",
 	"detail": "Chi tiết",
 	"cart_items": "Giỏ hàng",
 	"unit_price": "Đơn giá",
@@ -135,8 +137,13 @@
 	"write_a_review": "Viết Đánh giá",
 	"enter_your_name": "Nhập tên của bạn",
 	"enter_your_email": "Nhập email của bạn",
+	"enter_coupon_code": "Nhập mã giảm giá",
+	"apply_coupon": "Áp dụng phiếu giảm giá",
 	"review_title": "Tiêu đề đánh giá",
 	"enter_your_review_subjects": "Nhập chủ đề đánh giá của bạn",
+
+	"enter_your_message": "Nhập tin nhắn của bạn",
+
 	"body_of_review": "Nội dung đánh giá (1000)",
 	"write_your_testimonia_here": "Viết lời chứng thực của bạn ở đây",
 	"submit_review": "Viết lời chứng thực của bạn ở đây",
@@ -144,16 +151,29 @@
 	"availability": "Có sẵn: ",
 	"in_stock": "Còn hàng: ",
 	"out_of_stock": "Hết hàng: ",
-	"select_color": "Chọn màu",
-	"select_size": "Chọn kích cỡ",
-	"size_chart": "Chọn Chart",
+	"select_color": "Chọn màu:",
+	"select_size": "Chọn kích cỡ:",
+	"size_chart": "Chọn Chart:",
 	"select_variants": "Chọn Variants",
 	"brand": "Thương hiệu",
 	"product_detail": "Chi tiết sản phẩm",
 	"description": "Mô tả",
 	"all_category": "Tất cả danh mục",
+
+	"checkout": "Thanh toán",
+
 	"ｂilling_details": "Chi tiết thanh toán",
+	"place_order": "Đặt hàng",
+
+	"card_details": "Chi tiết thẻ!",
+	"provide_your_card_detail": "Cung cấp thông tin chi tiết về thẻ của bạn",
+	"and_confirm_final_order": "and confirm final order!",
+
 	"phone": "Điện thoại",
+	"phone_number": "Số điện thoại",
+	"subject": "Chủ đề",
+	"your_message": "Tin nhắn của bạn",
+	"send_your_message": "Gửi tin nhắn",
 	"order_note": "Ghi chú đơn hàng",
 	"product_name": "Tên sản phẩm",
 	"itage_search": "Tìm kiếm",
@@ -166,6 +186,21 @@
 	"success_otp_msg": "OTP đã được gửi đến email của bạn. Vui lòng xác nhận OTP và nhập mật khẩu mới!",
 	"success_pwd_changed": "Mật khẩu đã thay đổi thành công. Vui lòng đăng nhập bằng mật khẩu mới của bạn!",
 	"error_pwd_do_not_match_msg": "Mật khẩu không khớp!",
+	"enter_keyword_search": "Nhập gì đó để tìm kiếm!",
+
+	"enter_your_message_msg": "Vui lòng nhập tin nhắn",
+
+	"enter_subject_msg": "Vui lòng nhập chủ đề",
+	"enter_your_phone_msg": "Vui lòng nhập số điện thoại",
+	"enter_your_name_msg": "Vui lòng nhập tên",
+
+	"enter_your_email_msg": "Vui lòng nhập địa chỉ Email",
+
+	"enter_your_phone_number": "Vui lòng nhập số điện thoại",
+	"enter_subject_here": "Nhập chủ đề ở đây",
+	"get_in_touch": "Liên hệ",
+
+	"enter_order_notes": "Nhập ghi chú đơn hàng",
 
 	"enter_OTP": "Nhập OTP",
 	"OTP": "OTP",

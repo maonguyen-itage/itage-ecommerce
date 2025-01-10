@@ -158,31 +158,6 @@ const TopHeader = () => {
 									</div>
 								</div>
 							</span>
-							{/* <div className="top-menu-block">
-								<ul>
-									<li>
-										<a href="#">gift cards</a>
-									</li>
-									<li>
-										<a href="#">Notifications</a>
-									</li>
-									<li>
-										<a href="#">help & contact</a>
-									</li>
-									<li>
-										<a href="#">todays deal</a>
-									</li>
-									<li>
-										<a href="#">track order</a>
-									</li>
-									<li>
-										<a href="#">shipping </a>
-									</li>
-									<li>
-										<a href="#">easy returns</a>
-									</li>
-								</ul>
-							</div> */}
 						</div>
 					</Col>
 				</Row>

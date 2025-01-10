@@ -383,7 +383,7 @@ const AllProducts = () => {
 				<meta name="keywords" content={t("all_products")}></meta>
 			</Helmet>
 			<SiteBreadcrumb title={t("products")} parent={t("home")} />
-			<section className="section-big-pt-space section-big-pb-space ratio_asos bg-light">
+			<section className="ratio_asos ">
 				<div className="collection-wrapper">
 					<div className="custom-container">
 						<Row>
@@ -414,7 +414,7 @@ const AllProducts = () => {
 							</Col>
 
 							{/* <Collection cols="col-xl-3 col-md-4 col-6 col-grid-box" layoutList="" /> */}
-							<Col className="collection-content">
+							<Col className="collection-content shadow-sm p-3 mb-5 bg-body rounded">
 								<div className="page-main-content">
 									<Row>
 										<Col sm="12">

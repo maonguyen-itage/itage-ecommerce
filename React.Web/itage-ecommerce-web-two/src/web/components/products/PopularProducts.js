@@ -688,16 +688,8 @@ const PopularProducts = ({ hoverEffect }) => {
 
 	return (
 		<>
-			<div className="title1 section-my-space">
-				<h4>
-					{/*
-                    {LocalizationLabelsArray.length > 0 ?
-                        replaceLoclizationLabel(LocalizationLabelsArray, "Popular Products", "lbl_popprd_title")
-                        :
-                        "Popular Products"
-                    } */}
-					{t("popular_products")}
-				</h4>
+			<div className="title1 section-my-space shadow-sm bg-body rounded border-top">
+				<h4>{t("popular_products")}</h4>
 			</div>
 			<div className="product section-pb-space mb--5">
 				<div className="custom-container">
