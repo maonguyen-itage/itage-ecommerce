@@ -6,7 +6,7 @@ const ProductService = () => {
 
 	return (
 		<>
-			<div className="collection-filter-block creative-card creative-inner">
+			<div className="collection-filter-block creative-card creative-inner Regular shadow">
 				<div className="product-service">
 					<div className="media">
 						<svg

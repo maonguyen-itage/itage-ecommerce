@@ -224,7 +224,7 @@ export const SiteLeftSidebarFilter = (props) => {
 
 	return (
 		<>
-			<div className="collection-filter-block creative-card creative-inner category-side">
+			<div className="creative-card creative-inner category-side Regular shadow">
 				<div className="collection-mobile-back">
 					<span
 						className="filter-back"
@@ -245,13 +245,6 @@ export const SiteLeftSidebarFilter = (props) => {
 							className="collapse-block-title mt-0"
 							onClick={toggleCategory}
 						>
-							{/* {LocalizationLabelsArray.length > 0
-								? replaceLoclizationLabel(
-										LocalizationLabelsArray,
-										"Category",
-										"lbl_lftfilt_category"
-								  )
-								: "Category"} */}
 							{t("category")}
 						</h3>
 						<Collapse isOpen={isCategoryOpen}>
@@ -415,13 +408,6 @@ export const SiteLeftSidebarFilter = (props) => {
 							className="collapse-block-title mt-0"
 							onClick={toggleBrand}
 						>
-							{/* {LocalizationLabelsArray.length > 0
-								? replaceLoclizationLabel(
-										LocalizationLabelsArray,
-										"Brands",
-										"lbl_lftfilt_brand"
-								  )
-								: "Brands"} */}
 							{t("brands")}
 						</h3>
 						<Collapse isOpen={isBrandOpen}>
@@ -465,13 +451,6 @@ export const SiteLeftSidebarFilter = (props) => {
 							className="collapse-block-title mt-0"
 							onClick={toggleSize}
 						>
-							{/* {LocalizationLabelsArray.length > 0
-								? replaceLoclizationLabel(
-										LocalizationLabelsArray,
-										"Size",
-										"lbl_lftfilt_size"
-								  )
-								: "Size"} */}
 							{t("size")}
 						</h3>
 						<Collapse isOpen={isSizeOpen}>
@@ -546,13 +525,6 @@ export const SiteLeftSidebarFilter = (props) => {
 							className="collapse-block-title"
 							onClick={togglePrice}
 						>
-							{/* {LocalizationLabelsArray.length > 0
-								? replaceLoclizationLabel(
-										LocalizationLabelsArray,
-										"Price",
-										"lbl_lftfilt_price"
-								  )
-								: "Price"} */}
 							{t("price")}
 						</h3>
 						<Collapse isOpen={isPriceOpen}>
@@ -597,13 +569,6 @@ export const SiteLeftSidebarFilter = (props) => {
 						className="collapse-block-title mt-0"
 						onClick={toggleRating}
 					>
-						{/* {LocalizationLabelsArray.length > 0
-							? replaceLoclizationLabel(
-									LocalizationLabelsArray,
-									"Rating",
-									"lbl_lftfilt_rating"
-							  )
-							: "Rating"} */}
 						{t("rating")}
 					</h3>
 					<Collapse isOpen={isRatingOpen}>
@@ -677,13 +642,6 @@ export const SiteLeftSidebarFilter = (props) => {
 							className="collapse-block-title mt-0"
 							onClick={toggleTag}
 						>
-							{/* {LocalizationLabelsArray.length > 0
-								? replaceLoclizationLabel(
-										LocalizationLabelsArray,
-										"Popular Tags",
-										"lbl_lftfilt_tags"
-								  )
-								: "Popular Tags"} */}
 							{t("popular_tags")}
 						</h3>
 						<Collapse isOpen={isTagOpen}>
@@ -757,13 +715,6 @@ export const SiteLeftSidebarFilter = (props) => {
 								clearFilter(e);
 							}}
 						>
-							{/* {LocalizationLabelsArray.length > 0
-								? replaceLoclizationLabel(
-										LocalizationLabelsArray,
-										"Clear All Filter",
-										"lbl_lftfilt_clearfilter"
-								  )
-								: "Clear All Filter"} */}
 							{t("clear_all_filter")}
 						</Link>
 					</Col>
@@ -848,17 +799,8 @@ export const LeftSideBarPopularProducts = () => {
 	}, []);
 
 	return (
-		<div className="theme-card creative-card creative-inner">
-			<h5 className="title-border">
-				{/* {LocalizationLabelsArray.length > 0
-					? replaceLoclizationLabel(
-							LocalizationLabelsArray,
-							"Popular Products",
-							"lbl_lftfilt_pop_prod"
-					  )
-					: "Popular Products"} */}
-				{t("popular_products")}
-			</h5>
+		<div className="theme-card creative-card creative-inner Regular shadow">
+			<h5 className="title-border">{t("popular_products")}</h5>
 			<div className="offer-slider slide-1">
 				<div>
 					{PopularProductsList?.slice(0, 5)?.map((item, idx) => (

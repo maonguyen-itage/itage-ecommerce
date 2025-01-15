@@ -7,7 +7,7 @@ const SiteBreadcrumb = ({ title, parent }) => {
 
 	return (
 		<>
-			<div className="breadcrumb-main ">
+			{/* <div className="breadcrumb-main ">
 				<Container>
 					<Row>
 						<Col>
@@ -30,7 +30,7 @@ const SiteBreadcrumb = ({ title, parent }) => {
 						</Col>
 					</Row>
 				</Container>
-			</div>
+			</div> */}
 		</>
 	);
 };

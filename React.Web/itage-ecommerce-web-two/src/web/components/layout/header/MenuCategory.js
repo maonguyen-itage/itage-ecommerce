@@ -27,6 +27,7 @@ import rootAction from "../../../../stateManagment/actions/rootAction";
 const MenuCategory = () => {
 	const dispatch = useDispatch();
 	const [showState, setShowState] = useState(false);
+	const [showSidebar, setShowSidebar] = useState(false);
 
 	const { t } = useTranslation();
 	let leftMenuState = useSelector(
@@ -43,6 +44,12 @@ const MenuCategory = () => {
 
 	const forceLoadCategory = (url) => {
 		window.location.href = url;
+	};
+
+	const handleOverlayClick = (e) => {
+		if (e.target.className === "sidebar-overlay active") {
+			setShowSidebar(false);
+		}
 	};
 
 	useEffect(() => {
@@ -113,20 +120,13 @@ const MenuCategory = () => {
 							onClick={() => setShowState(!showState)}
 						>
 							<span className="navbar-icon ">
-								{/* <i className="fa fa-arrow-down"></i> */}
 								<i
 									class="fa fa-bars sidebar-bar"
-									style={{ fontSize: "2.0em" }}
+									style={{ fontSize: "1.5em" }}
+									onClick={() => setShowSidebar(true)}
 								></i>
-								{/* style={{
-											color: "inherit",
-											textDecoration: "none",
-										}} */}
 							</span>
 						</button>
-						<h5 className="mb-0  text-white title-font">
-							{t("all")}
-						</h5>
 					</nav>
 					<div
 						className={`collapse  nav-desk ${
@@ -144,88 +144,183 @@ const MenuCategory = () => {
 								leftMenuState ? "showoverlay" : ""
 							}`}
 						></a>
-						<ul
-							className={`nav-cat title-font ${
-								leftMenuState ? "openmenu" : ""
-							}`}
-						>
-							<li
-								className="back-btn"
-								onClick={() => {
-									setLeftMenuManual(false);
-									document.body.style.overflow = "visible";
-								}}
-							>
-								<a>
-									<i className="fa fa-angle-left"></i>
-									{t("back")}
-								</a>
-							</li>
 
-							{PopularCategoriesList &&
-								PopularCategoriesList?.filter(
-									(x) =>
-										x.ParentCategoryID != null &&
-										x.ParentCategoryID != undefined
-								)?.map((item, i) => (
-									<li key={i}>
-										<Link
-											to="#"
-											onClick={(e) => {
-												forceLoadCategory(
-													`/${getLanguageCodeFromSession()}/all-products/${
-														item.CategoryID ?? 0
-													}/${replaceWhiteSpacesWithDashSymbolInUrl(
-														item.Name
-													)}`
-												);
-											}}
-										>
-											<Media
-												src={
-													adminPanelBaseURL +
-													item.AttachmentURL
-												}
-												alt="category-product"
-												className="img-fluid"
-												style={{
-													width: "39px",
-													height: "39px",
-												}}
-											/>
-											{langCode != null &&
-											langCode ==
-												Config.LANG_CODES_ENUM["Arabic"]
-												? item.LocalizationJsonData !=
-														null &&
-												  item.LocalizationJsonData
-														.length > 0
-													? makeAnyStringLengthShort(
-															item.LocalizationJsonData?.find(
-																(l) =>
-																	l.langId ==
-																	Config
-																		.LANG_CODES_IDS_ENUM[
-																		"Arabic"
-																	]
-															)?.text,
-															22
-													  )
-													: makeAnyStringLengthShort(
-															item.Name,
-															17
-													  )
-												: makeAnyStringLengthShort(
-														item.Name,
-														17
-												  )}
-										</Link>
+						<div
+							className={`sidebar-overlay ${
+								showSidebar ? "active" : ""
+							}`}
+							onClick={handleOverlayClick}
+						>
+							<div
+								className={`sidebar ${
+									showSidebar ? "open" : ""
+								}`}
+							>
+								<button
+									type="button"
+									className="btn-close-custom"
+									aria-label="Close"
+									onClick={() => setShowSidebar(false)}
+								>
+									&times;
+								</button>
+								<ul
+									className={`nav-cat title-font ${
+										leftMenuState ? "openmenu" : ""
+									}`}
+								>
+									<li
+										className="back-btn"
+										onClick={() => {
+											setLeftMenuManual(false);
+											document.body.style.overflow =
+												"visible";
+										}}
+									>
+										{/* <a>
+											<i className="fa fa-angle-left"></i>
+											{t("back")}
+										</a> */}
 									</li>
-								))}
-						</ul>
+
+									{PopularCategoriesList.map((item, i) => (
+										<li className="list-group-item" key={i}>
+											<a
+												href={`/${getLanguageCodeFromSession()}/all-products/${
+													item.CategoryID ?? 0
+												}/${item.Name}`}
+												onClick={() => {
+													forceLoadCategory(
+														`/${getLanguageCodeFromSession()}/all-products/${
+															item.CategoryID ?? 0
+														}/${item.Name}`
+													);
+												}}
+											>
+												<img
+													src={
+														adminPanelBaseURL +
+														item.AttachmentURL
+													}
+													alt={item.Name}
+													style={{
+														width: "30px",
+														height: "30px",
+														marginRight: "10px",
+													}}
+												/>
+												{item.Name}
+											</a>
+										</li>
+									))}
+								</ul>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
+
+			<style>{`
+                .sidebar-overlay {
+									position: fixed;
+									top: 0;
+									left: 0;
+									width: 100%;
+									height: 100%;
+									background: rgba(0, 0, 0, 0.6);
+									z-index: 1049;
+									display: none;
+									transition: opacity 0.3s ease-in-out;
+							}
+							.sidebar-overlay.active {
+									display: block;
+									opacity: 1;
+							}
+
+							/* Sidebar Container */
+							.sidebar {
+									position: fixed;
+									top: 0;
+									left: -300px;
+									width: 300px;
+									height: 100%;
+									background: #ffffff; /* Nền trắng */
+									box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
+									overflow-y: auto;
+									transition: left 0.3s ease-in-out;
+									z-index: 1050;
+									padding: 20px;
+									display: flex;
+									flex-direction: column;
+							}
+							.sidebar.open {
+									left: 0;
+							}
+
+							/* Close Button */
+							.btn-close-custom {
+									position: absolute;
+									top: 10px;
+									right: 10px;
+									width: 40px;
+									height: 40px;
+									background-color: #f0f0f0;
+									color: #333;
+									font-size: 1.5rem;
+									display: flex;
+									justify-content: center;
+									align-items: center;
+									border: none;
+									border-radius: 50%;
+									cursor: pointer;
+									transition: background-color 0.3s ease;
+							}
+							.btn-close-custom:hover {
+									background-color: #e0e0e0;
+							}
+
+							/* Menu List */
+							.nav-cat {
+									list-style: none;
+									padding: 0;
+							}
+							.nav-cat li {
+									margin-bottom: 15px;
+							}
+							.nav-cat li a {
+								width: 100%;
+								display: flex;
+								align-items: center;
+								text-decoration: none;
+								color: #333;
+								font-size: 1rem;
+								padding: 10px 15px;
+								border-radius: 5px;
+								transition: background-color 0.3s ease, color 0.3s ease;
+							}
+							.nav-cat li a:hover {
+									background-color: #f5f5f5;
+									color: #007bff;
+							}
+							.nav-cat li a img {
+									width: 30px;
+									height: 30px;
+									margin-right: 10px;
+									border-radius: 5px;
+							}
+
+							/* Scrollable Sidebar */
+							.sidebar::-webkit-scrollbar {
+									width: 8px;
+							}
+							.sidebar::-webkit-scrollbar-thumb {
+									background: #ccc;
+									border-radius: 4px;
+							}
+							.sidebar::-webkit-scrollbar-thumb:hover {
+									background: #aaa;
+							}
+            `}</style>
 		</>
 	);
 };

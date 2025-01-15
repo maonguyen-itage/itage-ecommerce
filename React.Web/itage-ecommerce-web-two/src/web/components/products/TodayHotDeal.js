@@ -266,11 +266,11 @@ const TodayHotDeal = () => {
 
 	return (
 		<section className="hot-deal b-g-white section-pb-space space-abjust">
-			<div className="custom-container">
+			<div className="custom-container border-top mt-3">
 				<Row className="hot-2">
 					<Col lg="12">
 						{/* <!--title start--> */}
-						<div className="title3 b-g-white text-center">
+						<div className="title3 b-g-white text-center border-top border-bottom">
 							<h4>{t("today_hot_deal")}</h4>
 						</div>
 						{/* <!--titel end--> */}
@@ -445,7 +445,7 @@ const TodayHotDeal = () => {
 					</Col>
 					<Col lg="3">
 						<div>
-							<div className="media-banner border-0">
+							<div className="media-banner border-0 Regular shadow">
 								<div className="media-banner-box">
 									<div className="media-heading">
 										<h5>{t("customer_favorites")}</h5>

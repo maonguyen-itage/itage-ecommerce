@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
 import { Row, Col, Media, Container } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
@@ -130,22 +131,12 @@ const PopularCategories = () => {
 
 	return (
 		<>
-			{PopularCategoriesList != undefined &&
+			{/* {PopularCategoriesList != undefined &&
 			PopularCategoriesList != null &&
 			PopularCategoriesList.length > 0 ? (
 				<>
-					<div className="title6">
-						<h4>
-							{/* {" "}
-							{LocalizationLabelsArray.length > 0
-								? replaceLoclizationLabel(
-										LocalizationLabelsArray,
-										" Popular Categories!",
-										"lbl_popct_category"
-								  )
-								: " Popular Categories!"} */}
-							{t("popular_categories")}
-						</h4>
+					<div className="title6 border-top">
+						<h4>{t("popular_categories")}</h4>
 					</div>
 					<section className="rounded-category rounded-category-inverse">
 						<Container>
@@ -158,7 +149,14 @@ const PopularCategories = () => {
 													(item, i) => (
 														<div key={i}>
 															<div className="category-contain">
-																<a href="#">
+																<a
+																	href={`/${getLanguageCodeFromSession()}/all-products/${
+																		item.CategoryID ??
+																		0
+																	}/${replaceWhiteSpacesWithDashSymbolInUrl(
+																		item.Name
+																	)}`}
+																>
 																	<div className="img-wrapper">
 																		<Media
 																			src={
@@ -223,9 +221,6 @@ const PopularCategories = () => {
 																				}/${replaceWhiteSpacesWithDashSymbolInUrl(
 																					item.Name
 																				)}`;
-																				console.log(
-																					allProductsUrl
-																				);
 																				return (
 																					<>
 																						<Link
@@ -293,7 +288,7 @@ const PopularCategories = () => {
 				</>
 			) : (
 				<></>
-			)}
+			)} */}
 		</>
 	);
 };

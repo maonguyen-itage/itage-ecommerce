@@ -16,9 +16,10 @@ import {
 } from "../../../helpers/CommonHelper";
 import GlobalEnums from "../../../helpers/GlobalEnums";
 import { useTranslation } from "react-i18next";
+import { LANGUAGES } from "../../../constants";
 
 const Footer = ({ layoutLogo }) => {
-	const { t } = useTranslation();
+	const { i18n, t } = useTranslation();
 
 	const dispatch = useDispatch();
 	const [paymentMethods, setPaymentMethods] = useState([]);
@@ -29,6 +30,11 @@ const Footer = ({ layoutLogo }) => {
 	const [LogoImageFromStorage, setLogoImageFromStorage] = useState(
 		useSelector((state) => state.commonReducer.websiteLogoInLocalStorage)
 	);
+
+	const onChangeLang = (e) => {
+		const lang_code = e.target.value;
+		i18n.changeLanguage(lang_code);
+	};
 
 	useEffect(() => {
 		// declare the data fetching function
@@ -130,7 +136,7 @@ const Footer = ({ layoutLogo }) => {
 	}, []);
 
 	return (
-		<footer className="footer-2">
+		<footer className="footer-2 border-top mt-5">
 			<Container>
 				<Row className="row">
 					<Col xs="12">
@@ -233,14 +239,6 @@ const Footer = ({ layoutLogo }) => {
 																				to={`/${getLanguageCodeFromSession()}/about`}
 																				id="lbl_footr_about"
 																			>
-																				{/* {LocalizationLabelsArray.length >
-																				0
-																					? replaceLoclizationLabel(
-																							LocalizationLabelsArray,
-																							"About Us",
-																							"lbl_footr_about"
-																					  )
-																					: "About Us"} */}
 																				{t(
 																					"about_us"
 																				)}
@@ -251,14 +249,6 @@ const Footer = ({ layoutLogo }) => {
 																				to={`/${getLanguageCodeFromSession()}/contact-us`}
 																				id="lbl_footr_cont"
 																			>
-																				{/* {LocalizationLabelsArray.length >
-																				0
-																					? replaceLoclizationLabel(
-																							LocalizationLabelsArray,
-																							"Contact Us",
-																							"lbl_footr_cont"
-																					  )
-																					: "Contact Us"} */}
 																				{t(
 																					"contact_us"
 																				)}
@@ -269,14 +259,6 @@ const Footer = ({ layoutLogo }) => {
 																			<Link
 																				to={`/${getLanguageCodeFromSession()}/signup`}
 																			>
-																				{/* {LocalizationLabelsArray.length >
-																				0
-																					? replaceLoclizationLabel(
-																							LocalizationLabelsArray,
-																							"Create Account",
-																							"lbl_footr_create_acnt"
-																					  )
-																					: "Create Account"} */}
 																				{t(
 																					"create_an_account"
 																				)}
@@ -286,14 +268,6 @@ const Footer = ({ layoutLogo }) => {
 																			<Link
 																				to={`/${getLanguageCodeFromSession()}/become-seller`}
 																			>
-																				{/* {LocalizationLabelsArray.length >
-																				0
-																					? replaceLoclizationLabel(
-																							LocalizationLabelsArray,
-																							"Become Vendor",
-																							"lbl_footr_become_vendor"
-																					  )
-																					: "Become Vendor"} */}
 																				{t(
 																					"become_vendor"
 																				)}
@@ -307,14 +281,6 @@ const Footer = ({ layoutLogo }) => {
 															<div className="footer-box">
 																<div className="footer-title">
 																	<h5>
-																		{/* {LocalizationLabelsArray.length >
-																		0
-																			? replaceLoclizationLabel(
-																					LocalizationLabelsArray,
-																					"Quick Links",
-																					"lbl_footr_quicklink"
-																			  )
-																			: "Quick Links"} */}
 																		{t(
 																			"quick_links"
 																		)}
@@ -326,14 +292,6 @@ const Footer = ({ layoutLogo }) => {
 																			<Link
 																				to={`/${getLanguageCodeFromSession()}/cart`}
 																			>
-																				{/* {LocalizationLabelsArray.length >
-																				0
-																					? replaceLoclizationLabel(
-																							LocalizationLabelsArray,
-																							"Cart",
-																							"lbl_footr_cart"
-																					  )
-																					: "Cart"} */}
 																				{t(
 																					"cart"
 																				)}
@@ -359,14 +317,6 @@ const Footer = ({ layoutLogo }) => {
 																				to={`/${getLanguageCodeFromSession()}/`}
 																				id="lbl_footr_home"
 																			>
-																				{/* {LocalizationLabelsArray.length >
-																				0
-																					? replaceLoclizationLabel(
-																							LocalizationLabelsArray,
-																							"Home",
-																							"lbl_footr_home"
-																					  )
-																					: "Home"} */}
 																				{t(
 																					"home"
 																				)}
@@ -376,14 +326,6 @@ const Footer = ({ layoutLogo }) => {
 																			<Link
 																				to={`/${getLanguageCodeFromSession()}/compare`}
 																			>
-																				{/* {LocalizationLabelsArray.length >
-																				0
-																					? replaceLoclizationLabel(
-																							LocalizationLabelsArray,
-																							"Compare",
-																							"lbl_footr_Compare"
-																					  )
-																					: "Compare"} */}
 																				{t(
 																					"compare"
 																				)}
@@ -393,14 +335,6 @@ const Footer = ({ layoutLogo }) => {
 																			<Link
 																				to={`/${getLanguageCodeFromSession()}/all-products/0/all-categories`}
 																			>
-																				{/* {LocalizationLabelsArray.length >
-																				0
-																					? replaceLoclizationLabel(
-																							LocalizationLabelsArray,
-																							"All Products",
-																							"lbl_footr_all_prd"
-																					  )
-																					: "All Products"} */}
 																				{t(
 																					"all_products"
 																				)}
@@ -414,14 +348,6 @@ const Footer = ({ layoutLogo }) => {
 															<div className="footer-box footer-contact-box">
 																<div className="footer-title">
 																	<h5>
-																		{/* {LocalizationLabelsArray.length >
-																		0
-																			? replaceLoclizationLabel(
-																					LocalizationLabelsArray,
-																					"Contact Us",
-																					"lbl_footr_cont"
-																			  )
-																			: "Contact Us"} */}
 																		{t(
 																			"contact_us"
 																		)}
@@ -512,6 +438,50 @@ const Footer = ({ layoutLogo }) => {
 											</Link>
 										</li>
 									</ul>
+									<div className="footer-box">
+										<div className="footer-contant">
+											<ul>
+												<li>リンク</li>
+												<li>
+													特定商取引法に基づく表記
+												</li>
+												<li>プライバシーポリシー</li>
+												<li>利用規約</li>
+												<li>
+													<Link
+														to={`/${getLanguageCodeFromSession()}/contact-us`}
+														id="lbl_thead_contct"
+														className="dark-menu-item border-end has-submenu"
+													>
+														{t("contact")}
+													</Link>
+												</li>
+											</ul>
+										</div>
+									</div>
+									<div className="footer-box footer-contact-box">
+										<div className="footer-contant">
+											<ul className="contact-list">
+												<li>
+													<Link
+														to={`/${getLanguageCodeFromSession()}/contact-us`}
+														id="lbl_thead_contct"
+														className="dark-menu-item border-end has-submenu"
+													>
+														{t("contact")}
+													</Link>
+												</li>
+												<li>
+													<Link
+														to={`/${getLanguageCodeFromSession()}/about`}
+														id="lbl_footr_about"
+													>
+														{t("about_us")}
+													</Link>
+												</li>
+											</ul>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>

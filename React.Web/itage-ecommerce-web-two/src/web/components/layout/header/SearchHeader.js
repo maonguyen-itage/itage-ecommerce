@@ -116,7 +116,7 @@ const SearchHeader = () => {
 			// navigate(url, { replace: true });
 			// window.location.reload();
 		} else {
-			showInfoMsg("Enter something then search");
+			showInfoMsg(t("enter_keyword_search"));
 		}
 	};
 
@@ -127,8 +127,6 @@ const SearchHeader = () => {
 			let lnCode = getLanguageCodeFromSession();
 			await setLangCode(lnCode);
 			const headers = {
-				// customerid: userData?.UserID,
-				// customeremail: userData.EmailAddress,
 				Accept: "application/json",
 				"Content-Type": "application/json",
 			};
@@ -187,16 +185,6 @@ const SearchHeader = () => {
 									<i className="fa fa-bars"></i>
 								</span>
 							</div>
-							<div className="logo-block">
-								<h4 className="">傾奇MONO</h4>
-								{/* <a href="/#">
-									<Media
-										src={logoImage}
-										className="img-fluid"
-										alt="logo"
-									/>
-								</a> */}
-							</div>
 							<div className="input-block">
 								<div className="input-box">
 									<form
@@ -205,6 +193,7 @@ const SearchHeader = () => {
 									>
 										<InputGroup>
 											<Input
+												className="p-2 border border-gray-300 input-group"
 												placeholder={t("itage_search")}
 												value={SearchTerm}
 												onChange={(e) =>
@@ -213,6 +202,24 @@ const SearchHeader = () => {
 													)
 												}
 											/>
+
+											{/* <div class="input-group">
+												<Input
+													className="form-control py-2 rounded-pill mr-1 pr-5"
+													type="search"
+													placeholder="Search for your organization"
+													id="example-search-input"
+												/>
+												<span class="input-group-append">
+													<button
+														class="btn rounded-pill border-0 ms-n5"
+														type="button"
+													>
+														<i class="fa fa-search"></i>
+													</button>
+												</span>
+											</div> */}
+
 											<InputGroupText
 												onClick={(e) =>
 													submitSearchForm(e)
@@ -368,19 +375,10 @@ const SearchHeader = () => {
 										</li>
 									</ul>
 								</div>
-								<div className={`cart-item`}>
-									{/* <h5>
-										{LocalizationLabelsArray.length > 0
-											? replaceLoclizationLabel(
-													LocalizationLabelsArray,
-													"shopping",
-													"lbl_search_hdr_shopping"
-											  )
-											: "shopping"}
-									</h5> */}
+								{/* <div className={`cart-item`}>
 									<h5>{t("shopping")}</h5>
 									<h5>{t("cart")}</h5>
-								</div>
+								</div> */}
 							</div>
 						</div>
 					</Col>

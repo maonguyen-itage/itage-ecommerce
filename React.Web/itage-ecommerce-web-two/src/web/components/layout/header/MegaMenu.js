@@ -24,14 +24,13 @@ const MegaMenu = () => {
 					<Col>
 						<div className="navbar-menu">
 							<div className="category-left">
-								<MenuCategory />
-								<HorizaontalMenu />
+								{/* <MenuCategory /> */}
+								{/* <HorizaontalMenu /> */}
 								<div className="icon-block">
 									<ul>
-										<MenuUserSection />
-										<Wishlist />
+										{/* <MenuUserSection /> */}
+										{/* <Wishlist /> */}
 										<MobileSearch />
-										{/* <MobileSetting /> */}
 									</ul>
 								</div>
 							</div>

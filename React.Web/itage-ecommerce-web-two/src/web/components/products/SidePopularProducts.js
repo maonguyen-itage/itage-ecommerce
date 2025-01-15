@@ -101,7 +101,7 @@ const SidePopularProducts = () => {
 
 	return (
 		<>
-			<div className="theme-card creative-card creative-inner">
+			<div className="theme-card creative-card creative-inner Regular shadow">
 				<h5 className="title-border">
 					{/* {LocalizationLabelsArray.length > 0 ?
                         replaceLoclizationLabel(LocalizationLabelsArray, "Popular Products", "lbl_lftfilt_pop_prod")

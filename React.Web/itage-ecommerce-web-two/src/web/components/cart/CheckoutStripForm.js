@@ -1,78 +1,89 @@
-import React from 'react';
-import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
-import CardSection from './CardSection';
-import { MakeApiCallSynchronous, MakeApiCallAsync } from '../../../helpers/ApiHelpers';
-import Config from '../../../helpers/Config';
-import { showErrorMsg, showSuccessMsg } from '../../../helpers/ValidationHelper';
-import rootAction from '../../../stateManagment/actions/rootAction';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import { LOADER_DURATION } from '../../../helpers/Constants';
-import {Button } from "reactstrap";
+import React from "react";
+import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+import CardSection from "./CardSection";
+import {
+	MakeApiCallSynchronous,
+	MakeApiCallAsync,
+} from "../../../helpers/ApiHelpers";
+import Config from "../../../helpers/Config";
+import {
+	showErrorMsg,
+	showSuccessMsg,
+} from "../../../helpers/ValidationHelper";
+import rootAction from "../../../stateManagment/actions/rootAction";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { LOADER_DURATION } from "../../../helpers/Constants";
+import { Button } from "reactstrap";
+import { useTranslation } from "react-i18next";
 
 export default function CheckoutStripForm(props) {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+	const { t } = useTranslation();
 
-  const stripe = useStripe();
-  const elements = useElements();
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    //--start loader
-    dispatch(rootAction.commonAction.setLoading(true));
+	const stripe = useStripe();
+	const elements = useElements();
 
-    try {
-      event.preventDefault();
+	const handleSubmit = async (event) => {
+		//--start loader
+		dispatch(rootAction.commonAction.setLoading(true));
 
-      if (!stripe || !elements) {
-        // Stripe.js has not yet loaded.
-        // Make  sure to disable form submission until Stripe.js has loaded.
-        return;
-      }
+		try {
+			event.preventDefault();
 
-      const card = elements.getElement(CardElement);
-      const result = await stripe.createToken(card);
+			if (!stripe || !elements) {
+				// Stripe.js has not yet loaded.
+				// Make  sure to disable form submission until Stripe.js has loaded.
+				return;
+			}
 
-      if (result.error) {
-        // Show error to your customer.
-        showErrorMsg("An error occured. Please try again!");
-        console.log(result.error.message);
+			const card = elements.getElement(CardElement);
+			const result = await stripe.createToken(card);
 
-        //--stop loader
-        setTimeout(() => {
-          dispatch(rootAction.commonAction.setLoading(false));
-        }, LOADER_DURATION);
-      } else {
-        // Send the token to your server.
-        // This function does not exist yet; we will define it in the next step.
-        //await  stripeTokenHandler(result.token);
+			if (result.error) {
+				// Show error to your customer.
+				showErrorMsg(t("an_error_occured_msg"));
+				console.log(result.error.message);
 
-        props.PlaceAndConfirmCustomerOrder(result.token.id);
-        dispatch(rootAction.commonAction.setLoading(false));
+				//--stop loader
+				setTimeout(() => {
+					dispatch(rootAction.commonAction.setLoading(false));
+				}, LOADER_DURATION);
+			} else {
+				// Send the token to your server.
+				// This function does not exist yet; we will define it in the next step.
+				//await  stripeTokenHandler(result.token);
 
-        return false;
-      }
-    }
-    catch (err) {
-      showErrorMsg("An error occured. Please try again!");
-      console.log(err.message);
-      props.HandleStripCardModal();
+				props.PlaceAndConfirmCustomerOrder(result.token.id);
+				dispatch(rootAction.commonAction.setLoading(false));
 
-      //--stop loader
-      setTimeout(() => {
-        dispatch(rootAction.commonAction.setLoading(false));
-      }, LOADER_DURATION);
-    }
-  };
+				return false;
+			}
+		} catch (err) {
+			showErrorMsg(t("an_error_occured_msg"));
+			console.log(err.message);
+			props.HandleStripCardModal();
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <CardSection />
-      {/* <button disabled={!stripe}>Confirm order</button> */}
-        <Button disabled={!stripe} className="btn btn-theme btn-normal btn-sm " id="mc-submit">
-        Confirm order
-        </Button>
-    </form>
-  );
+			//--stop loader
+			setTimeout(() => {
+				dispatch(rootAction.commonAction.setLoading(false));
+			}, LOADER_DURATION);
+		}
+	};
+
+	return (
+		<form onSubmit={handleSubmit}>
+			<CardSection />
+			{/* <button disabled={!stripe}>Confirm order</button> */}
+			<Button
+				disabled={!stripe}
+				className="btn btn-theme btn-normal btn-sm "
+				id="mc-submit"
+			>
+				{t("confirm_order_btn")}
+			</Button>
+		</form>
+	);
 }
-

@@ -86,7 +86,6 @@ const OrdersHistory = () => {
 			await setOrderItemsDetailList(
 				JSON.parse(responseDetailOrderDetail.data.data)
 			);
-			console.log(JSON.parse(responseDetailOrderDetail.data.data));
 		}
 
 		//--stop loader
@@ -341,13 +340,6 @@ const OrdersHistory = () => {
 									className="btn btn-normal btn-sm"
 									id="lbl_ordrhis_continue_ship"
 								>
-									{/* {LocalizationLabelsArray.length > 0
-										? replaceLoclizationLabel(
-												LocalizationLabelsArray,
-												"Continue Shopping",
-												"lbl_ordrhis_continue_ship"
-										  )
-										: "Continue Shopping"} */}
 									{t("continue_shopping")}
 								</Link>
 							</Col>
