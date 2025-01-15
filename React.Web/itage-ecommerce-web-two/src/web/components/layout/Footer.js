@@ -239,14 +239,6 @@ const Footer = ({ layoutLogo }) => {
 																				to={`/${getLanguageCodeFromSession()}/about`}
 																				id="lbl_footr_about"
 																			>
-																				{/* {LocalizationLabelsArray.length >
-																				0
-																					? replaceLoclizationLabel(
-																							LocalizationLabelsArray,
-																							"About Us",
-																							"lbl_footr_about"
-																					  )
-																					: "About Us"} */}
 																				{t(
 																					"about_us"
 																				)}
@@ -257,14 +249,6 @@ const Footer = ({ layoutLogo }) => {
 																				to={`/${getLanguageCodeFromSession()}/contact-us`}
 																				id="lbl_footr_cont"
 																			>
-																				{/* {LocalizationLabelsArray.length >
-																				0
-																					? replaceLoclizationLabel(
-																							LocalizationLabelsArray,
-																							"Contact Us",
-																							"lbl_footr_cont"
-																					  )
-																					: "Contact Us"} */}
 																				{t(
 																					"contact_us"
 																				)}
@@ -275,14 +259,6 @@ const Footer = ({ layoutLogo }) => {
 																			<Link
 																				to={`/${getLanguageCodeFromSession()}/signup`}
 																			>
-																				{/* {LocalizationLabelsArray.length >
-																				0
-																					? replaceLoclizationLabel(
-																							LocalizationLabelsArray,
-																							"Create Account",
-																							"lbl_footr_create_acnt"
-																					  )
-																					: "Create Account"} */}
 																				{t(
 																					"create_an_account"
 																				)}
@@ -292,14 +268,6 @@ const Footer = ({ layoutLogo }) => {
 																			<Link
 																				to={`/${getLanguageCodeFromSession()}/become-seller`}
 																			>
-																				{/* {LocalizationLabelsArray.length >
-																				0
-																					? replaceLoclizationLabel(
-																							LocalizationLabelsArray,
-																							"Become Vendor",
-																							"lbl_footr_become_vendor"
-																					  )
-																					: "Become Vendor"} */}
 																				{t(
 																					"become_vendor"
 																				)}
@@ -313,14 +281,6 @@ const Footer = ({ layoutLogo }) => {
 															<div className="footer-box">
 																<div className="footer-title">
 																	<h5>
-																		{/* {LocalizationLabelsArray.length >
-																		0
-																			? replaceLoclizationLabel(
-																					LocalizationLabelsArray,
-																					"Quick Links",
-																					"lbl_footr_quicklink"
-																			  )
-																			: "Quick Links"} */}
 																		{t(
 																			"quick_links"
 																		)}
@@ -332,14 +292,6 @@ const Footer = ({ layoutLogo }) => {
 																			<Link
 																				to={`/${getLanguageCodeFromSession()}/cart`}
 																			>
-																				{/* {LocalizationLabelsArray.length >
-																				0
-																					? replaceLoclizationLabel(
-																							LocalizationLabelsArray,
-																							"Cart",
-																							"lbl_footr_cart"
-																					  )
-																					: "Cart"} */}
 																				{t(
 																					"cart"
 																				)}
@@ -365,14 +317,6 @@ const Footer = ({ layoutLogo }) => {
 																				to={`/${getLanguageCodeFromSession()}/`}
 																				id="lbl_footr_home"
 																			>
-																				{/* {LocalizationLabelsArray.length >
-																				0
-																					? replaceLoclizationLabel(
-																							LocalizationLabelsArray,
-																							"Home",
-																							"lbl_footr_home"
-																					  )
-																					: "Home"} */}
 																				{t(
 																					"home"
 																				)}
@@ -382,14 +326,6 @@ const Footer = ({ layoutLogo }) => {
 																			<Link
 																				to={`/${getLanguageCodeFromSession()}/compare`}
 																			>
-																				{/* {LocalizationLabelsArray.length >
-																				0
-																					? replaceLoclizationLabel(
-																							LocalizationLabelsArray,
-																							"Compare",
-																							"lbl_footr_Compare"
-																					  )
-																					: "Compare"} */}
 																				{t(
 																					"compare"
 																				)}
@@ -399,14 +335,6 @@ const Footer = ({ layoutLogo }) => {
 																			<Link
 																				to={`/${getLanguageCodeFromSession()}/all-products/0/all-categories`}
 																			>
-																				{/* {LocalizationLabelsArray.length >
-																				0
-																					? replaceLoclizationLabel(
-																							LocalizationLabelsArray,
-																							"All Products",
-																							"lbl_footr_all_prd"
-																					  )
-																					: "All Products"} */}
 																				{t(
 																					"all_products"
 																				)}
@@ -420,14 +348,6 @@ const Footer = ({ layoutLogo }) => {
 															<div className="footer-box footer-contact-box">
 																<div className="footer-title">
 																	<h5>
-																		{/* {LocalizationLabelsArray.length >
-																		0
-																			? replaceLoclizationLabel(
-																					LocalizationLabelsArray,
-																					"Contact Us",
-																					"lbl_footr_cont"
-																			  )
-																			: "Contact Us"} */}
 																		{t(
 																			"contact_us"
 																		)}
@@ -527,15 +447,38 @@ const Footer = ({ layoutLogo }) => {
 												</li>
 												<li>プライバシーポリシー</li>
 												<li>利用規約</li>
-												<li>お問い合わせ</li>
+												<li>
+													<Link
+														to={`/${getLanguageCodeFromSession()}/contact-us`}
+														id="lbl_thead_contct"
+														className="dark-menu-item border-end has-submenu"
+													>
+														{t("contact")}
+													</Link>
+												</li>
 											</ul>
 										</div>
 									</div>
 									<div className="footer-box footer-contact-box">
 										<div className="footer-contant">
 											<ul className="contact-list">
-												<li>連絡</li>
-												<li>お問い合わせ</li>
+												<li>
+													<Link
+														to={`/${getLanguageCodeFromSession()}/contact-us`}
+														id="lbl_thead_contct"
+														className="dark-menu-item border-end has-submenu"
+													>
+														{t("contact")}
+													</Link>
+												</li>
+												<li>
+													<Link
+														to={`/${getLanguageCodeFromSession()}/about`}
+														id="lbl_footr_about"
+													>
+														{t("about_us")}
+													</Link>
+												</li>
 											</ul>
 										</div>
 									</div>
@@ -548,39 +491,12 @@ const Footer = ({ layoutLogo }) => {
 			<div className="sub-footer">
 				<Container>
 					<Row>
-						<Col xs="6">
+						<Col xs="12">
 							<div className="sub-footer-contain">
 								<p>
 									<span>2024 - 25 </span>
 									{t("copy_right_by")}
 								</p>
-							</div>
-						</Col>
-						<Col xs="6">
-							<div
-								className="sub-footer-contain"
-								style={{ float: "right" }}
-							>
-								<div className="language-block">
-									<div className="language-dropdown">
-										<select
-											class="form-select"
-											defaultValue={i18n.language}
-											onChange={onChangeLang}
-										>
-											{LANGUAGES.map(
-												({ code, label }) => (
-													<option
-														key={code}
-														value={code}
-													>
-														{label}
-													</option>
-												)
-											)}
-										</select>
-									</div>
-								</div>
 							</div>
 						</Col>
 					</Row>

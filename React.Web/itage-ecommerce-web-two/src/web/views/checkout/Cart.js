@@ -28,8 +28,11 @@ import {
 } from "../../../helpers/CommonHelper";
 import GlobalEnums from "../../../helpers/GlobalEnums";
 import { Modal, ModalBody, Button } from "reactstrap";
+import { useTranslation } from "react-i18next";
 
 const Cart = () => {
+	const { t } = useTranslation();
+
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const [adminPanelBaseURL, setadminPanelBaseURL] = useState(
@@ -432,57 +435,22 @@ const Cart = () => {
 									<table className="table cart-table table-responsive-xs">
 										<thead>
 											<tr className="table-head">
-												<th scope="col">image</th>
 												<th scope="col">
-													{LocalizationLabelsArray.length >
-													0
-														? replaceLoclizationLabel(
-																LocalizationLabelsArray,
-																"Name",
-																"lbl_hdr_cart_name"
-														  )
-														: "Name"}
+													{t("image")}
+												</th>
+												<th scope="col">{t("name")}</th>
+												<th scope="col">
+													{t("variants")}
 												</th>
 												<th scope="col">
-													{LocalizationLabelsArray.length >
-													0
-														? replaceLoclizationLabel(
-																LocalizationLabelsArray,
-																"Variants",
-																"lbl_hdr_cart_vari"
-														  )
-														: "Variants"}
+													{t("unit_price")}
 												</th>
 												<th scope="col">
-													{LocalizationLabelsArray.length >
-													0
-														? replaceLoclizationLabel(
-																LocalizationLabelsArray,
-																"Unit Price",
-																"lbl_hdr_cart_price"
-														  )
-														: "Unit Price"}
-												</th>
-												<th scope="col">
-													{LocalizationLabelsArray.length >
-													0
-														? replaceLoclizationLabel(
-																LocalizationLabelsArray,
-																"Quantity",
-																"lbl_hdr_cart_qty"
-														  )
-														: "Quantity"}
+													{t("quantity")}
 												</th>
 												<th scope="col">action</th>
 												<th scope="col">
-													{LocalizationLabelsArray.length >
-													0
-														? replaceLoclizationLabel(
-																LocalizationLabelsArray,
-																"Total",
-																"lbl_hdr_cart_totl"
-														  )
-														: "Total"}
+													{t("total")}
 												</th>
 											</tr>
 										</thead>
@@ -728,16 +696,7 @@ const Cart = () => {
 									<table className="table cart-table table-responsive-md">
 										<tfoot>
 											<tr>
-												<td>
-													{LocalizationLabelsArray.length >
-													0
-														? replaceLoclizationLabel(
-																LocalizationLabelsArray,
-																"Subtotal:",
-																"lbl_cart_subtotal"
-														  )
-														: "Subtotal:"}
-												</td>
+												<td>{t("sub_total")}</td>
 												<td>
 													<h2>
 														{GetDefaultCurrencySymbol()}
@@ -746,16 +705,7 @@ const Cart = () => {
 												</td>
 											</tr>
 											<tr>
-												<td>
-													{LocalizationLabelsArray.length >
-													0
-														? replaceLoclizationLabel(
-																LocalizationLabelsArray,
-																"Shipping",
-																"lbl_cart_shipping"
-														  )
-														: "Shipping"}
-												</td>
+												<td>{t("shipping")}</td>
 												<td>
 													<h2>
 														{GetDefaultCurrencySymbol()}
@@ -764,16 +714,7 @@ const Cart = () => {
 												</td>
 											</tr>
 											<tr>
-												<td>
-													{LocalizationLabelsArray.length >
-													0
-														? replaceLoclizationLabel(
-																LocalizationLabelsArray,
-																"Total",
-																"lbl_cart_total_2"
-														  )
-														: "Total"}
-												</td>
+												<td>{t("total")}</td>
 												<td>
 													<h2>
 														{GetDefaultCurrencySymbol()}
@@ -791,25 +732,13 @@ const Cart = () => {
 										to={`/${getLanguageCodeFromSession()}/`}
 										className="btn btn-normal"
 									>
-										{LocalizationLabelsArray.length > 0
-											? replaceLoclizationLabel(
-													LocalizationLabelsArray,
-													"Continue Shopping",
-													"lbl_cart_cont_shop"
-											  )
-											: "Continue Shopping"}
+										{t("continue_shopping")}
 									</Link>
 									<Link
 										to={`/${getLanguageCodeFromSession()}/checkout`}
 										className="btn btn-normal ms-3"
 									>
-										{LocalizationLabelsArray.length > 0
-											? replaceLoclizationLabel(
-													LocalizationLabelsArray,
-													"Proceed to Checkout",
-													"lbl_cart_proc_check"
-											  )
-											: "Proceed to Checkout"}
+										{t("proceed_to_checkout")}
 									</Link>
 								</div>
 							</div>
@@ -824,9 +753,11 @@ const Cart = () => {
 										alt=""
 									/>
 									<h3>
-										<strong>Your Cart is Empty</strong>
+										<strong>
+											{t("your_cart_is_empty")}
+										</strong>
 									</h3>
-									<h4>Explore more shortlist some items.</h4>
+									<h4>{t("shortlist")}</h4>
 								</div>
 							</div>
 						</div>
@@ -861,7 +792,7 @@ const Cart = () => {
 							<div className="offer-content">
 								<div>
 									<h2 style={{ marginBottom: "23px" }}>
-										Variants Detail!
+										{t("variants_detail")}
 									</h2>
 
 									<ul className="list-group">

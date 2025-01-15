@@ -56,6 +56,7 @@ import { useTranslation } from "react-i18next";
 // Make sure to call `loadStripe` outside of a component's render to avoid
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(process.env.REACT_APP_STRP_PUBLISHABLE_KEY);
+const FincodeKey = loadStripe(process.env.REACT_APP_FINCODE_PUBLISHABLE_KEY);
 
 const Checkout = () => {
 	const dispatch = useDispatch();
@@ -64,6 +65,8 @@ const Checkout = () => {
 
 	const [showCardSectionStripe, setshowCardSectionStripe] = useState(false);
 	const [showCardSectionPaypal, setshowCardSectionPaypal] = useState(false);
+	const [showCardSectionFincode, setshowCardSectionFincode] = useState(false);
+
 	const [PaymentMethod, setPaymentMethod] = useState(
 		process.env.REACT_APP_STRIPE_PAYMENT_METHOD ?? 5
 	);
@@ -104,13 +107,13 @@ const Checkout = () => {
 		cartItemsSession == null ||
 		cartItemsSession.length < 1
 	) {
-		showInfoMsg("Your cart is empty");
+		showInfoMsg(t("your_cart_is_empty"));
 		navigate("/" + getLanguageCodeFromSession() + "/");
 	}
 
 	const GetCouponCodeInfo = async () => {
 		if (IsCouponCodeApplied) {
-			showInfoMsg("Coupon code is already applied!");
+			showInfoMsg(t("coupon_code_is_already_applied"));
 			return false;
 		}
 
@@ -149,7 +152,6 @@ const Checkout = () => {
 
 		if (couponResponse != null && couponResponse.data != null) {
 			let copounData = JSON.parse(couponResponse.data.data);
-			console.log(copounData);
 			if (
 				copounData != undefined &&
 				copounData.DiscountValueAfterCouponAppliedWithQuantity !=
@@ -163,7 +165,7 @@ const Checkout = () => {
 				);
 				setIsCouponCodeApplied(true);
 			} else {
-				showErrorMsg("Invalid coupon code!");
+				showErrorMsg(t("invalid_coupon_code"));
 			}
 		}
 	};
@@ -175,6 +177,7 @@ const Checkout = () => {
 			//-- First Disable all forms
 			setshowCardSectionStripe(false);
 			setshowCardSectionPaypal(false);
+			setshowCardSectionFincode(false);
 
 			if (PaymentMethod === process.env.REACT_APP_STRIPE_PAYMENT_METHOD) {
 				setshowCardSectionStripe(true);
@@ -186,7 +189,7 @@ const Checkout = () => {
 				PaymentMethod ===
 				process.env.REACT_APP_CASH_ON_DELIVERY_PAYMENT_METHOD
 			) {
-				let isYes = window.confirm("Do you really want place order?");
+				let isYes = window.confirm(t("confirm_place_order"));
 				if (isYes) {
 					//--start loader
 					dispatch(rootAction.commonAction.setLoading(true));
@@ -198,10 +201,13 @@ const Checkout = () => {
 						dispatch(rootAction.commonAction.setLoading(false));
 					}, LOADER_DURATION);
 				}
+			} else if (
+				PaymentMethod === process.env.REACT_APP_FINCODE_PAYMENT_METHOD
+			) {
+				setshowCardSectionFincode(true);
 			}
 		} catch (err) {
-			showErrorMsg("An error occured. Please try again!");
-			console.log(err.message);
+			showErrorMsg(t("an_error_occured_msg"));
 			if (PaymentMethod === process.env.REACT_APP_STRIPE_PAYMENT_METHOD) {
 				HandleStripCardModal();
 				HandlePaypalCardModal();
@@ -263,7 +269,7 @@ const Checkout = () => {
 					stripServerResponseDetail[0].ResponseMsg ==
 						"Order Placed Successfully"
 				) {
-					showSuccessMsg("Order Placed Successfully!");
+					showSuccessMsg(t("order_placed_successfully_msg"));
 
 					setTimeout(function () {
 						navigate("/" + getLanguageCodeFromSession() + "/");
@@ -274,10 +280,10 @@ const Checkout = () => {
 						localStorage.setItem("cartItems", "[]");
 					}, 1000);
 				} else {
-					showErrorMsg("An error occured. Please try again!");
+					showErrorMsg(t("an_error_occured_msg"));
 				}
 			} else {
-				showErrorMsg("An error occured. Please try again!");
+				showErrorMsg(t("an_error_occured_msg"));
 			}
 
 			if (PaymentMethod === process.env.REACT_APP_STRIPE_PAYMENT_METHOD) {
@@ -288,7 +294,7 @@ const Checkout = () => {
 				HandlePaypalCardModal();
 			}
 		} catch (err) {
-			showErrorMsg("An error occured. Please try again!");
+			showErrorMsg(t("an_error_occured_msg"));
 			console.log(err.message);
 			if (PaymentMethod === process.env.REACT_APP_STRIPE_PAYMENT_METHOD) {
 				HandleStripCardModal();
@@ -307,6 +313,10 @@ const Checkout = () => {
 
 	const HandlePaypalCardModal = () => {
 		setshowCardSectionPaypal(!showCardSectionPaypal);
+	};
+
+	const HandleFincodeCardModal = () => {
+		setshowCardSectionFincode(!showCardSectionFincode);
 	};
 
 	// creates a paypal order
@@ -366,7 +376,7 @@ const Checkout = () => {
 	//capture likely error for paypal
 	const onError = (data, actions) => {
 		HandlePaypalCardModal();
-		showErrorMsg("An error occured. Please try again!");
+		showErrorMsg(t("an_error_occured_msg"));
 	};
 
 	useEffect(() => {
@@ -1163,6 +1173,77 @@ const Checkout = () => {
 						</ModalBody>
 					</Modal>
 				</PayPalScriptProvider>
+			) : (
+				<></>
+			)}
+
+			{/* Fincode card section ends here */}
+			{showCardSectionFincode == true ? (
+				<Modal
+					isOpen={showCardSectionFincode}
+					toggle={HandleFincodeCardModal}
+					centered={true}
+					size="lg"
+					className="theme-modal"
+					id="exampleModal"
+					role="dialog"
+					aria-hidden="true"
+				>
+					<ModalBody className="modal-content">
+						<Button
+							className="close"
+							data-dismiss="modal"
+							aria-label="Close"
+							onClick={(e) => {
+								e.preventDefault();
+								HandleFincodeCardModal();
+							}}
+						>
+							<span aria-hidden="true">×</span>
+						</Button>
+						<div className="news-latter">
+							<div className="modal-bg">
+								<div className="offer-content">
+									<div>
+										<h2>
+											{t("card_details")}
+											{t("place_order")}
+										</h2>
+										<p>
+											{t("provide_your_card_detail")}
+											<br />{" "}
+											{t("and_confirm_final_order")}
+										</p>
+
+										<Elements stripe={stripePromise}>
+											<CheckoutStripForm
+												UserID={loginUser.UserID}
+												OrderNote={OrderNote}
+												cartJsonData={JSON.stringify(
+													cartItemsSession
+												)}
+												ShippingSubTotal={
+													ShippingSubTotal
+												}
+												OrderTotal={OrderTotal}
+												OrderTotalAfterDiscount={
+													OrderTotalAfterDiscount
+												}
+												CouponCode={CouponCode}
+												HandleStripCardModal={
+													HandleFincodeCardModal
+												}
+												PlaceAndConfirmCustomerOrder={
+													PlaceAndConfirmCustomerOrder
+												}
+											/>
+										</Elements>
+									</div>
+								</div>
+							</div>
+						</div>
+					</ModalBody>
+				</Modal>
 			) : (
 				<></>
 			)}

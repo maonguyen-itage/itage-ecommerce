@@ -240,9 +240,7 @@ const ProductBox = ({
 								);
 							}}
 						>
-							<i className="ti-heart" aria-hidden="true">
-								sss
-							</i>
+							<i className="ti-heart" aria-hidden="true"></i>
 						</a>
 						<Link
 							to={`/${getLanguageCodeFromSession()}/product-detail/${

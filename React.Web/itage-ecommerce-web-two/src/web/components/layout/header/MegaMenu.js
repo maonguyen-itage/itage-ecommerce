@@ -19,17 +19,17 @@ import Wishlist from "./Wishlist";
 const MegaMenu = () => {
 	return (
 		<>
-			<div className="custom-container shadow-sm p-2 mb-5 bg-body rounded">
+			<div className="custom-container">
 				<Row>
 					<Col>
 						<div className="navbar-menu">
 							<div className="category-left">
-								<MenuCategory />
-								<HorizaontalMenu />
+								{/* <MenuCategory /> */}
+								{/* <HorizaontalMenu /> */}
 								<div className="icon-block">
 									<ul>
-										<MenuUserSection />
-										<Wishlist />
+										{/* <MenuUserSection /> */}
+										{/* <Wishlist /> */}
 										<MobileSearch />
 									</ul>
 								</div>

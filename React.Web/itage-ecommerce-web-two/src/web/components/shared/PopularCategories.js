@@ -131,7 +131,7 @@ const PopularCategories = () => {
 
 	return (
 		<>
-			{PopularCategoriesList != undefined &&
+			{/* {PopularCategoriesList != undefined &&
 			PopularCategoriesList != null &&
 			PopularCategoriesList.length > 0 ? (
 				<>
@@ -288,7 +288,7 @@ const PopularCategories = () => {
 				</>
 			) : (
 				<></>
-			)}
+			)} */}
 		</>
 	);
 };
